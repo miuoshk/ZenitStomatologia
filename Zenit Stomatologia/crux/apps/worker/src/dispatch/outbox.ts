@@ -103,7 +103,7 @@ async function processOne(
         where id = ${row.id}::uuid
       `);
     });
-    log.info({ outbox_id: row.id, topic: row.topic, status: "sent" }, "outbox sent");
+    log.info({ outboxId: row.id, topic: row.topic, status: "sent" }, "outbox sent");
     return "sent";
   } catch (error) {
     const attempts = row.attempts + 1;
@@ -140,7 +140,7 @@ async function processOne(
 
     log.warn(
       {
-        outbox_id: row.id,
+        outboxId: row.id,
         topic: row.topic,
         attempts,
         status: deadNow ? "dead" : "pending",

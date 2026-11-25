@@ -1,4 +1,4 @@
-export { createDb, type CruxDb, type CreateDbOptions, type DbRole, type Tx } from "./client";
+export { createDb, type CruxDb, type CreateDbOptions, type DbRole, type Tx, type WithActorOptions } from "./client";
 export { actorToClaims, type Actor, type JwtClaims, type WorkerClaims } from "./actor";
 export { DbMappedError, isDbMappedError } from "./errors";
 export {
@@ -17,15 +17,16 @@ export {
 export { sql } from "drizzle-orm";
 
 import type { Actor } from "./actor";
-import type { CruxDb, Tx } from "./client";
+import type { CruxDb, Tx, WithActorOptions } from "./client";
 
 /** `withActor(db, actor, fn)` — jedyny dostęp aplikacji do bazy z claims. */
 export function withActor<T>(
   db: CruxDb,
   actor: Actor,
   fn: (tx: Tx) => Promise<T>,
+  opts?: WithActorOptions,
 ): Promise<T> {
-  return db.withActor(actor, fn);
+  return db.withActor(actor, fn, opts);
 }
 
 /** `withWorker(db, operation, fn)` — operacje z `privileged.ts`. */

@@ -56,3 +56,19 @@ export {
 export { mapPgError, type PgLikeError } from "./errors";
 
 export { containsPii } from "./pii";
+
+export {
+  createLogger,
+  sanitizeLogObject,
+  ALLOWED_LOG_KEYS,
+  REDACTED,
+  LOGGER_REDACTED_CODE,
+  type Logger,
+  type CreateLoggerOptions,
+} from "./logger";
+
+export { scrubSentryEvent, sentryBaseOptions, type SentryBaseOptions } from "./sentry-before-send";
+
+export { startSpan, otelEnabled, type SpanAttrs } from "./telemetry";
+
+export { REQUEST_ID_HEADER, resolveRequestId } from "./request-id";

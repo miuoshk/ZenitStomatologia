@@ -8,7 +8,7 @@ async function occupancyAnalytics(
   const tenantId = asString(payload["tenantId"]);
   const locationId = asString(payload["locationId"]);
   const day = asString(payload["day"]);
-  ctx.log.info({ topic: "occupancy", tenant_id: tenantId, location_id: locationId }, "occupancy event");
+  ctx.log.info({ topic: "occupancy", tenantId: tenantId, locationId: locationId }, "occupancy event");
   await ctx.enqueueAnalyticsRefresh({ tenantId, locationId, day });
 }
 

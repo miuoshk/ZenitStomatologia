@@ -32,8 +32,8 @@ export async function runAnalyticsRefresh(
   log.info(
     {
       operation: "analytics.refresh",
-      ...(input.tenantId ? { tenant_id: input.tenantId } : {}),
-      ...(input.locationId ? { location_id: input.locationId } : {}),
+      ...(input.tenantId ? { tenantId: input.tenantId } : {}),
+      ...(input.locationId ? { locationId: input.locationId } : {}),
     },
     `analytics.refresh incremental ${window.from}…${window.to} rows=${String(result.rowsWritten)}`,
   );

@@ -1,38 +1,26 @@
-import pino, { type LoggerOptions } from "pino";
+import { createLogger as createSharedLogger, type Logger } from "@crux/shared/logger";
 
-/** Dozwolone pola w logach — nigdy hasła / PESEL / treść wiadomości. */
-export const ALLOWED_LOG_KEYS = [
-  "level",
-  "time",
-  "msg",
-  "pid",
-  "hostname",
-  "request_id",
+export { ALLOWED_LOG_KEYS } from "@crux/shared/logger";
+export type { Logger };
+
+/** Nieosobowe klucze operacyjne workera (poza allowlistą `@crux/shared/logger`). */
+export const WORKER_EXTRA_LOG_KEYS = [
   "operation",
   "topic",
-  "outbox_id",
-  "tenant_id",
-  "location_id",
-  "attempts",
   "status",
   "queue",
-  "job_id",
-  "err",
+  "attempts",
+  "flag",
+  "metric",
 ] as const;
 
-export function createLogger(name = "crux-worker") {
-  const opts: LoggerOptions = {
+/** Wrapper na logger z `@crux/shared` (ADR-016): allowlista + `containsPii`. */
+export function createLogger(name = "crux-worker"): Logger {
+  return createSharedLogger({
     name,
-    level: process.env["LOG_LEVEL"] ?? "info",
-    redact: {
-      paths: ["password", "pesel", "email", "phone", "content", "authorization"],
-      remove: true,
-    },
-  };
-  if (process.env["NODE_ENV"] !== "production") {
-    opts.transport = { target: "pino-pretty", options: { colorize: true } };
-  }
-  return pino(opts);
+    extraAllowedKeys: WORKER_EXTRA_LOG_KEYS,
+    ...(process.env["NODE_ENV"] !== "production"
+      ? { transport: { target: "pino-pretty", options: { colorize: true } } }
+      : {}),
+  });
 }
-
-export type Logger = ReturnType<typeof createLogger>;

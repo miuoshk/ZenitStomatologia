@@ -46,6 +46,55 @@ describe("@crux/db withActor / withWorker", () => {
     expect(row.tenant_id).toBeNull();
   });
 
+  it("[K16] withActor z requestId ustawia crux.request_id, audit.events.request_id i czyści po transakcji", async () => {
+    const fixture = await withTestTenant(app);
+    const actor = fixture.actorFor(fixture.staffA.receptionist);
+    const requestId = "req-k16-test";
+
+    await withActor(
+      app,
+      actor,
+      async (tx) => {
+        const rows = await tx.execute(sql`select current_setting('crux.request_id', true) as rid`);
+        expect((rows[0] as { rid: string }).rid).toBe(requestId);
+        await tx.execute(
+          sql`insert into tests.audit_probe (tenant_id, label) values (${fixture.tenantA}, 'k16')`,
+        );
+      },
+      { requestId },
+    );
+
+    const after = await app.drizzle.execute(
+      sql`select nullif(current_setting('crux.request_id', true), '') as rid`,
+    );
+    expect((after[0] as { rid: string | null }).rid).toBeNull();
+
+    const auditor = fixture.actorFor(fixture.staffA.auditor);
+    const events = await withActor(app, auditor, async (tx) =>
+      tx.execute(
+        sql`select request_id from audit.events where table_name = 'tests.audit_probe' and action = 'insert'`,
+      ),
+    );
+    expect(events.map((r) => (r as { request_id: string | null }).request_id)).toContain(requestId);
+  });
+
+  it("[K16] withActor ignoruje requestId w niebezpiecznym formacie (np. PII)", async () => {
+    const fixture = await withTestTenant(app);
+    const actor = fixture.actorFor(fixture.staffA.receptionist);
+    const rid = await withActor(
+      app,
+      actor,
+      async (tx) => {
+        const rows = await tx.execute(
+          sql`select nullif(current_setting('crux.request_id', true), '') as rid`,
+        );
+        return (rows[0] as { rid: string | null }).rid;
+      },
+      { requestId: "jan kowalski@example.com" },
+    );
+    expect(rid).toBeNull();
+  });
+
   it("withWorker z nieznaną operacją rzuca forbidden", async () => {
     try {
       await withWorker(worker, "not.a.real.operation", () => Promise.resolve("nope"));

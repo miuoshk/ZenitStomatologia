@@ -61,3 +61,17 @@ Dokumentacja (`03a`) nazywa funkcje `auth.tenant_id()` itd. Lokalny migrator CLI
 2. Utwórz role `crux_app` / `crux_worker` (hasła w menedżerze sekretów, nie w repo).
 3. Zapisz URL-e i klucze w `.env` / Vercel (bez commitowania).
 4. Potwierdź w panelu: Data API off, Realtime off, lista schematów API pusta.
+
+## Obserwowalność (K16, ADR-016)
+
+- [ ] Sentry: projekt w regionie **UE**, podpisany DPA, `SENTRY_DSN` tylko w menedżerze sekretów
+- [ ] `SENTRY_ENVIRONMENT` ustawione per środowisko; session replay wyłączone (kod nie włącza)
+- [ ] OTel: `OTEL_EXPORTER_OTLP_ENDPOINT` tylko na kolektor w UE / własny serwer
+- [ ] `log_statement = none` — w logach bazy nie ma parametrów zapytań
+- [ ] Korelacja: `audit.events.request_id` ← nagłówek `x-request-id` (`withActor`)
+
+Szczegóły: [sentry-bez-pii.md](sentry-bez-pii.md).
+
+---
+
+**Właściciel:** Bartek (technik) · **Data przeglądu:** 2026-11-25

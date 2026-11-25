@@ -52,7 +52,15 @@ Wersja 1.0 · K10 (25 listopada 2026). Każda bezpośrednia zależność musi tu
 | `pg-boss` | kolejki / cron workera (`apps/worker`, schemat `pgboss`) | MIT | tak (metadane jobów w PG) |
 | `pino` | logi JSON workera (bez PII) | MIT | nie |
 | `pino-pretty` | czytelne logi workera w dev | MIT | nie |
+| `pino` (w `@crux/shared`) | fabryka loggera z allowlistą kluczy i `containsPii` (K16, ADR-016) | MIT | nie (logi bez PII) |
+| `@sentry/nextjs` | błędy web (server/edge); **region UE**, `sendDefaultPii: false`, `beforeSend` bez PII, bez session replay; wymaga DPA z Sentry; DSN pusty = wyłączone | MIT | nie — żadnych danych pacjentów w telemetrii |
+| `@sentry/node` | błędy workera; jak wyżej | MIT | nie — jw. |
+| `@opentelemetry/api` | `startSpan` / no-op tracer w `@crux/shared`; także w roocie, by jedna instancja `drizzle-orm` (peer) | Apache-2.0 | nie |
+| `@opentelemetry/sdk-node` | ślady w web i workerze; tylko z `OTEL_EXPORTER_OTLP_ENDPOINT` | Apache-2.0 | nie — atrybuty tylko identyfikatory |
+| `@opentelemetry/exporter-trace-otlp-http` | eksport OTLP/HTTP do kolektora w UE lub własnego serwera | Apache-2.0 | nie — jw. |
 | `seedrandom` | deterministyczny PRNG dla fabryk i golden datasetu (`@crux/testing`, K12) | MIT | nie |
 | `@types/seedrandom` | typy `seedrandom` | MIT | nie |
+
+Telemetria (K16): Sentry wyłącznie w regionie UE z podpisanym DPA (umowa powierzenia); do Sentry/OTel nie trafiają dane pacjentów ani personelu poza identyfikatorami (`user.id`, `tenant.id`, `request.id`). Zob. `docs/ops/sentry-bez-pii.md`.
 
 Transitive (m.in. `postcss` z `@tailwindcss/postcss`) nie wymagają osobnego wiersza, dopóki nie są zależnością bezpośrednią.

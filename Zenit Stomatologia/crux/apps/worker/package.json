@@ -25,6 +25,9 @@
     "@crux/integrations": "workspace:*",
     "@crux/platform": "workspace:*",
     "@crux/shared": "workspace:*",
+    "@opentelemetry/exporter-trace-otlp-http": "0.301.2",
+    "@opentelemetry/sdk-node": "0.301.2",
+    "@sentry/node": "11.18.0",
     "pg-boss": "10.1.5",
     "pino": "9.7.0",
     "zod": "4.6.7"

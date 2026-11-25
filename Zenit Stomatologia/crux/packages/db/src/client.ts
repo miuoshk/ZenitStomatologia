@@ -19,10 +19,17 @@ export type CreateDbOptions = {
 type DrizzleDb = ReturnType<typeof drizzle<typeof schema>>;
 export type Tx = Parameters<Parameters<DrizzleDb["transaction"]>[0]>[0];
 
+export type WithActorOptions = {
+  /** Trafia do `crux.request_id` → `audit.events.request_id` (korelacja z logami). */
+  readonly requestId?: string;
+};
+
+const REQUEST_ID_RE = /^[A-Za-z0-9._:-]{1,128}$/;
+
 export type CruxDb = {
   readonly role: DbRole;
   readonly drizzle: DrizzleDb;
-  withActor<T>(actor: Actor, fn: (tx: Tx) => Promise<T>): Promise<T>;
+  withActor<T>(actor: Actor, fn: (tx: Tx) => Promise<T>, opts?: WithActorOptions): Promise<T>;
   withWorker<T>(operation: string, fn: (tx: Tx) => Promise<T>): Promise<T>;
   close(): Promise<void>;
 };
@@ -38,15 +45,25 @@ export function createDb(url: string, options: CreateDbOptions): CruxDb {
   const db = drizzle(client, { schema });
   const privileged = new Set(options.privilegedOperations ?? PRIVILEGED_OPERATIONS);
 
-  async function withActor<T>(actor: Actor, fn: (tx: Tx) => Promise<T>): Promise<T> {
+  async function withActor<T>(
+    actor: Actor,
+    fn: (tx: Tx) => Promise<T>,
+    opts?: WithActorOptions,
+  ): Promise<T> {
     if (options.role !== "app") {
       throw new DbMappedError(domainForbidden("withActor wymaga createDb(..., { role: 'app' })"));
     }
     const claims = JSON.stringify(actorToClaims(actor));
+    // Tylko bezpieczny format (bez PII); inne wartości są pomijane.
+    const requestId =
+      opts?.requestId !== undefined && REQUEST_ID_RE.test(opts.requestId) ? opts.requestId : null;
     try {
       return await db.transaction(async (tx) => {
         await tx.execute(sql.raw("set local role authenticated"));
         await tx.execute(sql`select set_config('request.jwt.claims', ${claims}, true)`);
+        if (requestId !== null) {
+          await tx.execute(sql`select set_config('crux.request_id', ${requestId}, true)`);
+        }
         await tx.execute(sql.raw("set local statement_timeout = '15s'"));
         return fn(tx);
       });

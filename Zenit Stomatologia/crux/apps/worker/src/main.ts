@@ -6,7 +6,9 @@ import { markDispatchNow } from "./dispatch/outbox";
 import { startHealthServer, type HealthState } from "./health";
 import { registerJobs } from "./jobs/register";
 import { createLogger } from "./logger";
+import { initTelemetry, shutdownTelemetry } from "./telemetry";
 
+initTelemetry();
 const log = createLogger();
 
 async function main(): Promise<void> {
@@ -41,6 +43,7 @@ async function main(): Promise<void> {
     });
     await stopBoss(boss);
     await db.close();
+    await shutdownTelemetry();
     process.exit(0);
   };
 
