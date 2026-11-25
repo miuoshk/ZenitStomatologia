@@ -32,8 +32,8 @@ export const eventRegistry = {
     topic: z.string().min(1),
     tenantId: IdOnly,
   }),
-  "occupancy.entry_recorded.v1": OccupancyDay.extend({ entryId: IdOnly }),
-  "occupancy.entry_voided.v1": OccupancyDay.extend({ entryId: IdOnly }),
+  "occupancy.entry_recorded.v1": OccupancyDay.extend({ entryId: IdOnly, chairId: IdOnly }),
+  "occupancy.entry_voided.v1": OccupancyDay.extend({ entryId: IdOnly, chairId: IdOnly }),
   "occupancy.day_closed.v1": OccupancyDay,
   "occupancy.day_reopened.v1": OccupancyDay,
 } as const;

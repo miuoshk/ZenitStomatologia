@@ -18,6 +18,7 @@
     "@crux/i18n": "workspace:*",
     "@crux/identity": "workspace:*",
     "@crux/org": "workspace:*",
+    "@crux/scheduling": "workspace:*",
     "@crux/shared": "workspace:*",
     "@crux/ui": "workspace:*",
     "@supabase/ssr": "0.12.7",

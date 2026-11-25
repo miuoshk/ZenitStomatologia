@@ -42,3 +42,12 @@ export {
   breakGlassRequests,
   type StaffRole,
 } from "./identity";
+
+export {
+  schedulingSchema,
+  occupancySourceEnum,
+  timeBlocks,
+  chairOccupancy,
+  occupancyDayClosures,
+  type OccupancySource,
+} from "./scheduling";

@@ -24,6 +24,10 @@
         "reason": "tests.reset_fixtures dla Vitest"
       },
       {
+        "path": "supabase/migrations/0011_tests_reset_scheduling.sql",
+        "reason": "tests.reset_fixtures obejmuje tabele scheduling (K11)"
+      },
+      {
         "path": "supabase/migrations/0004_platform.sql",
         "reason": "audit.track + audit.log_access (+ probe) — ADR/K05"
       },

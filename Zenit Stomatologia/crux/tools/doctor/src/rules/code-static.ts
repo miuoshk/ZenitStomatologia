@@ -207,7 +207,8 @@ export const codeUsecaseAuthorize: Rule = {
         /export\s+(?:async\s+)?function\s+\w+\s*\([^)]*\bActor\b/.test(text) ||
         /export\s+(?:async\s+)?function\s+\w+\s*\([^)]*actor\s*:\s*Actor/.test(text);
       if (!exportsActor) continue;
-      if (!text.includes("authorize(")) {
+      // authorize( albo cienki wrapper (np. authorizeWrite → authorize)
+      if (!/\bauthorize\w*\(/.test(text)) {
         out.push({
           ruleId: this.id,
           level: this.level,
