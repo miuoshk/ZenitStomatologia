@@ -16,7 +16,7 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## 2026-11-25 · K02 · Supabase lokalnie i migracja bazowa · część 1
 Prompt: prompts/F0-fundament.md#K02
-Commit: f6619a5 · Gałąź: main
+Commit: d028c38 · Gałąź: main
 Wynik: `pnpm db:start` / `db:reset` / `db:test` zielone (27 asercji). `extensions.tenant_id()` bez claims = null; `crux_app` nie może `set role postgres`. CLI 3.4 → `config.jsonc` (nie toml); `api.enabled=false`, MFA TOTP on, jwt 12h, signup off, PG 17, bucket `assets`.
 Uwagi: claims helpers w **`extensions.*`** (migrator `postgres` nie ma CREATE na `auth`; stockowe `auth.role()` zostaje). Decyzja ADR/synonimy w `auth` otwarta — `docs/ops/supabase-konfiguracja.md`. Hosted staging nie pushowany (`db:push:staging` blokuje).
 
