@@ -7,8 +7,19 @@
 | Warstwa | Co | Gdzie | Retencja |
 |---|---|---|---|
 | PITR (Supabase Pro) | ciągłe WAL | `eu-central-1` | 7 dni (produkcja obowiązkowo) |
-| Kopia nocna `backup.nightly` (worker, 02:00) | `pg_dump` schematów `public`, `audit`, `platform`, `ref`, `analytics` (bez `pgboss`), szyfrowanie AES-256-GCM kluczem z `KeyProvider` | `FileStoragePort` (1.0: folder lokalny `BACKUP_LOCAL_DIR`; docelowo magazyn obiektowy UE poza Supabase) | 35 dni + miesięczne 12 mies. (roczna 20 lat od F4) |
+| Kopia nocna `backup.nightly` (worker, 02:00) | `pg_dump` (klient ≥ 17) jako rola `crux_backup` schematów `public`, `org`, `identity`, `scheduling`, `platform`, `audit`, `ref`, `analytics` (bez `pgboss`, `tests`), szyfrowanie AES-256-GCM kluczem z `KeyProvider` | `FileStoragePort` (1.0: folder lokalny `BACKUP_LOCAL_DIR`; docelowo magazyn obiektowy UE poza Supabase) | 35 dni + miesięczne 12 mies. (roczna 20 lat od F4) |
 | Wpis audytu | `backup.completed` w `audit.events` | baza | zgodnie z audytem |
+
+## Rola kopii `crux_backup` (ADR-034)
+
+Migracja `20261126000300_backup_role.sql` tworzy rolę `crux_backup` jako `NOLOGIN`: tylko `SELECT` na schematach danych, `BYPASSRLS`, bez zapisu. Przed pierwszą kopią na danej bazie:
+
+1. Wygeneruj hasło w menedżerze sekretów.
+2. Jako `postgres` (SQL Editor): `alter role crux_backup login password '<hasło>';`
+3. Ustaw w workerze `DATABASE_URL_BACKUP=postgresql://crux_backup:<hasło>@db.<projekt>.supabase.co:5432/postgres` (połączenie bezpośrednie, nie pooler transakcyjny).
+4. Uruchom kopię ręcznie i sprawdź `backup.completed` w `audit.events` oraz `pg_restore --list` na pliku.
+
+Do 2026-11-25 kopia nocna nie działała: `crux_worker` nie mógł czytać całej bazy przez RLS i brak uprawnień, a lista schematów pomijała `org`, `identity`, `scheduling` (audyt 1.0).
 
 ## Cele
 
