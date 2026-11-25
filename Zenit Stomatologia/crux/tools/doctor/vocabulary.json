@@ -1,0 +1,15 @@
+{
+  "forbidden": ["visit", "clinic", "branch", "customer", "client", "doctor", "bill", "slot"],
+  "pathGlobs": ["apps/**/*.{ts,tsx}", "packages/modules/**/*.{ts,tsx}"],
+  "ignoreLinePatterns": [
+    "^\\s*\"use client\"",
+    "^\\s*\"use server\"",
+    "SupabaseClient",
+    "createBrowserClient",
+    "createServerClient",
+    "createSupabase",
+    "@crux/doctor",
+    "crux-doctor",
+    "tools/doctor"
+  ]
+}

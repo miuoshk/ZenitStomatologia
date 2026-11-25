@@ -1,0 +1,14 @@
+{
+  "files": {
+    "AGENTS.md": "5f241bf200a9a758c64da5fb8b744a9408d3f3df455e44fd534db324325b0147",
+    ".cursor/rules/00-core.mdc": "455472c92ceaf9ae8ab1479fa5fabc22372463fd720a8f7677411f384f77acb2",
+    ".cursor/rules/10-architecture-boundaries.mdc": "e44dec876cf6810c367632312766813d89189125a6e31b81ab16272eef2304e5",
+    ".cursor/rules/20-database.mdc": "68b9046741fa184b9ff31ba95e38389bb95a053e30280b0c9459f3cde265ca58",
+    ".cursor/rules/30-ui.mdc": "3fe5ddf67a5ffc67a6a84e8e5adf5888bbc46db50cfdf22f1f58220924beda31",
+    ".cursor/rules/40-security-privacy.mdc": "3ebdd2aafdcbeecb75eb8494a4e1ac8ed82a1831c7c986cbbf2bbf0b81524622",
+    ".cursor/rules/50-clinical.mdc": "1617d30268d1258d458b9ac896ddcfc1327c55d5541638d4c7604e70da9be584",
+    ".cursor/rules/60-integrations.mdc": "52e3a47ab0ce75e1dda828bee65b34a958dceb8d464db8d0b7dcbfc264ec6bb6",
+    ".cursor/rules/70-analytics.mdc": "f946767f76a5fdbc844e7e36a278edb9e66e0930ebefc0d4a8ba8952013e6ddd",
+    ".cursor/rules/80-testing.mdc": "c0aa6848cd9fedb0ec1879a881853eaa3977de63e48234da3a590914f3c57d66"
+  }
+}

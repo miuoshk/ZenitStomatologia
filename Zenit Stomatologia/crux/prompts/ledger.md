@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K10 · CI, crux-doctor, gen, dependency-cruiser · część 1
+Prompt: prompts/F0-fundament.md#K10
+Commit: (pending) · Gałąź: main
+Wynik: `pnpm run doctor` OK (z DB); celowe `as any` wykryte; `pnpm gen module demo` → typecheck OK, usunięty; `lint:deps` 0 errors; typecheck/lint monorepo OK.
+Uwagi: CLI przez `pnpm run doctor` (nie `pnpm doctor` — kolizja z built-inem pnpm). Reguły db.* z `--strict-db` w CI; allowlista security definer + pgtap zbiorcze; depcruiser pełny graf docs/01 §4; PR template + gitleaks/audit soft w CI.
+
 ## 2026-11-25 · K09 · apps/worker: pg-boss, outbox, harmonogramy, kopie · część 1
 Prompt: prompts/F0-fundament.md#K09
 Commit: 4ed6ced · Gałąź: main

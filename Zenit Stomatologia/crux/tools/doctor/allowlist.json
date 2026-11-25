@@ -1,0 +1,139 @@
+{
+  "rules": {
+    "code.no-as-unknown": [
+      {
+        "path": "apps/worker/src/dispatch/outbox.ts",
+        "reason": "postgres.js RowList → OutboxRow; brak stabilnego typu RETURNING w drizzle execute"
+      },
+      {
+        "path": "packages/modules/identity/src/application/resolve-actor.ts",
+        "reason": "json z security definer → ActorJson; cast na granicy SQL"
+      },
+      {
+        "path": "packages/ui/src/charts/LineChart.tsx",
+        "reason": "Recharts 3 + React 19: ReferenceLine JSX types mismatch"
+      }
+    ],
+    "code.no-security-definer": [
+      {
+        "path": "supabase/migrations/0002_pgtap.sql",
+        "reason": "helpers testowe tests.*"
+      },
+      {
+        "path": "supabase/migrations/0003_tests_reset.sql",
+        "reason": "tests.reset_fixtures dla Vitest"
+      },
+      {
+        "path": "supabase/migrations/0004_platform.sql",
+        "reason": "audit.track + audit.log_access (+ probe) — ADR/K05"
+      },
+      {
+        "path": "supabase/migrations/0006_identity.sql",
+        "reason": "identity helper pod authorize / seed"
+      },
+      {
+        "path": "supabase/migrations/0008_identity_resolve_actor.sql",
+        "reason": "identity.resolve_actor — bootstrap requireActor (K07)"
+      }
+    ],
+    "db.pgtap-required": [
+      {
+        "table": "org.tenants",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena (nie per tabela) do K11+"
+      },
+      {
+        "table": "org.locations",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "org.chairs",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "org.opening_hours",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "org.opening_exceptions",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "identity.staff_members",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "identity.memberships",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "identity.permissions",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "identity.role_permissions",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "identity.provider_capabilities",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "identity.break_glass_requests",
+        "path": "supabase/tests/020_org_identity.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "platform.outbox",
+        "path": "supabase/tests/010_platform.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "platform.command_log",
+        "path": "supabase/tests/010_platform.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "platform.feature_flags",
+        "path": "supabase/tests/010_platform.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "platform.settings",
+        "path": "supabase/tests/010_platform.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "audit.events",
+        "path": "supabase/tests/010_platform.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "audit.access_log",
+        "path": "supabase/tests/010_platform.sql",
+        "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "audit.integrity_checks",
+        "path": "supabase/tests/010_platform.sql",
+        "reason": "testy zebrane per domena"
+      }
+    ],
+    "code.vocabulary": [
+      {
+        "path": "apps/web/server/auth-adapter.ts",
+        "pattern": "\\bclient\\b",
+        "reason": "zmienna Supabase Auth client — nie encja domenowa"
+      }
+    ]
+  }
+}

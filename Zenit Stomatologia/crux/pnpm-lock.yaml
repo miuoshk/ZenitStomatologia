@@ -414,7 +414,17 @@ importers:
         version: 5.1.2(@types/node@22.20.7)(@vitest/coverage-v8@5.1.2)(vite@7.1.9(@types/node@22.20.7)(jiti@2.7.0)(lightningcss@1.33.0)(tsx@4.23.15))
 
   tools/doctor:
+    dependencies:
+      postgres:
+        specifier: 3.4.7
+        version: 3.4.7
     devDependencies:
+      '@types/node':
+        specifier: 22.20.7
+        version: 22.20.7
+      tsx:
+        specifier: 4.23.15
+        version: 4.23.15
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -424,6 +434,12 @@ importers:
 
   tools/gen:
     devDependencies:
+      '@types/node':
+        specifier: 22.20.7
+        version: 22.20.7
+      tsx:
+        specifier: 4.23.15
+        version: 4.23.15
       typescript:
         specifier: 6.0.3
         version: 6.0.3

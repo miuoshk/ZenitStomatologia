@@ -1,2 +1,2 @@
-/** @crux/gen — szkielet (K01). */
+/** @crux/gen — generatory szkieletów (K10). */
 export {};

@@ -1,6 +1,6 @@
 # Zależności npm
 
-Wersja 1.0 · K09 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
+Wersja 1.0 · K10 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `pnpm run doctor` (`deps.documented`) porównuje `package.json` z tą tabelą.
 
 | Pakiet | Po co | Licencja | Dane pacjentów |
 |---|---|---|---|
@@ -46,6 +46,8 @@ Wersja 1.0 · K09 (25 listopada 2026). Każda bezpośrednia zależność musi tu
 | `lucide-react` | ikony UI | ISC | nie |
 | `react-hook-form` / `@hookform/resolvers` | formularze (PeselInput itd.) | MIT | nie |
 | `storybook` + `@storybook/react-vite` + `addon-a11y` | historie komponentów | MIT | nie |
+| `@tailwindcss/vite` | Tailwind w Storybook (Vite) | MIT | nie |
+| `vite` | bundler Storybook | MIT | nie |
 | Hanken Grotesk (SIL OFL) | font lokalny w `packages/ui/brand/fonts` | SIL OFL | nie |
 | `pg-boss` | kolejki / cron workera (`apps/worker`, schemat `pgboss`) | MIT | tak (metadane jobów w PG) |
 | `pino` | logi JSON workera (bez PII) | MIT | nie |
