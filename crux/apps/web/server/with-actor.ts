@@ -45,13 +45,19 @@ export async function requireActor(options: RequireActorOptions = {}): Promise<A
     redirect("/logowanie?error=no_staff");
   }
 
+  // Cookie wolno mutować tylko w Server Action / Route Handler.
+  // W RSC (layout/page) pomijamy — location i tak wraca z resolveActor.
   if (activeLocationId !== actor.activeLocationId) {
-    jar.set(LOCATION_COOKIE, actor.activeLocationId, {
-      httpOnly: true,
-      sameSite: "lax",
-      path: "/",
-      secure: process.env["NODE_ENV"] === "production",
-    });
+    try {
+      jar.set(LOCATION_COOKIE, actor.activeLocationId, {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env["NODE_ENV"] === "production",
+      });
+    } catch {
+      // Server Component — brak zapisu cookie; kolejna mutacja /api/location ustawi.
+    }
   }
 
   return actor;
