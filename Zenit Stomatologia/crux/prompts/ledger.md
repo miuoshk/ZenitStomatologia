@@ -16,7 +16,7 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## 2026-11-25 · K03 · packages/shared: Result, Money, Id, czas, crypto · część 1
 Prompt: prompts/F0-fundament.md#K03
-Commit: (pending) · Gałąź: main
+Commit: 1fa2494 · Gałąź: main
 Wynik: `pnpm --filter @crux/shared` typecheck/lint/test zielone (40 testów); coverage lines 99% / statements 97% dla money+pesel+crypto+pii (≥90%). Monorepo typecheck/lint/test OK.
 Uwagi: zależność tylko `zod`/`uuidv7`/`date-fns`/`@date-fns/tz` + `node:crypto`. LocalKeyProvider z `KMS_LOCAL_*` (NIE produkcja). `hourRange` w dniu zmiany czasu (2:00) → zakres zerowy. Subpath exports (`./errors`, `./time`, …) pod K04.
 
