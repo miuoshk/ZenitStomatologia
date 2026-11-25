@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K07 · logowanie, MFA, blokada, powłoka · część 1
+Prompt: prompts/F0-fundament.md#K07
+Commit: a4a91e9 · Gałąź: main
+Wynik: `pnpm e2e` 3/3 smoke OK (2 auth-flow skipped bez E2E_*); typecheck/lint monorepo OK; `db:test` 46 OK.
+Uwagi: AuthPort + SSR adapter; `identity.resolve_actor` (security definer) pod requireActor; AppShell/CruxLogo tymczasowe `TODO(K08)`; brand assets w `apps/web/public`; CSP+proxy; idle lock `CRUX_IDLE_LOCK_MS`. Importy workspace bez `.js` (Turbopack). Pełny MFA e2e po seedzie E2E_EMAIL/PASSWORD/TOTP.
+
 ## 2026-11-25 · K06 · @crux/identity + @crux/org: personel, role, gabinety · część 1
 Prompt: prompts/F0-fundament.md#K06
 Commit: d2a84a6 · Gałąź: main
