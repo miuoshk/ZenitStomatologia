@@ -265,6 +265,15 @@ Wersja 2.1 · 6 listopada 2026. Rejestr decyzji. Każda ma: kontekst, decyzję, 
 **Alternatywy.** Ścieżka `zenitstomatologia.pl/crux` (wspólne ciasteczka i skrypty ze stroną dla pacjentów, `basePath` w całej aplikacji, każdy deploy strony dotyka systemu, jedna polityka CSP dla dwóch różnych potrzeb): odrzucona. Osobna domena (np. `cruxapp.pl`): bez związku z siecią, kolejna domena do odnawiania, kolejny certyfikat, zero korzyści: odrzucona. `app.zenitstomatologia.pl`: neutralna nazwa, ale system nazywa się Crux i tak mówi o nim personel; `app.` zostaje wolne na ewentualny portal pacjenta (5.0).
 **Wracamy, gdy** powstanie więcej niż jedna aplikacja wewnętrzna (wtedy wspólne SSO i konwencja `<aplikacja>.zenitstomatologia.pl`) albo gdy sieć zmieni domenę główną (zmiana jest jednym rekordem CNAME i jednym wpisem w Supabase Auth).
 
+## ADR-034 · Rola `crux_backup` z BYPASSRLS dla kopii nocnej; funkcje testowe poza migracjami
+
+**Status.** przyjęta (audyt wydania 1.0, 2026-11-25)
+**Kontekst.** Kopia nocna (K09) robiła `pg_dump` jako `crux_worker`. Rola nie ma `BYPASSRLS` (słusznie), więc `pg_dump` kończył się błędem uprawnień albo RLS, a lista schematów pomijała `org`, `identity` i `scheduling`. Dodatkowo `tests.reset_fixtures()` (security definer, TRUNCATE tabel domenowych i `audit.events`) była tworzona w migracjach, więc trafiłaby na każdą bazę hostowaną z EXECUTE dla `authenticated`, `crux_app` i `crux_worker`.
+**Decyzja.** (1) Osobna rola `crux_backup`: tworzona w migracji jako `NOLOGIN NOINHERIT BYPASSRLS`, wyłącznie `SELECT` na schematach danych (z domyślnymi uprawnieniami na przyszłe tabele); `LOGIN` i hasło nadaje operator poza repo; worker używa jej tylko do `pg_dump` przez `DATABASE_URL_BACKUP`. Lista schematów kopii jest stałą w kodzie, a test porównuje ją ze schematami z migracji. Klient `pg_dump` w obrazie workera w wersji serwera (PGDG, 17). (2) `tests.reset_fixtures()` istnieje tylko w `supabase/seed.sql`, który wykonuje lokalny `supabase start`/`db reset`, a nie `supabase db push`; migracja `20261126000200` usuwa funkcję z baz, na które trafiły wcześniejsze migracje.
+**Konsekwencje.** Jedna rola z obejściem RLS, ale bez zapisu i bez użycia w aplikacji; jej hasło to sekret operacyjny tej samej klasy co `crux_worker`. Wyciek `DATABASE_URL_BACKUP` = odczyt całej bazy, więc zmienna tylko w workerze, nigdy w Vercelu. Nowa tabela z kluczem obcym wymaga dopisania jej do `tests.reset_fixtures()` w `seed.sql` (test integracyjny od razu to pokaże). `seed:demo` nie zadziała przeciw bazie hostowanej, bo nie ma tam funkcji czyszczącej.
+**Alternatywy.** `pg_dump --enable-row-security` jako `crux_worker` z claims (zrzuca tylko to, co widzi RLS, czyli niepełną kopię): odrzucona. `BYPASSRLS` dla `crux_worker` (worker obsługuje też outbox i zadania, za szeroki promień): odrzucona. Wyłącznie kopie Supabase (PITR) bez własnej kopii poza dostawcą (brak scenariusza utraty projektu, `docs/04`, sekcja 6): odrzucona.
+**Wracamy, gdy** kopie przejdą na magazyn obiektowy z niezależnym KMS albo gdy Supabase udostępni logiczny eksport z uprawnieniami tylko do odczytu.
+
 ---
 
 ## Szablon nowej decyzji

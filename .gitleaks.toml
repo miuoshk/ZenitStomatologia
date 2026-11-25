@@ -1,0 +1,15 @@
+# Konfiguracja gitleaks dla repozytorium (CI: .github/workflows/ci.yml).
+# Allowlista tylko dla znanych, jawnych wartości. Nowy wpis = uzasadnienie w komentarzu.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Jawne wartości: sumy SHA-256 pakietu marki i publiczny klucz demo Supabase CLI"
+paths = [
+  # manifest.json pakietu marki: sumy SHA-256 plików, nie sekrety
+  '''packages/ui/brand/manifest\.json$''',
+]
+regexes = [
+  # anon JWT demo Supabase CLI (iss=supabase-demo), identyczny w każdej instalacji lokalnej
+  '''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9\.[A-Za-z0-9_-]+''',
+]

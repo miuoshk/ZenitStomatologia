@@ -90,6 +90,8 @@ export const OCCUPANCY_ERROR_CODES_PL: Record<string, string> = {
   reason_required: "Podaj powód.",
   already_voided: "Wpis jest już anulowany.",
   day_closed: "Dzień zamknięty. Poproś kierownika.",
+  not_own_entry: "Możesz anulować tylko własne wpisy.",
+  entry_not_editable: "Nie możesz zmienić tego wpisu.",
   day_already_closed: "Dzień jest już zamknięty.",
   day_not_closed: "Dzień nie jest zamknięty.",
   invalid_range: "Zakres godzin jest nieprawidłowy.",

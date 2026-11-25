@@ -77,6 +77,17 @@ export async function idempotent<T>(
   return result;
 }
 
+/**
+ * Czy aktor może zmieniać wpisy dowolnego wykonawcy w gabinecie (recepcja, kierownik, zarząd).
+ * Wykonawca (`write_own`, `void`) zmienia i unieważnia wyłącznie własne wpisy (docs/03 §8).
+ */
+export function canEditAnyEntry(actor: Actor): boolean {
+  return (
+    actor.permissions.includes("occupancy.write") ||
+    actor.permissions.includes("occupancy.write_closed")
+  );
+}
+
 /** `occupancy.write` albo `occupancy.write_own` (tylko wpisy własnego wykonawcy). */
 export async function authorizeWrite(
   tx: Tx,
@@ -269,7 +280,11 @@ export async function writeEntry(
   const entry = created.value;
 
   const existing = await tx
-    .select({ id: chairOccupancy.id, source: chairOccupancy.source })
+    .select({
+      id: chairOccupancy.id,
+      source: chairOccupancy.source,
+      providerId: chairOccupancy.providerId,
+    })
     .from(chairOccupancy)
     .where(
       and(
@@ -288,9 +303,13 @@ export async function writeEntry(
     if (mode === "insert_only" || found.source !== "manual") {
       return err(validation("hour", "chair_occupied"));
     }
+    // Wykonawca z samym `write_own` nie nadpisuje cudzego wpisu ([F0-010/AC4], docs/03 §8).
+    if (!canEditAnyEntry(actor) && found.providerId !== actor.staffId) {
+      return err(validation("hour", "chair_occupied"));
+    }
     entryId = found.id;
     wasCreated = false;
-    await tx
+    const updated = await tx
       .update(chairOccupancy)
       .set({
         category: entry.category,
@@ -301,7 +320,12 @@ export async function writeEntry(
         updatedAt: clock.now(),
         updatedBy: actor.staffId,
       })
-      .where(eq(chairOccupancy.id, found.id));
+      .where(eq(chairOccupancy.id, found.id))
+      .returning({ id: chairOccupancy.id });
+    // RLS może po cichu odfiltrować UPDATE (0 wierszy) — to odmowa, nie sukces.
+    if (updated.length === 0) {
+      return err({ type: "forbidden", details: { reason: "entry_not_editable" } });
+    }
   } else {
     await tx.insert(chairOccupancy).values({
       id: entry.id,

@@ -42,6 +42,7 @@ Wersja 1.0 · K02. Organizacja: **Zenit Stomatologia** (osobna od Zenit Labs). R
 
 - [ ] `crux_app` — LOGIN, `in role authenticated`, **bez** `BYPASSRLS`
 - [ ] `crux_worker` — LOGIN, osobna rola, **bez** `BYPASSRLS`; operacje tylko z `privileged.ts`
+- [ ] `crux_backup` — tworzy migracja (NOLOGIN, `BYPASSRLS`, tylko `SELECT`); `alter role crux_backup login password …` z menedżera sekretów; `DATABASE_URL_BACKUP` wyłącznie w workerze (ADR-034)
 - [ ] Brak użycia `service_role` w kodzie aplikacji
 
 ## Claims helpers (K02)
@@ -57,10 +58,14 @@ Dokumentacja (`03a`) nazywa funkcje `auth.tenant_id()` itd. Lokalny migrator CLI
 
 ## Po utworzeniu projektu
 
-1. Zastosuj migracje (`pnpm db:push:staging` tylko ręcznie, z `--linked`).
-2. Utwórz role `crux_app` / `crux_worker` (hasła w menedżerze sekretów, nie w repo).
-3. Zapisz URL-e i klucze w `.env` / Vercel (bez commitowania).
-4. Potwierdź w panelu: Data API off, Realtime off, lista schematów API pusta.
+1. **Najpierw role, potem migracje.** Migracja `0001` tworzy `crux_app` i `crux_worker` z hasłami `*_local_only` z repozytorium, jeśli role jeszcze nie istnieją (repo jest jawne dla każdego, kto ma do niego dostęp). Dlatego w SQL Editor, przed pierwszą migracją:
+   `create role crux_app login password '<sekret>' nosuperuser nocreatedb nocreaterole noreplication nobypassrls;`
+   `create role crux_worker login password '<sekret>' nosuperuser nocreatedb nocreaterole noreplication nobypassrls;`
+   Jeśli migracje już poszły: natychmiast `alter role crux_app password '<sekret>'; alter role crux_worker password '<sekret>';` i sprawdź, że logowanie hasłem `*_local_only` się nie udaje.
+2. Zastosuj migracje (`pnpm db:push:staging` tylko ręcznie, z `--linked`). Nie uruchamiaj `seed.sql` na bazie hostowanej.
+3. `alter role crux_backup login password '<sekret>';` (ADR-034, `docs/ops/kopie-i-odtwarzanie.md`).
+4. Zapisz URL-e i klucze w `.env` / Vercel (bez commitowania).
+5. Potwierdź w panelu: Data API off, Realtime off, lista schematów API pusta.
 
 ## Obserwowalność (K16, ADR-016)
 

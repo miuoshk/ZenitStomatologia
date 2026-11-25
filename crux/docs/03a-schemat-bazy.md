@@ -27,6 +27,7 @@ create or replace function auth.has_permission(p text) returns boolean ...;
 -- Role bazy:
 --   crux_app     LOGIN, member of authenticated (web)      — RLS obowiązuje
 --   crux_worker  LOGIN, własna rola z politykami workera   — tylko operacje z privileged.ts
+--   crux_backup  NOLOGIN w migracji (LOGIN nadaje operator), BYPASSRLS, tylko SELECT — wyłącznie pg_dump kopii nocnej (ADR-034)
 --   authenticated: bez BYPASSRLS, bez UPDATE/DELETE na tabelach tylko do dopisywania
 ```
 

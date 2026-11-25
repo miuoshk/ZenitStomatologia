@@ -11,7 +11,23 @@ import { newId } from "@crux/shared/id";
 import { systemClock, toLocalDay } from "@crux/shared/time";
 import type { Logger } from "../logger";
 
-const SCHEMAS = ["public", "audit", "platform", "ref", "analytics"] as const;
+/**
+ * Wszystkie schematy z danymi Crux (bez `pgboss` — kolejka jest odtwarzalna — i bez `tests`).
+ * Nowy schemat domenowy w migracjach → dopisz tutaj (test `backup-nightly.test.ts` pilnuje).
+ */
+export const BACKUP_SCHEMAS = [
+  "public",
+  "org",
+  "identity",
+  "scheduling",
+  "platform",
+  "audit",
+  "ref",
+  "analytics",
+] as const;
+
+/** Schematy celowo pomijane w kopii. */
+export const BACKUP_EXCLUDED_SCHEMAS = ["pgboss", "tests", "extensions"] as const;
 
 /** Id systemowe workera (backup / zdarzenia bez tenanta UI). */
 const SYSTEM_ID = "00000000-0000-4000-8000-000000000001";
@@ -27,13 +43,14 @@ export async function runBackupNightly(
   env: NodeJS.ProcessEnv = process.env,
 ): Promise<{ uri: string; bytes: number }> {
   return db.withWorker("backup.nightly", async (tx) => {
-    const dumpUrl = env["DATABASE_URL_WORKER"] ?? env["DATABASE_URL"];
-    if (!dumpUrl) throw new Error("DATABASE_URL_WORKER missing for backup");
+    // Rola `crux_backup` (tylko odczyt, BYPASSRLS) — crux_worker nie widzi całej bazy przez RLS.
+    const dumpUrl = env["DATABASE_URL_BACKUP"];
+    if (!dumpUrl) throw new Error("DATABASE_URL_BACKUP missing for backup");
 
     const dir = await mkdtemp(path.join(tmpdir(), "crux-backup-"));
     const dumpPath = path.join(dir, "crux.dump");
     try {
-      await pgDump(dumpUrl, dumpPath, [...SCHEMAS]);
+      await pgDump(dumpUrl, dumpPath, [...BACKUP_SCHEMAS]);
       const plain = await readFile(dumpPath);
       const keys = new LocalKeyProvider(env);
       const keyId = await keys.currentKeyId("system");
@@ -77,7 +94,7 @@ function sealAesGcm(plain: Buffer, key: Buffer): Buffer {
   return Buffer.concat([Buffer.from("CRUXB1"), iv, tag, enc]);
 }
 
-function pgDump(url: string, outFile: string, schemas: string[]): Promise<void> {
+export function pgDump(url: string, outFile: string, schemas: string[]): Promise<void> {
   return new Promise((resolve, reject) => {
     const args = ["-Fc", "-f", outFile, ...schemas.flatMap((s) => ["-n", s]), url];
     const child = spawn("pg_dump", args, { stdio: ["ignore", "ignore", "pipe"] });

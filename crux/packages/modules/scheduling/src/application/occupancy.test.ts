@@ -542,6 +542,70 @@ describe("@crux/scheduling occupancy (integracja)", () => {
     expect(foreign.ok).toBe(false);
   });
 
+  it("[F0-010/AC4] wykonawca z uprawnieniami z seedu (write_own + void) zmienia i anuluje tylko własne wpisy", async () => {
+    // Uprawnienia jak w migracji 0007 dla dentist/hygienist (audyt 1.0).
+    const dentist: Actor = {
+      ...env.provider,
+      permissions: ["occupancy.read", "occupancy.write_own", "occupancy.void", "analytics.view_self"],
+    };
+    const colleague = await db.withActor(env.reception, (tx) =>
+      recordOccupancy(tx, env.reception, base({ providerId: env.f.staff.assistant, amountGrosze: 45000n })),
+    );
+    if (!colleague.ok) throw new Error("record colleague");
+
+    const overwrite = await db.withActor(dentist, (tx) =>
+      recordOccupancy(tx, dentist, base({ providerId: dentist.staffId, amountGrosze: 1n })),
+    );
+    expect(overwrite.ok).toBe(false);
+    if (!overwrite.ok) expect(overwrite.error).toMatchObject({ details: { code: "chair_occupied" } });
+
+    const voidForeign = await db.withActor(dentist, (tx) =>
+      voidOccupancy(tx, dentist, { commandId: newId(), entryId: colleague.value.entryId, reason: "nie moje" }),
+    );
+    expect(voidForeign.ok).toBe(false);
+    if (!voidForeign.ok) expect(voidForeign.error).toMatchObject({ type: "forbidden" });
+
+    await db.withActor(env.reception, async (tx) => {
+      const rows = await tx
+        .select({ amount: chairOccupancy.amountGrosze, provider: chairOccupancy.providerId, voided: chairOccupancy.voidedAt })
+        .from(chairOccupancy)
+        .where(eq(chairOccupancy.id, colleague.value.entryId));
+      expect(rows[0]).toMatchObject({ amount: 45000n, provider: env.f.staff.assistant, voided: null });
+    });
+
+    const own = await db.withActor(dentist, (tx) =>
+      recordOccupancy(tx, dentist, base({ hour: 11, providerId: dentist.staffId })),
+    );
+    if (!own.ok) throw new Error("record own");
+    const ownUpdate = await db.withActor(dentist, (tx) =>
+      recordOccupancy(tx, dentist, base({ hour: 11, providerId: dentist.staffId, amountGrosze: 50000n })),
+    );
+    expect(ownUpdate.ok && ownUpdate.value.created).toBe(false);
+    const voidOwn = await db.withActor(dentist, (tx) =>
+      voidOccupancy(tx, dentist, { commandId: newId(), entryId: own.value.entryId, reason: "pomyłka" }),
+    );
+    expect(voidOwn.ok).toBe(true);
+  });
+
+  it("[F0-010/AC5] zamknięty dzień blokuje baza także z pominięciem przypadku użycia", async () => {
+    const entry = await db.withActor(env.reception, (tx) => recordOccupancy(tx, env.reception, base()));
+    if (!entry.ok) throw new Error("record");
+    const closed = await db.withActor(env.reception, (tx) =>
+      closeDay(tx, env.reception, { commandId: newId(), locationId: env.f.location01, day: DAY }),
+    );
+    expect(closed.ok).toBe(true);
+
+    await expect(
+      db.withActor(env.reception, (tx) =>
+        tx.update(chairOccupancy).set({ amountGrosze: 1n }).where(eq(chairOccupancy.id, entry.value.entryId)),
+      ),
+    ).rejects.toMatchObject({ mapped: { type: "forbidden" } });
+
+    await db.withActor(env.manager, (tx) =>
+      tx.update(chairOccupancy).set({ amountGrosze: 46000n }).where(eq(chairOccupancy.id, entry.value.entryId)),
+    );
+  });
+
   it("copyDayFrom kopiuje wykonawców i kategorie bez kwot i notatek", async () => {
     await db.withActor(env.reception, async (tx) => {
       await recordOccupancy(tx, env.reception, base({ hour: 9, note: "x" }));
