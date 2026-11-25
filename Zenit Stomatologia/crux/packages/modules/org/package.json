@@ -9,10 +9,17 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run",
     "build": "tsc -p tsconfig.build.json"
   },
+  "dependencies": {
+    "@crux/db": "workspace:*",
+    "@crux/identity": "workspace:*",
+    "@crux/shared": "workspace:*",
+    "drizzle-orm": "0.45.4"
+  },
   "devDependencies": {
+    "@types/node": "22.20.7",
     "typescript": "6.0.3",
     "vitest": "5.1.2"
   }

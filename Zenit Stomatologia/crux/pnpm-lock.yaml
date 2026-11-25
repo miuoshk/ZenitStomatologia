@@ -155,7 +155,20 @@ importers:
         version: 5.1.2(@types/node@22.20.7)(@vitest/coverage-v8@5.1.2)(vite@8.3.8(@types/node@22.20.7)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15))
 
   packages/modules/identity:
+    dependencies:
+      '@crux/db':
+        specifier: workspace:*
+        version: link:../../db
+      '@crux/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      drizzle-orm:
+        specifier: 0.45.4
+        version: 0.45.4(postgres@3.4.7)
     devDependencies:
+      '@types/node':
+        specifier: 22.20.7
+        version: 22.20.7
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -173,7 +186,23 @@ importers:
         version: 5.1.2(@types/node@22.20.7)(@vitest/coverage-v8@5.1.2)(vite@8.3.8(@types/node@22.20.7)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15))
 
   packages/modules/org:
+    dependencies:
+      '@crux/db':
+        specifier: workspace:*
+        version: link:../../db
+      '@crux/identity':
+        specifier: workspace:*
+        version: link:../identity
+      '@crux/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      drizzle-orm:
+        specifier: 0.45.4
+        version: 0.45.4(postgres@3.4.7)
     devDependencies:
+      '@types/node':
+        specifier: 22.20.7
+        version: 22.20.7
       typescript:
         specifier: 6.0.3
         version: 6.0.3

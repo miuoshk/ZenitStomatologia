@@ -21,3 +21,24 @@ export {
   accessLog,
   integrityChecks,
 } from "./audit.js";
+
+export {
+  orgSchema,
+  tenants,
+  locations,
+  chairs,
+  openingHours,
+  openingExceptions,
+} from "./org.js";
+
+export {
+  identitySchema,
+  staffRoleEnum,
+  staffMembers,
+  memberships,
+  permissions,
+  rolePermissions,
+  providerCapabilities,
+  breakGlassRequests,
+  type StaffRole,
+} from "./identity.js";

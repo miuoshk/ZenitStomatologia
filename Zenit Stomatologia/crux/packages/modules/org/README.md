@@ -1,3 +1,5 @@
-# @crux/org
+# `@crux/org`
 
-Szkielet modułu (K01). Zakres i zależności: `docs/01-architektura.md`, sekcja 4.
+Tenanci, gabinety, fotele, godziny otwarcia.
+
+**Zależy od:** `@crux/db`, `@crux/identity`, `@crux/shared`.
