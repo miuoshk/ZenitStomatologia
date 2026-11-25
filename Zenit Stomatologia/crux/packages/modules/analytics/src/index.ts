@@ -14,6 +14,27 @@ export {
   type OccupancyDrilldownRow,
   type CapacityDrilldownRow,
 } from "./metrics/drilldown";
+export {
+  listDashboardLocations,
+  listDashboardProviders,
+  listDashboardChairs,
+  type DashboardChair,
+  type DashboardProvider,
+  queryWeeklyRevenue,
+  queryLocationBreakdown,
+  queryDailyUtilization,
+  queryHoursByChair,
+  queryProviderBreakdown,
+  listUnclosedDays,
+  latestRefreshAt,
+  type DashboardLocation,
+  type WeeklyRevenueRow,
+  type LocationBreakdownRow,
+  type DailyUtilizationRow,
+  type ChairHoursRow,
+  type ProviderBreakdownRow,
+  type UnclosedDay,
+} from "./queries/dashboard";
 export { clearMetricCache, stableSerialize } from "./metrics/cache";
 export type {
   ClampedFilters,

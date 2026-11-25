@@ -140,11 +140,15 @@ export interface ChartCardProps {
   table?: ReactNode;
   refreshedAt?: Date;
   loading?: boolean;
+  /** Widok początkowy (np. z parametru URL `widok`). */
+  defaultView?: "wykres" | "tabela";
+  /** Wywołane po przełączeniu „Wykres | Tabela” (np. zapis do URL). */
+  onViewChange?: (view: "wykres" | "tabela") => void;
   className?: string;
 }
 
-export function ChartCard({ title, hint, legend, chart, table, refreshedAt, loading = false, className }: ChartCardProps) {
-  const [view, setView] = useState<"wykres" | "tabela">("wykres");
+export function ChartCard({ title, hint, legend, chart, table, refreshedAt, loading = false, defaultView = "wykres", onViewChange, className }: ChartCardProps) {
+  const [view, setView] = useState<"wykres" | "tabela">(defaultView);
   return (
     <Card className={className} aria-busy={loading}>
       <CardHeader
@@ -155,7 +159,10 @@ export function ChartCard({ title, hint, legend, chart, table, refreshedAt, load
             <SegmentedControl
               aria-label="Widok"
               value={view}
-              onChange={setView}
+              onChange={(v) => {
+                setView(v);
+                onViewChange?.(v);
+              }}
               options={[
                 { value: "wykres", label: "Wykres" },
                 { value: "tabela", label: "Tabela" },

@@ -20,6 +20,17 @@ export const platformHandlers: Record<string, TopicHandler> = {
     );
     return Promise.resolve();
   },
+  "analytics.export_generated.v1": (ctx, payload) => {
+    ctx.log.info(
+      {
+        topic: "analytics.export_generated.v1",
+        tenant_id: asString(payload["tenantId"]),
+        metric: asString(payload["metric"]),
+      },
+      "analytics export generated",
+    );
+    return Promise.resolve();
+  },
   "platform.outbox.dead.v1": (ctx, payload) => {
     ctx.log.warn(
       {

@@ -8,6 +8,7 @@ import {
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table";
+export type { ColumnDef } from "@tanstack/react-table";
 import { cn } from "../lib/cn";
 import { focusRing } from "./Button";
 

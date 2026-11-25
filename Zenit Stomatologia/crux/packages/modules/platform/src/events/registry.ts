@@ -36,6 +36,16 @@ export const eventRegistry = {
   "occupancy.entry_voided.v1": OccupancyDay.extend({ entryId: IdOnly, chairId: IdOnly }),
   "occupancy.day_closed.v1": OccupancyDay,
   "occupancy.day_reopened.v1": OccupancyDay,
+  /** Ślad eksportu CSV z listy drążenia (F0-011): bez treści wierszy, tylko metryka, okres i liczba wierszy. */
+  "analytics.export_generated.v1": z.object({
+    tenantId: IdOnly,
+    locationId: IdOnly.optional(),
+    metric: z.string().min(1),
+    tab: z.string().min(1),
+    from: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    to: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    rows: z.number().int().nonnegative(),
+  }),
 } as const;
 
 export type EventTopic = keyof typeof eventRegistry;

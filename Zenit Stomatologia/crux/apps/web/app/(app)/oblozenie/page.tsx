@@ -1,11 +1,15 @@
+import { locations as locationsTable } from "@crux/db/schema";
 import { OCCUPANCY_LABELS } from "@crux/i18n";
 import { getDayGrid } from "@crux/scheduling";
 import { PlainDateSchema, plusMs, startOfDayIn, systemClock, toLocalDay } from "@crux/shared/time";
+import { and, eq, inArray } from "drizzle-orm";
 import { getDb } from "@/server/db";
 import { requireActor } from "@/server/with-actor";
 import { OccupancyGrid, type GridData } from "./occupancy-grid";
 
-type Props = { searchParams: Promise<{ dzien?: string | string[] }> };
+type Props = {
+  searchParams: Promise<{ dzien?: string | string[]; gabinet?: string | string[] }>;
+};
 
 const DAY_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -22,9 +26,26 @@ export default async function OblozeniePage({ searchParams }: Props) {
   const prevDay = startOfDay ? toLocalDay(plusMs(startOfDay, -12 * 3_600_000)) : day;
   const nextDay = startOfDay ? toLocalDay(plusMs(startOfDay, 36 * 3_600_000)) : day;
 
-  const result = await getDb().withActor(actor, (tx) =>
-    getDayGrid(tx, actor, { locationIds: [actor.activeLocationId], day }),
-  );
+  // `gabinet=<numer>` (link z karty „Jakość danych”): tylko gabinety z członkostwa aktora.
+  const gabinet = Array.isArray(params.gabinet) ? params.gabinet[0] : params.gabinet;
+  const result = await getDb().withActor(actor, async (tx) => {
+    let locationId = actor.activeLocationId;
+    if (gabinet && /^\d{1,3}$/.test(gabinet)) {
+      const rows = await tx
+        .select({ id: locationsTable.id })
+        .from(locationsTable)
+        .where(
+          and(
+            eq(locationsTable.tenantId, actor.tenantId),
+            eq(locationsTable.number, gabinet),
+            inArray(locationsTable.id, [...actor.locationIds]),
+          ),
+        )
+        .limit(1);
+      locationId = rows[0]?.id ?? locationId;
+    }
+    return getDayGrid(tx, actor, { locationIds: [locationId], day });
+  });
 
   if (!result.ok) {
     return (

@@ -56,6 +56,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@crux/analytics':
+        specifier: workspace:*
+        version: link:../../packages/modules/analytics
       '@crux/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -68,6 +71,9 @@ importers:
       '@crux/org':
         specifier: workspace:*
         version: link:../../packages/modules/org
+      '@crux/platform':
+        specifier: workspace:*
+        version: link:../../packages/modules/platform
       '@crux/scheduling':
         specifier: workspace:*
         version: link:../../packages/modules/scheduling

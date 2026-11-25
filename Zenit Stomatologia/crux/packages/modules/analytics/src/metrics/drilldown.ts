@@ -28,7 +28,7 @@ export type OccupancyDrilldown = {
   readonly filters: ClampedFilters;
 };
 
-async function prepare(
+export async function prepare(
   tx: Tx,
   actor: Actor,
   filters: MetricFilters,

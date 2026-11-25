@@ -13,6 +13,15 @@ import {
 import { sql } from "drizzle-orm";
 import {
   clearMetricCache,
+  listDashboardChairs,
+  listDashboardLocations,
+  listDashboardProviders,
+  listUnclosedDays,
+  queryDailyUtilization,
+  queryHoursByChair,
+  queryLocationBreakdown,
+  queryProviderBreakdown,
+  queryWeeklyRevenue,
   drilldownCapacity,
   drilldownOccupancy,
   metricRegistry,
@@ -331,5 +340,71 @@ describe("@crux/analytics — metryki na zestawie wzorcowym", () => {
     );
     clearMetricCache();
     expect((await metric("chair_hours_worked")).value).toBe(expected.chair_hours_worked);
+  });
+
+  // ---- zapytania pulpitów (K14) — te same fakty, te same sumy co metryki
+  it("[F0-011/AC1] pulpit: tygodniowy przychód sumuje się do revenue_realized", async () => {
+    const r = await app.withActor(admin, (tx) => queryWeeklyRevenue(tx, admin, filters));
+    if (!r.ok) throw new Error(JSON.stringify(r.error));
+    const sum = r.value.reduce((a, row) => a + row.amountGrosze, 0);
+    expect(sum).toBe(expected.revenue_realized);
+    expect(new Set(r.value.map((row) => row.locationId)).size).toBe(2);
+  });
+
+  it("[F0-011/AC1] pulpit: rozbicie per gabinet = chair_utilization i days_closed_rate", async () => {
+    const r = await app.withActor(admin, (tx) => queryLocationBreakdown(tx, admin, filters));
+    if (!r.ok) throw new Error(JSON.stringify(r.error));
+    const occ = r.value.reduce((a, x) => a + x.occupiedMinutes, 0);
+    const avail = r.value.reduce((a, x) => a + x.availableMinutes, 0);
+    expect(occ / avail).toBeCloseTo(expected.chair_utilization, 6);
+    const working = r.value.reduce((a, x) => a + x.workingDays, 0);
+    const closed = r.value.reduce((a, x) => a + x.closedDays, 0);
+    expect(closed / working).toBeCloseTo(expected.days_closed_rate, 6);
+  });
+
+  it("[F0-011/AC10] pulpit: lista dni niezamkniętych = dni robocze − zamknięte", async () => {
+    const breakdown = await app.withActor(admin, (tx) => queryLocationBreakdown(tx, admin, filters));
+    const open = await app.withActor(admin, (tx) => listUnclosedDays(tx, admin, filters, 1000));
+    if (!breakdown.ok || !open.ok) throw new Error("unclosed");
+    const working = breakdown.value.reduce((a, x) => a + x.workingDays, 0);
+    const closed = breakdown.value.reduce((a, x) => a + x.closedDays, 0);
+    expect(open.value.total).toBe(working - closed);
+    expect(open.value.days.length).toBe(open.value.total);
+  });
+
+  it("[F0-011/AC1] pulpit: godziny per fotel i wykonawca sumują się do metryk", async () => {
+    const chairs = await app.withActor(admin, (tx) => queryHoursByChair(tx, admin, filters));
+    const providers = await app.withActor(admin, (tx) => queryProviderBreakdown(tx, admin, filters));
+    if (!chairs.ok || !providers.ok) throw new Error("chairs/providers");
+    expect(chairs.value.reduce((a, x) => a + x.minutes, 0) / 60).toBeCloseTo(expected.chair_hours_worked, 6);
+    const phw = await metric("provider_hours_worked");
+    const total = Object.values(phw.value as Record<string, number>).reduce((a, b) => a + b, 0);
+    expect(providers.value.reduce((a, x) => a + x.minutes, 0) / 60).toBeCloseTo(total, 6);
+  });
+
+  it("pulpit: słowniki foteli i wykonawców do list i filtrów", async () => {
+    const chairs = await app.withActor(admin, (tx) => listDashboardChairs(tx, admin));
+    expect(chairs.length).toBeGreaterThan(0);
+    const providers = await app.withActor(admin, (tx) => listDashboardProviders(tx, admin, filters));
+    if (!providers.ok) throw new Error("providers");
+    expect(providers.value.length).toBe(expected.meta.provider_keys.length);
+    const mine = await app.withActor(dentist1, (tx) => listDashboardProviders(tx, dentist1, filters));
+    if (!mine.ok) throw new Error("mine");
+    expect(mine.value.map((p) => p.id)).toEqual([dentist1.staffId]);
+  });
+
+  it("[F0-011/AC3] pulpit: kierownik 01 nie widzi gabinetu 02; lekarz bez pojemności", async () => {
+    const locs = await app.withActor(manager01, (tx) => listDashboardLocations(tx, manager01));
+    expect(locs.map((l) => l.number)).toEqual(["01"]);
+    const rows = await app.withActor(manager01, (tx) =>
+      queryLocationBreakdown(tx, manager01, filters),
+    );
+    if (!rows.ok) throw new Error("manager");
+    expect(rows.value.every((r) => r.locationId === manager01.locationIds[0])).toBe(true);
+    const denied = await app.withActor(dentist1, (tx) => queryLocationBreakdown(tx, dentist1, filters));
+    expect(denied.ok).toBe(false);
+    const own = await app.withActor(dentist1, (tx) => queryDailyUtilization(tx, dentist1, filters));
+    if (!own.ok) throw new Error("dentist daily");
+    expect(own.value.every((d) => d.availableMinutes === null)).toBe(true);
   });
 });

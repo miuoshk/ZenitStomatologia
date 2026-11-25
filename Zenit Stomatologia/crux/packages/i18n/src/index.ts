@@ -13,3 +13,4 @@ export {
   parseZlotyToGrosze,
   type OccupancyUiCategory,
 } from "./pl/occupancy";
+export { PULPIT_LABELS, SOURCE_LABELS_PL } from "./pl/pulpit";
