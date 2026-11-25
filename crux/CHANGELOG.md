@@ -2,6 +2,17 @@
 
 Format: wydanie · nazwa · data. Daty to daty wydania kodu; wdrożenie produkcyjne i bramka operacyjna są opisane osobno ([docs/ops/bramka-1-0.md](docs/ops/bramka-1-0.md)).
 
+## 1.0.1 · Krasnodrzew · niewydane
+
+Poprawki po audycie wydania 1.0 (ledger 2026-11-26).
+
+- Wykonawca zmienia i unieważnia wyłącznie własne wpisy obłożenia (baza i aplikacja).
+- Wpis w zamkniętym dniu blokuje baza, nie tylko aplikacja; zamknięcie dnia zostaje w swoim gabinecie.
+- Błędy bazy z Drizzle mapują się na właściwe typy (konflikt, odmowa) zamiast błędu technicznego.
+- Kopia nocna działa: rola `crux_backup`, wszystkie schematy danych, `pg_dump` 17 (ADR-034).
+- Funkcja czyszcząca bazę testową nie trafia na bazy hostowane.
+- CI uruchamia się na GitHubie; skan sekretów i audyt zależności blokują scalenie; Storybook i Vite bez znanych podatności high/critical.
+
 ## 1.0.0 · Krasnodrzew · 2026-11-25
 
 Data wydania kodu (tag `v1.0.0`). **Planowane wdrożenie produkcyjne: 11.12.2026**; bramka operacyjna mierzona po 10 dniach roboczych wpisów w obu gabinetach.

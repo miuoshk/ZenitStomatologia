@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-26 · 1.0 · poprawki po audycie (Claude) · bez promptu
+Prompt: brak (audyt adwersarialny wydania 1.0, raport w projekcie Claude: `claude/audyt-crux-1.0.md`)
+Commit: patrz PR `fix/audyt-1.0` · Gałąź: fix/audyt-1.0
+Wynik: lokalnie typecheck, lint, lint:deps OK; `pnpm test` 174/174 (z bazą, pg_dump 17); `db:test` 86 OK (nowy `050_audit_1_0`, 16 asercji); `doctor --strict-db` OK; gitleaks bez wycieków; `pnpm audit --audit-level high` czysty.
+Uwagi: (1) RLS `chair_occupancy_update`: wykonawca (write_own + void z seedu 0007) zmieniał i przepisywał cudze wpisy — teraz tylko własne; to samo w `writeEntry` (upsert) i `voidOccupancy`; UPDATE odfiltrowany przez RLS = błąd, nie cichy sukces. (2) Trigger `guard_closed_day`: zamknięty dzień chroni baza (42501 `day_closed`), nie tylko `assertEditable`; zamknięcia nie da się przenieść do innego gabinetu. (3) `mapPgError` rozpakowuje `cause` z DrizzleQueryError — wcześniej każdy błąd Postgresa (23505, 23P01, 42501) z Drizzle trafiał jako `technical:unknown`. (4) Kopia nocna: rola `crux_backup` (ADR-034), pełna lista schematów z testem zgodności z migracjami, pg_dump 17 w obrazie workera; wcześniej kopia nie działała wcale. (5) `tests.reset_fixtures()` usunięta z migracji, żyje w `seed.sql`. (6) CI przeniesione do `.github/` w korzeniu repo (wcześniej nie uruchamiało się), `pnpm test` po starcie bazy, gitleaks i audit blokujące, Storybook 9.1.21 / Vite 7.3.7 (CVE). (7) `docs/ops/supabase-konfiguracja.md`: role przed migracjami (hasła `*_local_only` z repo). Testy pominięte przez aktora testowego bez `occupancy.void` — nowy test używa uprawnień z seedu. Dług otwarty: e2e wymagają kont `E2E_*` (w CI tylko smoke), `test:visual` placeholder, worker może pisać dowolne `audit.events`, `integrity.verify` stub, brak grantów kolumnowych na `staff_members` (pracownik zmienia każde pole własnego rekordu), blokada ekranu jako ciasteczko z JS.
+
 ## 2026-11-25 · 1.0 · wydanie Krasnodrzew (kod)
 Prompt: prompts/F0-fundament.md#K17
 Commit: 0942269 · Tag: v1.0.0 · Gałąź: main
