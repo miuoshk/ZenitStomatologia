@@ -36,4 +36,16 @@ describe("mapPgError", () => {
       expect(r.error.type).toBe("technical");
     }
   });
+  it("błąd opakowany przez Drizzle (cause) mapuje się po SQLSTATE przyczyny", () => {
+    const wrapped = { message: "Failed query: update …", cause: { code: "23P01", constraint: "chair_occupancy_excl" } };
+    const r = mapPgError(wrapped);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error).toMatchObject({ type: "conflict", details: { constraint: "chair_occupancy_excl" } });
+  });
+
+  it("42501 day_closed ze strażnika bazy → forbidden z powodem day_closed", () => {
+    const r = mapPgError({ message: "Failed query", cause: { code: "42501", message: "day_closed" } });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error).toMatchObject({ type: "forbidden", details: { reason: "day_closed" } });
+  });
 });

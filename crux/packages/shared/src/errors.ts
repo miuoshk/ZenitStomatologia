@@ -33,15 +33,31 @@ export function mapPgError(error: unknown): Result<never, DomainError | Technica
     case "42501":
       return err({
         type: "forbidden",
-        details: { reason: "insufficient_privilege" },
+        // Strażnik zamkniętego dnia (migracja 20261126000100) rzuca 42501 z komunikatem `day_closed`.
+        details: { reason: pg.message === "day_closed" ? "day_closed" : "insufficient_privilege" },
       });
     default:
       return err({ type: "technical", code: pg.code, cause: error });
   }
 }
 
+/**
+ * Drizzle (0.45+) opakowuje błąd sterownika w `DrizzleQueryError` z `cause`.
+ * Szukamy pierwszego obiektu z kodem SQLSTATE w łańcuchu `cause` (maks. 5 poziomów).
+ */
 function asPgError(error: unknown): PgLikeError | null {
-  if (!error || typeof error !== "object") return null;
+  let current: unknown = error;
+  for (let depth = 0; depth < 5; depth += 1) {
+    if (!current || typeof current !== "object") return null;
+    const code: unknown = Reflect.get(current, "code");
+    if (typeof code === "string") return pgFields(current);
+    const cause: unknown = Reflect.get(current, "cause");
+    current = cause;
+  }
+  return null;
+}
+
+function pgFields(error: object): PgLikeError {
   const e = error as Record<string, unknown>;
   return {
     ...(typeof e["code"] === "string" ? { code: e["code"] } : {}),
