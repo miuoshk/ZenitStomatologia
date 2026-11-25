@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K04 · packages/db: Drizzle, withActor, RLS helpers · część 1
+Prompt: prompts/F0-fundament.md#K04
+Commit: (pending) · Gałąź: main
+Wynik: `pnpm --filter @crux/db` typecheck/lint/test zielone (5 testów integracyjnych); `db:generate` bez diffu (pusty schemat); `db:test` 27 asercji OK. Migracja `0003_tests_reset.sql` (`tests.reset_fixtures`).
+Uwagi: claims helpers nadal `extensions.*`. Lokalny DATABASE_URL → port 54322 (pooler 54329 wymaga tenant id Supavisor). `pgPolicy` OK w drizzle-orm 0.45; EXCLUDE → `manual_` gdy potrzeba. Zero service_role / supabase-js.
+
 ## 2026-11-25 · K03 · packages/shared: Result, Money, Id, czas, crypto · część 1
 Prompt: prompts/F0-fundament.md#K03
 Commit: 1fa2494 · Gałąź: main

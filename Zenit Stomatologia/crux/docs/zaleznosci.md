@@ -1,6 +1,6 @@
 # Zależności npm
 
-Wersja 1.0 · K03 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
+Wersja 1.0 · K04 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
 
 | Pakiet | Po co | Licencja | Dane pacjentów |
 |---|---|---|---|
@@ -31,5 +31,8 @@ Wersja 1.0 · K03 (25 listopada 2026). Każda bezpośrednia zależność musi tu
 | `uuidv7` | generowanie identyfikatorów UUIDv7 (`newId`) | Apache-2.0 | nie |
 | `date-fns` | formatowanie dat/czasu w `@crux/shared/time` | MIT | nie |
 | `@date-fns/tz` | strefa `Europe/Warsaw`, DST (`TZDate`) | MIT | nie |
+| `drizzle-orm` | ORM + `pgPolicy` / schemat TS (ADR-005) | Apache-2.0 | tak (SQL do DB) |
+| `drizzle-kit` | generowanie migracji SQL z schematu | MIT | nie |
+| `postgres` | klient Postgres (postgres.js) dla Drizzle; `prepare: false` | MIT | tak (SQL do DB) |
 
 Transitive (m.in. `postcss` z `@tailwindcss/postcss`) nie wymagają osobnego wiersza, dopóki nie są zależnością bezpośrednią.
