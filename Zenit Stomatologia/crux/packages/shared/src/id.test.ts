@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { asId, IdSchema, newId } from "./id.js";
+import { asId, IdSchema, newId } from "./id";
 
 describe("Id", () => {
   it("newId zwraca UUIDv7 parse'owalny przez IdSchema", () => {

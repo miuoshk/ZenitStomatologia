@@ -9,8 +9,8 @@ import {
 import { err, ok, type DomainError, type Result } from "@crux/shared/result";
 import { plainDate, type Clock } from "@crux/shared/time";
 import { and, eq, sql } from "drizzle-orm";
-import { authorize } from "./authorize.js";
-import type { AuthAdminPort } from "../ports/auth-admin.js";
+import { authorize } from "./authorize";
+import type { AuthAdminPort } from "../ports/auth-admin";
 
 export async function createStaffMember(
   tx: Tx,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { generateTestPesel } from "./pesel.js";
-import { containsPii } from "./pii.js";
+import { generateTestPesel } from "./pesel";
+import { containsPii } from "./pii";
 
 describe("containsPii", () => {
   const pesel = generateTestPesel({ birthDate: "1992-07-08", sex: "female", serial: 3 });

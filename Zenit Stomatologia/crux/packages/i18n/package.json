@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./pl/errors": "./src/pl/errors.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
@@ -15,5 +16,8 @@
   "devDependencies": {
     "typescript": "6.0.3",
     "vitest": "5.1.2"
+  },
+  "dependencies": {
+    "@crux/shared": "workspace:*"
   }
 }

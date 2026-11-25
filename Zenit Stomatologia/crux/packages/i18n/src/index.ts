@@ -1,2 +1,5 @@
-/** @crux/i18n — szkielet (K01). */
-export {};
+export {
+  AUTH_MESSAGES,
+  ERROR_MESSAGES,
+  messageForDomainError,
+} from "./pl/errors";

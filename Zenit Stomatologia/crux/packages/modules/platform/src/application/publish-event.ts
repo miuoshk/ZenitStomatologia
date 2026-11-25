@@ -2,7 +2,7 @@ import type { Actor, Tx } from "@crux/db";
 import { outbox } from "@crux/db/schema";
 import { err, ok, type DomainError, type Result } from "@crux/shared/result";
 import { and, eq } from "drizzle-orm";
-import { getEventSchema } from "../events/registry.js";
+import { getEventSchema } from "../events/registry";
 
 export type PublishEventOpts = {
   readonly dedupeKey?: string;

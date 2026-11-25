@@ -8,4 +8,4 @@ export {
   type StaffRole,
   type TestStaff,
   type TestTenantFixture,
-} from "./harness.js";
+} from "./harness";

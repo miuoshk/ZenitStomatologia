@@ -1,5 +1,5 @@
-import type { DomainError, TechnicalError } from "./result.js";
-import { err, type Result } from "./result.js";
+import type { DomainError, TechnicalError } from "./result";
+import { err, type Result } from "./result";
 
 /** Błąd sterownika Postgres / postgres.js. */
 export type PgLikeError = {

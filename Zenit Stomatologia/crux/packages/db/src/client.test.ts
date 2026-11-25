@@ -1,14 +1,14 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { sql } from "drizzle-orm";
-import { DbMappedError } from "./errors.js";
-import { createDb, withActor, withWorker, type CruxDb } from "./index.js";
+import { DbMappedError } from "./errors";
+import { createDb, withActor, withWorker, type CruxDb } from "./index";
 import {
   createTestDb,
   readClaimsRaw,
   readTenantId,
   resetBetweenTests,
   withTestTenant,
-} from "./testing/index.js";
+} from "./testing/index";
 
 describe("@crux/db withActor / withWorker", () => {
   let app: CruxDb;

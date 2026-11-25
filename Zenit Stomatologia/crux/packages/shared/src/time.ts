@@ -18,6 +18,9 @@ export class SystemClock implements Clock {
   }
 }
 
+/** Współdzielony zegar systemowy (web / worker). */
+export const systemClock: Clock = new SystemClock();
+
 export class FixedClock implements Clock {
   readonly #instant: Date;
 

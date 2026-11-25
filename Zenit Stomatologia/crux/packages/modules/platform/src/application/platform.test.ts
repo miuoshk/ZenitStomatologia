@@ -6,9 +6,9 @@ import { LocalKeyProvider } from "@crux/shared/crypto";
 import { newId } from "@crux/shared/id";
 import { outbox } from "@crux/db/schema";
 import { and, eq, sql } from "drizzle-orm";
-import { publishEvent } from "./publish-event.js";
-import { logAccess } from "./log-access.js";
-import { setSetting, getSetting } from "./settings.js";
+import { publishEvent } from "./publish-event";
+import { logAccess } from "./log-access";
+import { setSetting, getSetting } from "./settings";
 
 function keyEnv(): NodeJS.ProcessEnv {
   return {

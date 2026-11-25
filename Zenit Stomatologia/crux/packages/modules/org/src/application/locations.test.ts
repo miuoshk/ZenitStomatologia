@@ -4,8 +4,8 @@ import type { Actor, CruxDb } from "@crux/db";
 import { createTestDb, resetBetweenTests } from "@crux/db/testing";
 import { LocalKeyProvider } from "@crux/shared/crypto";
 import { newId } from "@crux/shared/id";
-import { createTenant } from "./tenants.js";
-import { createLocation } from "./locations.js";
+import { createTenant } from "./tenants";
+import { createLocation } from "./locations";
 
 function keys() {
   return new LocalKeyProvider({

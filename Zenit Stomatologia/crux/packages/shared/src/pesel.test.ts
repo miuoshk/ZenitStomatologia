@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateTestPesel, normalizePesel, validatePesel } from "./pesel.js";
+import { generateTestPesel, normalizePesel, validatePesel } from "./pesel";
 
 describe("pesel", () => {
   it("normalizePesel usuwa spacje i myślniki", () => {

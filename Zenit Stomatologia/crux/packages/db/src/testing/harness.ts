@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
-import { createDb, type CruxDb, type Tx } from "../client.js";
-import type { Actor } from "../actor.js";
-import { PRIVILEGED_OPERATIONS } from "../privileged.js";
+import { createDb, type CruxDb, type Tx } from "../client";
+import type { Actor } from "../actor";
+import { PRIVILEGED_OPERATIONS } from "../privileged";
 
 export const STAFF_ROLES = [
   "network_admin",

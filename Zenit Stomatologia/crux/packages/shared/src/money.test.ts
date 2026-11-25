@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { divRoundBankers, Money } from "./money.js";
+import { divRoundBankers, Money } from "./money";
 
 describe("Money", () => {
   it("fromPln / fromGrosze / format", () => {

@@ -1,0 +1,45 @@
+{
+  "opis": "Znak Crux: Krzyż Południa. Współrzędne w ramce znaku, wysokość = 1, oś y w dół (jak w SVG). Złota gwiazda: Ginan.",
+  "zrodlo": "J2000, Wikipedia: List of stars in Crux; r = 0,95° · 10^(−0,10·(m−0,77))",
+  "szerokosc": 0.71784,
+  "wysokosc": 1,
+  "zlota": "Ginan",
+  "pole_ochronne": 0.24607,
+  "gwiazdy": [
+    {
+      "nazwa": "Acrux",
+      "cx": 0.45409,
+      "cy": 0.87696,
+      "r": 0.12304,
+      "mag": 0.77
+    },
+    {
+      "nazwa": "Mimosa",
+      "cx": 0.11016,
+      "cy": 0.43528,
+      "r": 0.11016,
+      "mag": 1.25
+    },
+    {
+      "nazwa": "Gacrux",
+      "cx": 0.37974,
+      "cy": 0.10163,
+      "r": 0.10163,
+      "mag": 1.6
+    },
+    {
+      "nazwa": "Imai",
+      "cx": 0.64056,
+      "cy": 0.31356,
+      "r": 0.07727,
+      "mag": 2.79
+    },
+    {
+      "nazwa": "Ginan",
+      "cx": 0.53933,
+      "cy": 0.52758,
+      "r": 0.06427,
+      "mag": 3.59
+    }
+  ]
+}

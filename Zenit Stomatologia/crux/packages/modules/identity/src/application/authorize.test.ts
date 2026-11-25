@@ -11,8 +11,8 @@ import { createTestDb, resetBetweenTests } from "@crux/db/testing";
 import { newId } from "@crux/shared/id";
 import { FixedClock, instantFromIso } from "@crux/shared/time";
 import { eq } from "drizzle-orm";
-import { authorize } from "./authorize.js";
-import { buildClaims } from "./build-claims.js";
+import { authorize } from "./authorize";
+import { buildClaims } from "./build-claims";
 
 describe("@crux/identity authorize / buildClaims", () => {
   let app: CruxDb;

@@ -11,7 +11,7 @@ import {
   startOfDayIn,
   toLocalDay,
   TZ,
-} from "./time.js";
+} from "./time";
 
 describe("time", () => {
   it("FixedClock jest deterministyczny", () => {

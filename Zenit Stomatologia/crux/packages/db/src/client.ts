@@ -3,10 +3,10 @@ import type { DomainError, TechnicalError } from "@crux/shared/result";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import { actorToClaims, type Actor, type WorkerClaims } from "./actor.js";
-import { DbMappedError } from "./errors.js";
-import { isPrivilegedOperation, PRIVILEGED_OPERATIONS } from "./privileged.js";
-import * as schema from "./schema/index.js";
+import { actorToClaims, type Actor, type WorkerClaims } from "./actor";
+import { DbMappedError } from "./errors";
+import { isPrivilegedOperation, PRIVILEGED_OPERATIONS } from "./privileged";
+import * as schema from "./schema/index";
 
 export type DbRole = "app" | "worker";
 

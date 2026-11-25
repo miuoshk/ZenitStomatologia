@@ -11,15 +11,16 @@ export {
   type Result,
   type DomainError,
   type TechnicalError,
-} from "./result.js";
+} from "./result";
 
-export { Money, divRoundBankers, type MoneyJson } from "./money.js";
+export { Money, divRoundBankers, type MoneyJson } from "./money";
 
-export { IdSchema, newId, asId, type Id } from "./id.js";
+export { IdSchema, newId, asId, type Id } from "./id";
 
 export {
   TZ,
   SystemClock,
+  systemClock,
   FixedClock,
   PlainDateSchema,
   plainDate,
@@ -33,7 +34,7 @@ export {
   instantFromIso,
   type Clock,
   type PlainDate,
-} from "./time.js";
+} from "./time";
 
 export {
   LocalKeyProvider,
@@ -41,7 +42,7 @@ export {
   decryptField,
   hmacField,
   type KeyProvider,
-} from "./crypto.js";
+} from "./crypto";
 
 export {
   normalizePesel,
@@ -49,8 +50,8 @@ export {
   generateTestPesel,
   type PeselInfo,
   type PeselSex,
-} from "./pesel.js";
+} from "./pesel";
 
-export { mapPgError, type PgLikeError } from "./errors.js";
+export { mapPgError, type PgLikeError } from "./errors";
 
-export { containsPii } from "./pii.js";
+export { containsPii } from "./pii";

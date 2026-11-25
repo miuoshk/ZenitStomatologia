@@ -1,4 +1,4 @@
-export type { DomainEvent } from "./domain/events.js";
+export type { DomainEvent } from "./domain/events";
 
 export {
   eventRegistry,
@@ -6,12 +6,12 @@ export {
   FORBIDDEN_EVENT_FIELD_NAMES,
   type EventTopic,
   type EventPayload,
-} from "./events/registry.js";
+} from "./events/registry";
 
-export { settingKeys, getSettingDef, type SettingKey } from "./settings/keys.js";
+export { settingKeys, getSettingDef, type SettingKey } from "./settings/keys";
 
-export { publishEvent, type PublishEventOpts } from "./application/publish-event.js";
-export { findCommand, recordCommand } from "./application/command-log.js";
-export { logAccess, type LogAccessInput } from "./application/log-access.js";
-export { isEnabled, type FlagScope } from "./application/feature-flags.js";
-export { getSetting, setSetting } from "./application/settings.js";
+export { publishEvent, type PublishEventOpts } from "./application/publish-event";
+export { findCommand, recordCommand } from "./application/command-log";
+export { logAccess, type LogAccessInput } from "./application/log-access";
+export { isEnabled, type FlagScope } from "./application/feature-flags";
+export { getSetting, setSetting } from "./application/settings";

@@ -2,8 +2,8 @@ import type { Actor, Tx } from "@crux/db";
 import { settings } from "@crux/db/schema";
 import { err, ok, type DomainError, type Result } from "@crux/shared/result";
 import { and, eq, isNull, sql } from "drizzle-orm";
-import { getSettingDef, type SettingKey } from "../settings/keys.js";
-import { publishEvent } from "./publish-event.js";
+import { getSettingDef, type SettingKey } from "../settings/keys";
+import { publishEvent } from "./publish-event";
 
 export async function getSetting(
   tx: Tx,

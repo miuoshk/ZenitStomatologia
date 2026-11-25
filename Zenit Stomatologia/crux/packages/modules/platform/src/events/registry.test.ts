@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { eventRegistry, FORBIDDEN_EVENT_FIELD_NAMES, getEventSchema } from "./registry.js";
+import { eventRegistry, FORBIDDEN_EVENT_FIELD_NAMES, getEventSchema } from "./registry";
 
 describe("eventRegistry", () => {
   it("nie ma pól PII w schematach zdarzeń", () => {

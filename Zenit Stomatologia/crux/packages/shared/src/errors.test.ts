@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { mapPgError } from "./errors.js";
+import { mapPgError } from "./errors";
 
 describe("mapPgError", () => {
   it("23505 → conflict", () => {

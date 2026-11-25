@@ -1,7 +1,13 @@
-export { PERMISSIONS, isPermission, type Permission } from "./permissions.js";
-export { authorize, type AuthorizeScope } from "./application/authorize.js";
-export { buildClaims } from "./application/build-claims.js";
-export type { AuthAdminPort } from "./ports/auth-admin.js";
+export { PERMISSIONS, isPermission, type Permission } from "./permissions";
+export { authorize, type AuthorizeScope } from "./application/authorize";
+export { buildClaims } from "./application/build-claims";
+export { resolveActor } from "./application/resolve-actor";
+export type { AuthAdminPort } from "./ports/auth-admin";
+export type {
+  AuthPort,
+  AuthSession,
+  TotpEnrollment,
+} from "./ports/auth";
 export {
   createStaffMember,
   inviteStaffMember,
@@ -11,4 +17,4 @@ export {
   setProviderCapabilities,
   requestBreakGlass,
   listStaff,
-} from "./application/staff.js";
+} from "./application/staff";

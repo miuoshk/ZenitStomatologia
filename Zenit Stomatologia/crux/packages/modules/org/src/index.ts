@@ -1,4 +1,4 @@
-export { createTenant } from "./application/tenants.js";
+export { createTenant } from "./application/tenants";
 export {
   createLocation,
   updateLocation,
@@ -9,4 +9,4 @@ export {
   listLocations,
   listChairs,
   getOpeningHours,
-} from "./application/locations.js";
+} from "./application/locations";

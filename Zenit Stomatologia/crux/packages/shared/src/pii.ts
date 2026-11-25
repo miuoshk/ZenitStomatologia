@@ -1,4 +1,4 @@
-import { validatePesel } from "./pesel.js";
+import { validatePesel } from "./pesel";
 
 const EMAIL_RE = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/;
 /** `+48` + 9 cyfr albo samodzielne 9 cyfr (nie fragment dłuższej liczby). */

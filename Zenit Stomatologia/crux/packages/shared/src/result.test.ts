@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { andThen, err, isOk, map, ok, unwrapOr } from "./result.js";
+import { andThen, err, isOk, map, ok, unwrapOr } from "./result";
 
 describe("Result", () => {
   it("ok / err / isOk / map / andThen / unwrapOr", () => {

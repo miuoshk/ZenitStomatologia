@@ -1,6 +1,6 @@
 # Zależności npm
 
-Wersja 1.0 · K05 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
+Wersja 1.0 · K07 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
 
 | Pakiet | Po co | Licencja | Dane pacjentów |
 |---|---|---|---|
@@ -34,5 +34,9 @@ Wersja 1.0 · K05 (25 listopada 2026). Każda bezpośrednia zależność musi tu
 | `drizzle-orm` | ORM + `pgPolicy` / schemat TS (ADR-005) | Apache-2.0 | tak (SQL do DB) |
 | `drizzle-kit` | generowanie migracji SQL z schematu | MIT | nie |
 | `postgres` | klient Postgres (postgres.js) dla Drizzle; `prepare: false` | MIT | tak (SQL do DB) |
+| `@supabase/supabase-js` | Auth (logowanie, MFA, admin createUser); bez Data API | MIT | nie (tylko Auth) |
+| `@supabase/ssr` | sesja Auth w cookie (proxy + server) | MIT | nie |
+| `qrcode` | QR do rejestracji TOTP (MFA) | MIT | nie |
+| `drizzle-orm` (w `@crux/web`) | zapytania lokalizacji w layoutcie powłoki | Apache-2.0 | tak (SQL) |
 
 Transitive (m.in. `postcss` z `@tailwindcss/postcss`) nie wymagają osobnego wiersza, dopóki nie są zależnością bezpośrednią.

@@ -1,21 +1,21 @@
-export { createDb, type CruxDb, type CreateDbOptions, type DbRole, type Tx } from "./client.js";
-export { actorToClaims, type Actor, type JwtClaims, type WorkerClaims } from "./actor.js";
-export { DbMappedError, isDbMappedError } from "./errors.js";
+export { createDb, type CruxDb, type CreateDbOptions, type DbRole, type Tx } from "./client";
+export { actorToClaims, type Actor, type JwtClaims, type WorkerClaims } from "./actor";
+export { DbMappedError, isDbMappedError } from "./errors";
 export {
   PRIVILEGED_OPERATIONS,
   isPrivilegedOperation,
   type PrivilegedOperation,
-} from "./privileged.js";
+} from "./privileged";
 export {
   tenantColumns,
   mutableColumns,
   rls,
   tableComment,
   type TableCommentOpts,
-} from "./schema/index.js";
+} from "./schema/index";
 
-import type { Actor } from "./actor.js";
-import type { CruxDb, Tx } from "./client.js";
+import type { Actor } from "./actor";
+import type { CruxDb, Tx } from "./client";
 
 /** `withActor(db, actor, fn)` — jedyny dostęp aplikacji do bazy z claims. */
 export function withActor<T>(

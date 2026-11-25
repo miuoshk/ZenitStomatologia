@@ -4,8 +4,8 @@
  * `db:generate` nie powinien dublować 0004 — journal bez wpisów generowanych dla tych tabel
  * albo ręczny przegląd przed scaleniem.
  */
-export { tenantColumns, mutableColumns } from "./columns.js";
-export { rls, tableComment, type TableCommentOpts } from "./rls.js";
+export { tenantColumns, mutableColumns } from "./columns";
+export { rls, tableComment, type TableCommentOpts } from "./rls";
 
 export {
   platformSchema,
@@ -13,14 +13,14 @@ export {
   commandLog,
   featureFlags,
   settings,
-} from "./platform.js";
+} from "./platform";
 
 export {
   auditSchema,
   auditEvents,
   accessLog,
   integrityChecks,
-} from "./audit.js";
+} from "./audit";
 
 export {
   orgSchema,
@@ -29,7 +29,7 @@ export {
   chairs,
   openingHours,
   openingExceptions,
-} from "./org.js";
+} from "./org";
 
 export {
   identitySchema,
@@ -41,4 +41,4 @@ export {
   providerCapabilities,
   breakGlassRequests,
   type StaffRole,
-} from "./identity.js";
+} from "./identity";
