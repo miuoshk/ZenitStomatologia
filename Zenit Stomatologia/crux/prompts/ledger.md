@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K16 · obserwowalność bez PII + docs/ops · część 1
+Prompt: prompts/F0-fundament.md#K16
+Commit: c0bd0f4 · Gałąź: main
+Wynik: `@crux/shared` 53/53 (logger + beforeSend); `@crux/db` 7/7 (request_id); web/worker typecheck OK; `doctor` OK.
+Uwagi: shared `createLogger` allowlist + containsPii; Sentry UE (server/edge/worker, bez client replay); OTel opcjonalnie przez OTLP; `withActor` + proxy `x-request-id` → `crux.request_id`; `docs/ops/` (8 procedur + README). Brak zrzutu Sentry staging (brak DSN).
+
 ## 2026-11-25 · K15 · ekrany administracji: org, personel, system, integracje · część 1
 Prompt: prompts/F0-fundament.md#K15
 Commit: 301c9b7 · Gałąź: main
