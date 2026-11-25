@@ -42,6 +42,10 @@
       {
         "path": "supabase/migrations/0014_tests_reset_analytics.sql",
         "reason": "tests.reset_fixtures obejmuje fakty/wymiary analytics (K13)"
+      },
+      {
+        "path": "supabase/seed.sql",
+        "reason": "tests.reset_fixtures tylko lokalnie (audyt 1.0); bazy hostowane jej nie mają"
       }
     ],
     "db.pgtap-required": [
