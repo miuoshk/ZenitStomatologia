@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K13 · @crux/analytics: schemat, refresh, rejestr metryk · część 1–2
+Prompt: prompts/F0-fundament.md#K13
+Commit: cae7b73 · Gałąź: main
+Wynik: `@crux/analytics` 22/22 (metryki = golden expected, AC4 drilldown, idempotent refresh); `db:test` 70 OK (040_analytics); `doctor` OK; `seed:demo` + `analytics:refresh` → refresh_log 9322 wierszy (2025-10-01…2026-10-31).
+Uwagi: migracje `0013`/`0014`; widoki v_self/location/network; RLS faktów z poziomem uprawnień (lekarz tylko własne); worker `analytics.refresh` pełny; sentinel provider_key dla NULL; F0-011 status „w realizacji”.
+
 ## 2026-11-25 · K12 · @crux/testing: fabryki, golden, seed:demo, atrapy · część 1
 Prompt: prompts/F0-fundament.md#K12
 Commit: b5c113a · Gałąź: main
