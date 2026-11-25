@@ -1,0 +1,19 @@
+---
+description: Moduł dokumentacji klinicznej, odontogram, zgody, P1, obrazowanie
+globs: packages/modules/clinical/**, packages/modules/planning/**, packages/modules/interop/**, packages/modules/imaging/**, apps/web/features/clinical/**, apps/web/features/imaging/**
+alwaysApply: false
+---
+
+# Dokumentacja kliniczna
+
+- Zęby w notacji FDI (11–48 stałe, 51–85 mleczne), powierzchnie M, O, D, B, L, I. Walidacja w domenie (`@crux/shared/dental`).
+- Wpis kliniczny po podpisaniu jest niezmienny. Korekta = nowa podpisana wersja w `entry_versions` z `correction_reason`, `prev_hash` i `content_hash` w łańcuchu pacjenta (`sha256(prev_hash || canonical_json(content))`, `advisory lock` per pacjent).
+- Podpis wewnętrzny Crux (dokumentacja wewnętrzna, § 4 ust. 4): konto imienne + MFA + czas serwera + skrót + audyt `sign`. Dokumenty EDM (opis badania, informacja o rozpoznaniu, e-recepta, e-skierowanie) dodatkowo: CDA + podpis przez bramkę P1 + indeks (`edm_documents`).
+- Odontogram to projekcja z rozpoznań i procedur (`odontogramAt(patientId, date)`). Każda zmiana stanu zęba to rozpoznanie albo procedura we wpisie.
+- Kody ICD-10 i ICD-9 PL tylko ze słowników w schemacie `ref`. Nie wymyślaj kodów. Procedura realizująca pozycję planu oznacza ją `done` i tworzy należność (idempotentnie po `procedure_id`).
+- Zamknięcie wizyty klinicznej wymaga ≥ 1 podpisanego wpisu i publikuje `encounter.closed.v1` → zdarzenie medyczne do P1 przez `P1Gateway`. Odrzucenia P1 trafiają na listę kierownika; poprawka = nowa wersja + nowe zgłoszenie.
+- Zgody: wersjonowany szablon, podpis (tablet lub skan), PDF z sumą kontrolną w łańcuchu; małoletni wymagają opiekuna (od 16 lat zgoda łączna); zabieg z `requires_consent` nie może być podpisany bez aktywnej zgody.
+- Plan leczenia po akceptacji ma zamrożone ceny; akceptacja zapisuje przedstawiony kosztorys (`estimates`, PDF + skrót).
+- Recepcja nie ma `clinical_entry.read`: treść wpisów jest dla niej niewidoczna już na poziomie RLS.
+- Obrazowanie: Crux indeksuje i pokazuje podgląd („nie do diagnostyki”), bez narzędzi pomiarowych, okienkowania diagnostycznego, filtrów, adnotacji i AI; diagnoza w Romexis. Zmiana przeglądarki podglądu = etykieta `clinical` i przegląd.
+- Mapowanie na FHIR R4/CDA tylko w `@crux/interop`; moduły domenowe nie znają FHIR. Nowe pole kliniczne wymaga mapowania lub adnotacji `local` w `interop/src/coverage.ts`.

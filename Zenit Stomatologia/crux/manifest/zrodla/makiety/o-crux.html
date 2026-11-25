@@ -1,0 +1,39 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><title>Ustawienia · O Crux</title><link rel="stylesheet" href="app.css"><style>
+    .about{display:grid;grid-template-columns:1fr 420px;gap:24px}
+    .about .card{display:flex;flex-direction:column;gap:14px}
+    .about .ver{font-size:40px;line-height:44px;font-weight:800;letter-spacing:-.03em}
+    .about .ver small{font-size:18px;font-weight:600;color:var(--text-secondary);margin-left:10px;letter-spacing:0}
+    .about dl{display:grid;grid-template-columns:180px 1fr;gap:8px 16px;font-size:13px}.about dt{color:var(--text-secondary)}.about dd{font-weight:600}
+    .plant{background:#fff;border:1px solid var(--border);border-radius:22px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .plant img{height:420px}
+    .plant p{font-size:12px;color:var(--text-secondary);text-align:center;line-height:16px}
+    .tabs{display:flex;gap:18px;border-bottom:1px solid var(--border)}.tabs span{padding:10px 2px;font-weight:600;color:var(--text-secondary)}.tabs span.on{color:var(--text-primary);border-bottom:2px solid var(--zenit-zielen)}
+    </style></head>
+<body><div class="app">
+<aside class="side">
+  <img class="logo" src="../marka/logo/crux-poziomy-krem.svg" alt="crux · zenit.stomatologia">
+  <div class="switch"><span class="chip">01+02</span><span class="name">cała sieć</span><span class="chev">▾</span></div>
+  <nav class="nav"><a class="" href="#"><span class="ico"></span>Obłożenie</a><a class="" href="#"><span class="ico"></span>Pulpit</a><a class="active" href="#"><span class="ico"></span>Ustawienia</a><a class="" href="#"><span class="ico"></span>Integracje</a></nav>
+  <div class="spacer"></div>
+  <div class="user"><div class="av">MK</div><div class="meta">Miłosz Krysiak<br><small>zarząd · sieć</small></div><span class="lock">Zablokuj</span></div>
+</aside>
+<div class="main">
+  <header class="top"><span class="title">Ustawienia · O Crux</span><div class="cmd">Szukaj lub przejdź do… <kbd>Ctrl K</kbd></div><span class="date">czw., 12 listopada 2026</span><div class="av">MK</div></header>
+  <section class="content">
+<h1>Ustawienia</h1>
+<div class="tabs"><span>Organizacja</span><span>Personel</span><span>System</span><span class="on">O Crux</span></div>
+<div class="about">
+ <div class="card">
+  <img src="../marka/logo/crux-poziomy-zielen.svg" alt="crux · zenit.stomatologia" style="height:44px;width:auto;align-self:flex-start">
+  <div class="ver num">1.0.0<small>wydanie „Krasnodrzew”</small></div>
+  <dl><dt>Wdrożone</dt><dd class="num">11 grudnia 2026 · gabinety 01 Nowodworska, 02 Białowieska</dd>
+      <dt>Zakres wydania</dt><dd>obłożenie godzinowe foteli, role i dostępy, pulpity sieci, gabinetu i moje, administracja</dd>
+      <dt>Dane pacjentów</dt><dd>brak w tym wydaniu (od 1.1 „Ratania”)</dd>
+      <dt>Baza</dt><dd>PostgreSQL 17, Supabase eu-central-1 (Frankfurt), kopie nocne, PITR</dd>
+      <dt>Ostatnie odświeżenie analityki</dt><dd class="num">dziś 10:40 · pełne 02:10</dd>
+      <dt>Dokumenty</dt><dd>Podręcznik 1.0 · Changelog · Definicje metryk · Procedury</dd></dl>
+  <div style="display:flex;gap:8px;margin-top:6px"><span class="btn secondary">Zgłoś problem</span><span class="btn secondary">Changelog</span><span class="btn ghost">Licencje bibliotek</span></div>
+ </div>
+ <div class="plant"><img src="../marka/ryciny/krasnodrzew-mech.svg" alt="Krasnodrzew pospolity"><p><strong>Krasnodrzew pospolity</strong> · <em>Erythroxylum coca</em><br>Z jego liści wzięło się pierwsze znieczulenie miejscowe w stomatologii (1884). Roślina przewodnia wydania 1.0.<br>F. E. Köhler, Medizinal-Pflanzen (1887)</p></div>
+</div></section>
+</div></div></body></html>

@@ -1,0 +1,19 @@
+---
+description: Schemat bazy, migracje Drizzle, RLS, testy pgTAP
+globs: packages/db/**, supabase/**, **/infrastructure/**
+alwaysApply: false
+---
+
+# Baza danych
+
+- Źródło prawdy o tabelach: `docs/03a-schemat-bazy.md`. Schemat Drizzle w `packages/db/src/schema/<moduł>.ts` odzwierciedla `03a`; różnica = najpierw PR do `03a`.
+- Migracje generuje `pnpm db:generate`; funkcje, triggery i polityki złożone jako migracje ręczne `manual_`. Nigdy nie edytuj migracji, która jest na `main`.
+- Każda tabela: `id uuid` (UUIDv7), `tenant_id uuid not null`, `created_at`, `created_by`; modyfikowalne także `updated_at`, `updated_by`; komentarz `rls: <wzorzec>; append_only: yes|no; retention: <okres>`.
+- RLS włączone na każdej tabeli, polityki wg wzorców z `03a` sekcja 0: `tenant_all`, `tenant_location`, `append_only`, `self_or_manager`, `ref_read`. Funkcje claims: `auth.tenant_id()`, `auth.staff_id()`, `auth.location_ids()`, `auth.has_permission(text)`. Nigdy `using (true)` na danych pacjentów.
+- Tabele tylko do dopisywania (wersje wpisów, zgody, kosztorysy, akceptacje, płatności, alokacje, storna, rozliczenia zatwierdzone, audyt, log dostępu, scalenia): brak polityk `update`/`delete` i `revoke update, delete from authenticated`.
+- Klucze obce z indeksem i `on delete restrict` dla danych pacjentów i finansów. Kwoty `bigint` w groszach. Czas `timestamptz`. Zakresy `tstzrange` z `exclude using gist`.
+- Pola wrażliwe: `*_enc` (format `enc:v1:…`) + `*_hmac` do wyszukiwania; trigger audytu pomija `*_enc`.
+- Do każdej nowej tabeli test pgTAP w `supabase/tests/<tabela>.sql`: izolacja tenantów, izolacja gabinetów (gdy `tenant_location`), append-only, trigger audytu.
+- Zmiany niszczące (`drop column`, `drop table`, zmiana typu) tylko expand → migrate → contract, osobne PR, etykieta `destructive-migration`.
+- Nie używaj `service_role`. `security definer` tylko dla funkcji z `tools/doctor/allowlist.json` (audyt, log dostępu, status wiadomości) z `search_path` pustym.
+- Dostęp do bazy wyłącznie przez `withActor`/`withWorker` z `@crux/db`. Nie loguj parametrów zapytań. Komunikaty błędów bez danych osobowych.

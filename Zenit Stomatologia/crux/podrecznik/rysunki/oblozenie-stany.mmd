@@ -1,0 +1,16 @@
+stateDiagram-v2
+  direction LR
+  state "Wpis obłożenia" as W {
+    direction TB
+    [*] --> aktywny: recordOccupancy
+    aktywny --> aktywny: edycja (audyt)
+    aktywny --> unieważniony: voidOccupancy + powód
+    unieważniony --> [*]
+  }
+  state "Dzień w gabinecie" as D {
+    direction TB
+    [*] --> otwarty
+    otwarty --> zamknięty: closeDay
+    zamknięty --> otwarty: reopenDay + powód
+    zamknięty --> zamknięty: edycja z write_closed + powód
+  }

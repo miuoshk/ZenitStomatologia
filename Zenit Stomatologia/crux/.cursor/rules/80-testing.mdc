@@ -1,0 +1,16 @@
+---
+description: Testy, fabryki, zestaw wzorcowy, pgTAP, e2e
+globs: **/*.test.ts, **/*.spec.ts, supabase/tests/**, apps/web/e2e/**, packages/testing/**
+alwaysApply: false
+---
+
+# Testy
+
+- Nazwy testów kryteriów akceptacji: `[<ID specyfikacji>/ACn] opis po polsku`. `pnpm doctor` sprawdza pokrycie kryteriów.
+- Jednostkowe (domena): `FixedClock`, dane z fabryk `packages/testing`, bez bazy. Integracyjne (application): lokalny Supabase, `withTestTenant()` tworzy tenant A i B, aktorzy przez `actorFor(staff)`; każdy test izolowany (`resetBetweenTests`).
+- pgTAP dla każdej tabeli: izolacja tenantów (A nie widzi B), izolacja gabinetów dla `tenant_location`, brak `update`/`delete` dla append-only, trigger audytu, więzy (`EXCLUDE`, `check`).
+- Dane testowe tylko syntetyczne z fabryk (generator sylab, PESEL z poprawną sumą kontrolną oznaczony jako syntetyczny). Nigdy listy prawdziwych nazwisk, nigdy kopie produkcji.
+- Zestaw wzorcowy (`golden`): deterministyczny (ziarno), wartości oczekiwane policzone niezależnie (naiwny SQL + arkusz) i opisane w `golden/README.md`.
+- e2e (Playwright): ścieżki krytyczne z `docs/09`, sekcja 5; atrapy integracji (`FAKE_INTEGRATIONS=1`); viewport iPad dla ekranów przy fotelu; test klawiatury dla terminarza i wykresów.
+- Nie zmieniaj testu, który przechodził, razem z kodem bez wyjaśnienia w opisie commita. Jeśli test jest zły, napisz dlaczego i zapytaj.
+- Testy nie logują danych pacjenta; asercje na audycie sprawdzają brak pól `*_enc`, `pesel`, `phone`, `content` w `before`/`after`.

@@ -1,0 +1,58 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><title>Obłożenie</title><link rel="stylesheet" href="app.css"><style>
+    .wrap{display:grid;grid-template-columns:1fr 352px;gap:16px}
+    .bar{display:flex;align-items:center;gap:12px}
+    .bar .nav{display:inline-flex;gap:4px}
+    .grid{background:#FFFFFF;border:1px solid var(--border);border-radius:22px;padding:12px 16px 16px;overflow:hidden}
+    .row{display:grid;grid-template-columns:64px repeat(3,1fr);gap:6px;margin-top:6px}
+    .row.head{margin-top:0;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:4px}
+    .chair{display:flex;gap:8px;align-items:center;padding:4px 6px;font-size:13px;line-height:16px}
+    .hour{font-size:12px;color:var(--text-muted);padding-top:6px}
+    .cell{height:42px;border-radius:8px;border:1px solid var(--grid);background:#FFFFFF;display:flex;align-items:center;gap:8px;padding:0 10px;font-size:13px;font-weight:600}
+    .cell.entry .ini{font-weight:800}
+    .cell.entry .cat{font-size:11px;font-weight:700;color:var(--text-secondary)}
+    .cell.entry .amt{margin-left:auto;font-weight:600}
+    .cell.blocked{background:repeating-linear-gradient(135deg,#F1ECDD 0 6px,#E4ECE5 6px 12px);color:var(--text-secondary);font-weight:600;font-size:12px;justify-content:center;border-style:dashed;border-color:var(--border)}
+    .cell.focus{outline:2px solid var(--focus-ring);outline-offset:2px}
+    .panel{background:#FFFFFF;border:1px solid var(--border);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 6px 18px rgba(23,58,42,.12);align-self:start}
+    .panel h2{font-size:16px;line-height:22px}
+    .panel .actions{display:flex;gap:8px;justify-content:space-between;margin-top:6px}
+    .daybar{display:flex;align-items:center;gap:20px;background:#FFFFFF;border:1px solid var(--border);border-radius:22px;padding:14px 20px}
+    .daybar .stat{display:flex;flex-direction:column;gap:2px}
+    .daybar .stat b{font-size:18px;font-weight:800;letter-spacing:-.02em}
+    .daybar .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+    </style></head>
+<body><div class="app">
+<aside class="side">
+  <img class="logo" src="../marka/logo/crux-poziomy-krem.svg" alt="crux · zenit.stomatologia">
+  <div class="switch"><span class="chip">01</span><span class="name">Nowodworska</span><span class="chev">▾</span></div>
+  <nav class="nav"><a class="active" href="#"><span class="ico"></span>Obłożenie</a><a class="" href="#"><span class="ico"></span>Pulpit</a><a class="" href="#"><span class="ico"></span>Ustawienia</a><a class="" href="#"><span class="ico"></span>Integracje</a></nav>
+  <div class="spacer"></div>
+  <div class="user"><div class="av">KN</div><div class="meta">Kasia Nowak<br><small>recepcja · 01</small></div><span class="lock">Zablokuj</span></div>
+</aside>
+<div class="main">
+  <header class="top"><span class="title">Obłożenie</span><div class="cmd">Szukaj lub przejdź do… <kbd>Ctrl K</kbd></div><span class="date">czw., 12 listopada 2026</span><div class="av">KN</div></header>
+  <section class="content">
+<div class="bar"><h1 style="font-size:24px;white-space:nowrap">Obłożenie · <span class="locchip"><b>01</b>Nowodworska</span></h1>
+ <span class="btn secondary icon">‹</span><span class="btn secondary">czw., 12 listopada 2026</span><span class="btn secondary icon">›</span>
+ <span class="seg"><span class="on">Dzień</span><span>Tydzień</span></span>
+ <span class="btn secondary" style="margin-left:auto">Dzień jak wczoraj</span><span class="btn primary">Zamknij dzień</span></div>
+<div class="wrap">
+ <div class="grid"><div class="row head"><div class="hour"></div><div class="chair"><span class="locchip"><b>01</b></span><div><strong>Fotel 1</strong><br><small class="sec">lek. A. Wrona</small></div></div><div class="chair"><span class="locchip"><b>01</b></span><div><strong>Fotel 2</strong><br><small class="sec">hig. K. Sowa</small></div></div><div class="chair"><span class="locchip"><b>01</b></span><div><strong>Fotel 3</strong><br><small class="sec">lek. P. Kos</small></div></div></div><div class="row"><div class="hour num">8:00</div><div class="cell entry" style="background:#F6F1E1;border-left:4px solid #C9B37F"><span class="ini">AW</span><span class="cat">Z1</span><span class="amt num">180 zł</span></div><div class="cell entry" style="background:#EFE4C6;border-left:4px solid #B8A06A"><span class="ini">KS</span><span class="cat">Z2</span><span class="amt num">180 zł</span></div><div class="cell" style=""></div></div><div class="row"><div class="hour num">9:00</div><div class="cell entry" style="background:#E6D6AE;border-left:4px solid #A88F55"><span class="ini">AW</span><span class="cat">Z3</span><span class="amt num">420 zł</span></div><div class="cell entry" style="background:#EFE4C6;border-left:4px solid #B8A06A"><span class="ini">KS</span><span class="cat">Z2</span><span class="amt num">180 zł</span></div><div class="cell" style=""></div></div><div class="row"><div class="hour num">10:00</div><div class="cell entry" style="background:#E6D6AE;border-left:4px solid #A88F55"><span class="ini">AW</span><span class="cat">Z3</span><span class="amt num">450 zł</span></div><div class="cell entry" style="background:#EFE4C6;border-left:4px solid #B8A06A"><span class="ini">KS</span><span class="cat">Z2</span><span class="amt num">180 zł</span></div><div class="cell entry" style="background:#F6F1E1;border-left:4px solid #C9B37F"><span class="ini">PK</span><span class="cat">Z1</span><span class="amt num">180 zł</span></div></div><div class="row"><div class="hour num">11:00</div><div class="cell entry" style="background:#D9C595;border-left:4px solid #8F7741"><span class="ini">AW</span><span class="cat">Z4</span><span class="amt num">900 zł</span></div><div class="cell focus" style=""></div><div class="cell entry" style="background:#E6D6AE;border-left:4px solid #A88F55"><span class="ini">PK</span><span class="cat">Z3</span><span class="amt num">420 zł</span></div></div><div class="row"><div class="hour num">12:00</div><div class="cell entry" style="background:#D9C595;border-left:4px solid #8F7741"><span class="ini">AW</span><span class="cat">Z4</span><span class="amt muted">— zł</span></div><div class="cell entry" style="background:#EFE4C6;border-left:4px solid #B8A06A"><span class="ini">KS</span><span class="cat">Z2</span><span class="amt num">180 zł</span></div><div class="cell entry" style="background:#E6D6AE;border-left:4px solid #A88F55"><span class="ini">PK</span><span class="cat">Z3</span><span class="amt num">460 zł</span></div></div><div class="row"><div class="hour num">13:00</div><div class="cell" style=""></div><div class="cell entry" style="background:#EFE4C6;border-left:4px solid #B8A06A"><span class="ini">KS</span><span class="cat">Z2</span><span class="amt num">180 zł</span></div><div class="cell blocked" style=""><span>serwis</span></div></div><div class="row"><div class="hour num">14:00</div><div class="cell entry" style="background:#F6F1E1;border-left:4px solid #C9B37F"><span class="ini">AW</span><span class="cat">Z1</span><span class="amt num">180 zł</span></div><div class="cell entry" style="background:#EFE4C6;border-left:4px solid #B8A06A"><span class="ini">KS</span><span class="cat">Z2</span><span class="amt num">180 zł</span></div><div class="cell blocked" style=""></div></div><div class="row"><div class="hour num">15:00</div><div class="cell entry" style="background:#C9B37F;border-left:4px solid #6F5B2E"><span class="ini">AW</span><span class="cat">Z5</span><span class="amt num">1 800 zł</span></div><div class="cell entry" style="background:#F6F1E1;border-left:4px solid #C9B37F"><span class="ini">KS</span><span class="cat">Z1</span><span class="amt num">150 zł</span></div><div class="cell blocked" style=""></div></div><div class="row"><div class="hour num">16:00</div><div class="cell entry" style="background:#C9B37F;border-left:4px solid #6F5B2E"><span class="ini">AW</span><span class="cat">Z5</span><span class="amt muted">— zł</span></div><div class="cell entry" style="background:#EFE4C6;border-left:4px solid #B8A06A"><span class="ini">KS</span><span class="cat">Z2</span><span class="amt num">180 zł</span></div><div class="cell entry" style="background:#D9C595;border-left:4px solid #8F7741"><span class="ini">PK</span><span class="cat">Z4</span><span class="amt num">850 zł</span></div></div><div class="row"><div class="hour num">17:00</div><div class="cell entry" style="background:#E6D6AE;border-left:4px solid #A88F55"><span class="ini">AW</span><span class="cat">Z3</span><span class="amt num">380 zł</span></div><div class="cell" style=""></div><div class="cell entry" style="background:#D9C595;border-left:4px solid #8F7741"><span class="ini">PK</span><span class="cat">Z4</span><span class="amt muted">— zł</span></div></div><div class="row"><div class="hour num">18:00</div><div class="cell" style=""></div><div class="cell" style=""></div><div class="cell entry" style="background:#F6F1E1;border-left:4px solid #C9B37F"><span class="ini">PK</span><span class="cat">Z1</span><span class="amt num">180 zł</span></div></div><div class="row"><div class="hour num">19:00</div><div class="cell" style=""></div><div class="cell" style=""></div><div class="cell" style=""></div></div></div>
+ <div class="panel">
+  <div><span class="label">Fotel 2 · hig. K. Sowa</span><h2>Czwartek 12.11 · 11:00–12:00</h2></div>
+  <div class="field"><label>Wykonawca</label><div class="in">hig. Katarzyna Sowa <span style="margin-left:auto" class="muted">▾</span></div></div>
+  <div class="field"><label>Kategoria usługi</label><div class="chipz"><span class="z1">Z1</span><span class="z2 sel">Z2</span><span class="z3">Z3</span><span class="z4">Z4</span><span class="z5">Z5</span><span class="zp">Z+</span></div><span class="help">Klawisze 1–6 ustawiają kategorię bez otwierania panelu.</span></div>
+  <div class="field"><label>Zakres godzin</label><div style="display:flex;gap:8px"><div class="in num" style="flex:1">11:00</div><div class="in num" style="flex:1">12:00</div></div></div>
+  <div class="field"><label>Kwota zrealizowana (opcjonalnie)</label><div class="in num">180,00 zł</div><span class="help">Pomiar; księgowość zostaje w Optimie. Od wydania 2.0 źródłem będą należności.</span></div>
+  <div class="field"><label>Notatka organizacyjna</label><div class="in muted">bez danych pacjenta</div></div>
+  <div class="actions"><span class="btn danger">Unieważnij…</span><span class="btn primary">Zapisz · Ctrl+Enter</span></div>
+ </div>
+</div>
+<div class="daybar">
+ <div class="stat"><span class="label">Godziny z wpisem</span><b class="num">23 h <span class="sec" style="font-weight:600;font-size:13px">z 33 h dostępnych</span></b></div>
+ <div class="stat"><span class="label">Obłożenie dnia</span><b class="num">70%</b></div>
+ <div class="stat"><span class="label">Kwoty</span><b class="num">8 440 zł <span class="sec" style="font-weight:600;font-size:13px">· 19 z 23 godzin ma kwotę</span></b></div>
+ <div class="stat"><span class="label">Blokady</span><b class="num">3 h <span class="sec" style="font-weight:600;font-size:13px">· fotel 3, serwis</span></b></div>
+ <div class="right"><span class="pill uwaga">● Dzień otwarty</span><span class="muted">Wczoraj zamknięte 18:42 · K. Nowak</span></div>
+</div></section>
+</div></div></body></html>

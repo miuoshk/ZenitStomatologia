@@ -1,0 +1,17 @@
+---
+description: Schemat analytics, rejestr metryk, dashboardy
+globs: packages/modules/analytics/**, apps/web/app/(app)/pulpit/**, apps/web/features/analytics/**, packages/ui/src/charts/**
+alwaysApply: false
+---
+
+# Analityka i dashboardy
+
+- Dashboardy czytają wyłącznie ze schematu `analytics` (poza ekranem Dziś, który czyta dane operacyjne). Żadnych agregacji na tabelach operacyjnych w server actions.
+- Każda metryka: plik `metrics/<id>.ts` (id, nazwa, definicja, kierunek, ziarno, uprawnienie, SQL parametryzowany, drążenie) + wpis w `docs/11-dashboardy-i-raporty.md` (sekcja 4) + test na zestawie wzorcowym (`packages/testing/golden`) + test drążenia (suma listy = wartość).
+- `analytics` nie zawiera danych osobowych: `dim_patient_anon` ma tylko surrogate key, rok urodzenia, płeć, gabinet macierzysty, źródło. Zabronione kolumny: `first_name`, `last_name`, `pesel*`, `phone`, `email`, `address`.
+- Widoki per rola: `v_self_*` (wykonawca), `v_location_*`, `v_network_*`; RLS egzekwuje niezależnie od UI; parametry filtra spoza uprawnień są ignorowane po stronie serwera.
+- Filtry w URL wg kontraktu z `docs/11`, sekcja 3. Zmiana filtra przeładowuje wszystkie karty; poprzedni stan zostaje przyciemniony.
+- Wykresy: `ArchGauge`, `DotGrid`, `DotPlot`, `DotCalendar`, `Sparkline`, `PartsBar`, `LineChart`, `BarList` (z `variant="funnel"`) z `packages/ui/src/charts`; forma per metryka z pola `forma` w rejestrze (`docs/11`, 4.6); jedna oś Y; brak wykresów kołowych, pierścieniowych i dwuosiowych; gabinety w stałych kolorach z `locations.color_key`; miary jednej wielkości w skali `--dane-skala-*`; bursztyn nigdy na wykresie; każdy wykres ma `TableView`, `role="img"` z opisem i obsługę klawiatury. Geometria łuku z `arch-geometry.json`, nigdy rysowana na oko.
+- Kafel KPI (`docs/06`, 4.1) ma odniesienie (poprzedni okres, cel, mediana sieci lub rok temu), pigułkę zmiany ze strzałką i słowem w kolorze według `goodDirection` (nie według znaku) i link drążenia.
+- Rankingi imienne tylko dla `analytics.view_network`. Pulpit lekarza porównuje do mediany sieci bez nazwisk.
+- Raport „Koniec dnia” i odprawa: teksty deterministyczne z szablonów i18n, bez LLM, bez nazwisk pacjentów.

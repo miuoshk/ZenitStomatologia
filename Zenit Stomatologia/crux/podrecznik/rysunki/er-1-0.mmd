@@ -1,0 +1,39 @@
+erDiagram
+  TENANT ||--o{ LOCATION : "ma gabinety"
+  LOCATION ||--o{ CHAIR : "ma fotele"
+  LOCATION ||--o{ OPENING_HOURS : "godziny"
+  LOCATION ||--o{ OPENING_EXCEPTION : "wyjątki"
+  TENANT ||--o{ STAFF_MEMBER : "personel"
+  STAFF_MEMBER ||--o{ MEMBERSHIP : "członkostwa"
+  MEMBERSHIP }o--|| LOCATION : "w gabinecie"
+  ROLE_PERMISSION }o--|| PERMISSION : "uprawnienie"
+  CHAIR ||--o{ CHAIR_OCCUPANCY : "wpisy obłożenia"
+  STAFF_MEMBER |o--o{ CHAIR_OCCUPANCY : "wykonawca"
+  CHAIR ||--o{ TIME_BLOCK : "blokady"
+  LOCATION ||--o{ OCCUPANCY_DAY_CLOSURE : "zamknięte dni"
+  LOCATION ||--o{ SETTING : "occupancy_mode, cele"
+  CHAIR_OCCUPANCY ||--o{ AUDIT_EVENT : "audyt"
+  CHAIR_OCCUPANCY }o--o{ OUTBOX : "zdarzenia"
+  CHAIR_OCCUPANCY }o--|| FACT_CHAIR_OCCUPANCY : "analityka"
+  CHAIR ||--o{ FACT_CHAIR_CAPACITY : "pojemność"
+  CHAIR_OCCUPANCY {
+    uuid id
+    uuid chair_id
+    uuid provider_id
+    tstzrange period
+    text category
+    bigint amount_grosze
+    enum source
+    timestamptz voided_at
+  }
+  OCCUPANCY_DAY_CLOSURE {
+    uuid location_id
+    date day
+    timestamptz closed_at
+    jsonb summary
+  }
+  TIME_BLOCK {
+    uuid chair_id
+    tstzrange period
+    text kind
+  }

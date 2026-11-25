@@ -1,0 +1,15 @@
+---
+description: Granice modułów i kierunki zależności w modularnym monolicie
+alwaysApply: true
+---
+
+# Granice modułów
+
+- Importuj inne moduły tylko przez publiczny pakiet (`@crux/scheduling`), nigdy przez ścieżkę wewnętrzną (`packages/modules/scheduling/src/...`). Moduł eksportuje przypadki użycia, typy i zdarzenia; nigdy repozytoria.
+- `domain/` nie importuje niczego poza `@crux/shared` i własną domeną. Bez I/O, bez frameworków, bez `new Date()`.
+- Dozwolone kierunki (pełny graf: `packages/config/dependency-cruiser.cjs`, opis: `docs/01-architektura.md`, sekcja 4):
+  scheduling→patients,org,catalog · messaging→patients,scheduling · catalog→org · planning→catalog,patients · billing→planning,scheduling,catalog,patients · lab→patients,scheduling · crm→patients,scheduling,messaging,catalog · clinical→patients,scheduling,catalog · imaging→patients,clinical · interop→clinical,patients,org · ai→clinical,messaging · analytics czyta wszystko tylko przez widoki `analytics` · wszystkie→platform,identity · wszystkie→porty w integrations.
+- Reakcja modułu niższego na zdarzenie modułu wyższego tylko przez zdarzenie domenowe (z wersją `.v1`) i outbox.
+- Integracje zewnętrzne tylko przez porty w `@crux/integrations` i outbox; nigdy wywołanie API z UI ani z domeny. Każdy adapter ma atrapę w `testing/`.
+- Jedna komenda = jedna transakcja przez `ctx.db.withActor(actor, tx => ...)`. Worker używa `withWorker('<operacja z privileged.ts>', ...)`.
+- Server action: parsuj, `requireActor()`, wywołaj przypadek użycia, `updateTag`/`refresh`, zwróć `toActionResult`. Nic więcej.

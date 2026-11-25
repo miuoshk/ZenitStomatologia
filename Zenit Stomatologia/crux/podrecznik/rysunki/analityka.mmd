@@ -1,0 +1,8 @@
+flowchart LR
+  A[(chair_occupancy<br/>time_blocks<br/>opening_hours)] -- zdarzenia occupancy.* + co 5 min --> B[Worker<br/>analytics.refresh]
+  B --> C[(analytics<br/>fact_chair_capacity<br/>fact_chair_occupancy<br/>fact_day_closures)]
+  C --> D[Rejestr metryk<br/>metrics/registry.ts<br/>7 metryk z SQL i testem]
+  D --> E["runMetric(id, filtry, aktor)<br/>walidacja filtrów wg roli, cache 60 s"]
+  E --> F[Pulpit: kafel w formie z rejestru<br/>łuk, kropkowy, pasek, kalendarz, linia]
+  F -- klik --> G["/lista/oblozenie?metric=…<br/>w liczniku / w mianowniku<br/>suma = kafel"]
+  C --> H["refresh_log → refreshed_at w stopce"]

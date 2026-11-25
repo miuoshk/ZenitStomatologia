@@ -1,0 +1,16 @@
+flowchart LR
+  subgraph Ludzie
+    R[Recepcja 01 i 02]
+    L[Lekarze i higienistki]
+    K[Kierownicy gabinetów]
+    Z[Zarząd]
+  end
+  CRUX[("Crux 1.0<br/>obłożenie foteli, pulpity, administracja")]
+  R -- wpisy obłożenia, zamknięcie dnia --> CRUX
+  L -- własne godziny, pulpit moje --> CRUX
+  K -- pulpit gabinetu, korekty z powodem --> CRUX
+  Z -- pulpit sieci, konfiguracja, konta --> CRUX
+  STARY[Stary program gabinetowy<br/>pacjenci, terminarz, dokumentacja]
+  R -. "pracuje równolegle, bez integracji w 1.0" .-> STARY
+  CRUX -- błędy bez danych osobowych --> SENTRY[Sentry UE]
+  CRUX -- kopie nocne --> KOPIE[("Magazyn kopii w UE")]

@@ -1,0 +1,17 @@
+gantt
+  dateFormat YYYY-MM-DD
+  axisFormat %d.%m
+  title Wydanie 1.0 „Krasnodrzew” · prompty K01–K17
+  section Fundament
+  K01–K04 monorepo, Supabase, shared, db     :a1, 2026-11-09, 2026-11-13
+  K05–K08 platform, identity+org, auth, ui   :a2, 2026-11-16, 2026-11-20
+  K08–K10 ui, worker, doctor                 :a3, 2026-11-23, 2026-11-25
+  section Obłożenie i analityka
+  K11 obłożenie (4 części)                   :b1, 2026-11-25, 2026-12-01
+  K12–K13 fabryki, analityka 1.0             :b2, 2026-12-01, 2026-12-04
+  K14 pulpity                                :b3, 2026-12-07, 2026-12-08
+  section Wydanie
+  K15–K16 administracja, obserwowalność      :c1, 2026-12-09, 2026-12-10
+  K17 produkcja 11.12                        :milestone, c2, 2026-12-11, 1d
+  Bufor i przegląd adwersarialny             :c3, 2026-12-14, 2026-12-18
+  Bramka 1.0 po 10 dniach wpisów             :milestone, c4, 2027-01-08, 1d

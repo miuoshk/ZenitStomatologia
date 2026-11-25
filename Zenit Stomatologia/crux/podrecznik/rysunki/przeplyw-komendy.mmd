@@ -1,0 +1,21 @@
+sequenceDiagram
+  participant UI as Siatka dnia (React)
+  participant SA as Server action (≤ 25 linii)
+  participant UC as recordOccupancy (przypadek użycia)
+  participant D as Domena (reguły)
+  participant DB as PostgreSQL (RLS)
+  participant OB as Outbox
+  participant WK as Worker
+  UI->>SA: fotel 2, 11:00–12:00, Z2, 180 zł, commandId
+  SA->>SA: Zod, requireActor
+  SA->>UC: recordOccupancy(ctx, actor, input)
+  UC->>UC: authorize(actor, occupancy.write, gabinet)
+  UC->>D: godziny otwarcia? blokada? dzień zamknięty? notatka bez PII?
+  UC->>DB: BEGIN · set local role · set local claims · INSERT chair_occupancy
+  DB-->>DB: EXCLUDE (fotel, czas) · trigger audytu
+  UC->>OB: INSERT outbox(occupancy.entry_recorded.v1, identyfikatory)
+  UC->>DB: COMMIT
+  UC-->>SA: Result.ok(wpis)
+  SA-->>UI: odświeżenie siatki
+  WK->>OB: co 5 s: pending
+  WK->>DB: analytics.refresh dla gabinetu i dnia

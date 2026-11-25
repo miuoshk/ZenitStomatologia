@@ -1,0 +1,17 @@
+---
+description: Porty, adaptery, outbox, worker, agent lokalny
+globs: packages/modules/integrations/**, apps/worker/**, apps/bridge/**
+alwaysApply: false
+---
+
+# Integracje
+
+- Każda integracja: port (`ports/<nazwa>.ts`, interfejs TS zwracający `Result`), adapter (`adapters/<dostawca>/`), atrapa (`testing/fake-<nazwa>.ts`), test kontraktowy na nagranych odpowiedziach bez danych osobowych (`contracts/`).
+- Payload outboxa zawiera tylko identyfikatory. Dane dociąga adapter w chwili wysyłki w transakcji workera.
+- Każde wywołanie zewnętrzne zapisuje `integration_log` (port, operacja, status, czas, identyfikatory). Nigdy treści, numerów telefonów, nazwisk.
+- Ponowienia wykładnicze; po 8 próbach `dead` + zdarzenie `platform.outbox.dead.v1`. Nie implementuj własnych pętli retry poza dispatcherem.
+- Worker: operacje uprzywilejowane tylko z `apps/worker/src/privileged.ts`; brak importów z `apps/web`.
+- Sekrety z env/menedżera sekretów; nigdy w repo ani w logach. Klucze produkcyjne nie trafiają do środowisk podglądu.
+- Agent `apps/bridge`: tylko połączenia wychodzące, token urządzenia, komendy z `bridge_commands`, logi z identyfikatorami. Żadnych nasłuchujących portów publicznych.
+- P1: tylko przez `P1Gateway`. Dokumenty EDM generuje `@crux/interop`; adapter ich nie modyfikuje.
+- SMS: treść bez danych medycznych i kwot; okno 8:00–20:00; `dedupe_key` per wizyta i typ.

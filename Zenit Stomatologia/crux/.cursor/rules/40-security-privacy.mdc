@@ -1,0 +1,18 @@
+---
+description: Bezpieczeństwo, RODO, dokumentacja medyczna, AI
+alwaysApply: true
+---
+
+# Bezpieczeństwo i dane pacjenta
+
+- Każdy przypadek użycia wywołuje `authorize(actor, '<obiekt.działanie>', scope)` przed dostępem do danych; odmowa trafia do audytu.
+- Odczyt karty pacjenta, wpisu klinicznego, pliku, badania obrazowego, wydruk, eksport i pobranie zapisują wpis w `audit.access_log` (komponent logowania EHDS).
+- Zakaz danych osobowych i medycznych w: logach, Sentry, OTel, URL-ach, nazwach plików, payloadach outboxa, komunikatach błędów, analityce. Używaj identyfikatorów. Logger przepuszcza tylko pola z listy dozwolonych.
+- Pliki medyczne wyłącznie w magazynie obiektowym w UE za `FileStoragePort`, podpisane URL 60 s po `authorize`, zapis w logu dostępu. Supabase Storage tylko dla plików niemedycznych.
+- PESEL, numery dokumentów, skany, nagrania: szyfrowanie aplikacyjne (`@crux/shared/crypto`, ADR-025), wyszukiwanie po HMAC. Klucze w KMS w UE, nigdy w repo.
+- Wpisy kliniczne, zgody, kosztorysy, płatności: korekta to nowa podpisana wersja z powodem lub storno. Nigdy UPDATE ani DELETE. Podpis wewnętrzny Crux: konto + MFA + czas serwera + łańcuch skrótów (`docs/04`, sekcja 4).
+- Data API Supabase jest wyłączone; dostęp do bazy tylko przez `withActor`/`withWorker`. Nie dodawaj `supabase-js` do odczytu danych domenowych.
+- Nie dodawaj funkcji sugerujących rozpoznanie lub leczenie ani analizy obrazów medycznych (MDR, ADR-017). Podgląd RTG bez pomiarów i filtrów (ADR-028). AI tylko przez `LlmPort`, u dostawcy w UE, jako szkic do akceptacji (ADR-024).
+- Nowa zależność lub usługa zewnętrzna przetwarzająca dane pacjentów wymaga ADR, wpisu w `docs/zaleznosci.md` i umowy powierzenia.
+- Dane testowe tylko z fabryk w `packages/testing`; nigdy realne osoby, nigdy kopia produkcji.
+- Publiczne wejścia (rezerwacja online, webhooki) mają limity, weryfikację podpisu i nie ujawniają istnienia innych rekordów.

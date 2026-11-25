@@ -1,0 +1,24 @@
+---
+description: Interfejs, design system zenit/Crux, marka w aplikacji, dashboardy
+globs: apps/web/**/*.tsx, packages/ui/**
+alwaysApply: false
+---
+
+# Interfejs Crux
+
+- Przed pierwszym ekranem przeczytaj `docs/14-guideline-aplikacji.md` (zasady marki dla wszystkich aplikacji) i `docs/06-design-system.md` (Crux); przy wykresach także `docs/11`. Przy sprzeczności `06` wygrywa z `14`, a rozbieżność trafia do `docs/06`, sekcja 8.
+- Tylko komponenty z `packages/ui` (inwentarz: `docs/06`, sekcja 4) i tokeny z `packages/ui/brand/tokens.css` (kopia 1:1 z `Materialy marki/tokeny/`, bez ręcznych edycji; `doctor: ui.brand-sync`). Żadnych kolorów HEX ani wartości arbitralnych Tailwinda w kodzie ekranów (`doctor: ui.no-hex`). Brakuje tokena: zatrzymaj się i zaproponuj go w PR do `06` i `tokens.css`.
+- Logo zawsze z pliku SVG w `packages/ui/brand/logo/` (`CruxLogo` dla samego znaku, pliki `crux-poziomy-*`/`crux-znak-*` dla logotypu); nigdy składane z fontu ani generowane. Personel widzi znak Crux; **pacjent nigdy nie widzi marki Crux** (SMS, PDF, portal, rezerwacja: pliki `zenit-*`; `doctor: ui.brand-separation`).
+- Gabinety: zawsze „01 Nowodworska”, „02 Białowieska” (numer dwucyfrowy + ulica, przez `LocationChip`); nie „nr 1”, „#1”, „Gabinet 1”. Seedy i testy używają tej numeracji.
+- Tło aplikacji kość, karty białe z obramowaniem mgły, pasek boczny butelka, przycisk główny zieleń z kremowym tekstem. Motyw ciemny wyłącznie przez tokeny.
+- Bursztyn wyłącznie: Ginan w znaku Crux, wskaźnik „teraz” w terminarzu, obwódka fokusu, cień numeru gabinetu, kropka w „crux.”/„zenit.”. Nigdy tło, tekst ani seria wykresu.
+- Kategorie usług w kolorach kolornika Z1–Z+ (tabela w `docs/06`). Gabinety w wykresach w kolorach z `locations.color_key` (01 zieleń, 02 niebieski, 03 ochra, 04 terakota).
+- Hanken Grotesk z plików lokalnych (`packages/ui/brand/fonts/`), liczby z `tabular-nums` w polskim formacie przez `Num`/`Money.format()` (`1 234,50 zł`, `82%`, `14.02.2027`, `10:30`), wyróżnienia wagą, bez kursywy, wyrównanie do lewej.
+- Zaokrąglenia: 8 pola i bloki, 14 inputy, 22 karty, pełne przyciski i chipy. Bez cieni poza panelem bocznym i tooltipem.
+- Dashboardy: `docs/11`; jeden wiersz filtrów nad treścią, filtry w URL, rząd kafli, wykres główny na całą szerokość, siatka 2 × N kart; każdy wykres z widokiem tabeli i klawiaturą, jedna oś Y, legenda przy ≥ 2 seriach, tooltip przy najechaniu i fokusie. Forma metryki z rejestru (`docs/11`, 4.6): wartość z naturalnym 100% to łuk obłożenia (`ArchGauge`, 16 zębów), „x z y” to siatka kuleczek (`DotGrid`), porównanie gabinetów to wykres kropkowy (`DotPlot`); wykres kołowy nie istnieje. Przy każdym wykresie procedura z `docs/14`, 6.1, i zrzut w PR.
+- Każda liczba KPI ma definicję w rejestrze metryk (`docs/11`, sekcja 4), odniesienie (poprzedni okres/cel/mediana) i link drążenia.
+- Stany: ładowanie bez migania (przyciemnienie), pusto (krótki tekst + jedno działanie, rycina tylko w pustych stanach), błąd (co zrobić), brak uprawnień.
+- Dostępność: WCAG 2.2 AA, pola dotyku min. 44 px (iPad przy fotelu), pełna obsługa klawiaturą, stan nigdy samym kolorem (ikona + słowo).
+- Dane pacjenta nigdy w URL; PESEL maskowany poza edycją; nazwiska tylko tam, gdzie uprawnienie i gabinet na to pozwalają.
+- Ton: krótko, konkretnie, bez wykrzykników i emoji; personel bezosobowo, pacjent w formie Pan/Pani. Teksty w `packages/i18n/pl`.
+- Nowy komponent: najpierw `packages/ui` + historia Storybooka (warianty, fokus, motyw ciemny, iPad) + test wizualny.

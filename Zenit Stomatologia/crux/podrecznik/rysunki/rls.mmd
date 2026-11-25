@@ -1,0 +1,9 @@
+flowchart LR
+  A["Logowanie<br/>hasło + TOTP"] --> B[Sesja Supabase Auth<br/>JWT, aal2]
+  B --> C["requireActor()<br/>buildClaims z memberships × role_permissions"]
+  C --> D{{Actor<br/>staffId · tenantId · locationIds · role · permissions}}
+  D --> E["authorize(actor, uprawnienie, gabinet)<br/>w każdym przypadku użycia"]
+  E -- ok --> F["withActor(tx)<br/>set local role authenticated<br/>set local request.jwt.claims"]
+  E -- brak --> X[forbidden + wpis w audycie]
+  F --> G[("Polityki RLS<br/>tenant_id = auth.tenant_id()<br/>location_id = any(auth.location_ids())")]
+  G --> H[Tylko wiersze aktora]

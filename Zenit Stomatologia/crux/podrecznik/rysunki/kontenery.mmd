@@ -1,0 +1,18 @@
+flowchart TB
+  subgraph Gabinet["Gabinet 01 / 02"]
+    PRZ[Przeglądarka: recepcja, lekarz, iPad]
+  end
+  subgraph Chmura["Chmura UE"]
+    WEB[apps/web<br/>Next.js 16 na Vercel fra1<br/>ekrany + server actions]
+    WK[apps/worker<br/>Node + pg-boss na serwerze w UE<br/>outbox, analityka co 5 min, kopie]
+    DB[(PostgreSQL 17<br/>Supabase eu-central-1<br/>RLS, audyt, outbox, analytics)]
+    AUTH[Supabase Auth<br/>hasło + TOTP]
+    OBJ[(Magazyn kopii w UE)]
+    SEN[Sentry UE]
+  end
+  PRZ --> WEB
+  WEB -- SQL jako crux_app + claims, RLS --> DB
+  WEB --> AUTH
+  WK -- rola crux_worker, lista dozwolonych operacji --> DB
+  WK -- kopie nocne --> OBJ
+  WEB & WK -- zdarzenia bez danych osobowych --> SEN

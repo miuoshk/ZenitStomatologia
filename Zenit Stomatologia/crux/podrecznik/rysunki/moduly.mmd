@@ -1,0 +1,14 @@
+flowchart LR
+  scheduling["@crux/scheduling<br/>obłożenie foteli (1.0)"] --> org["@crux/org<br/>tenant, gabinety, fotele, godziny"]
+  analytics["@crux/analytics<br/>fakty, metryki"] -. tylko odczyt przez widoki .-> scheduling
+  analytics -. tylko odczyt .-> org
+  scheduling --> platform["@crux/platform<br/>audyt, outbox, flagi, ustawienia"]
+  org --> platform
+  analytics --> platform
+  scheduling --> identity["@crux/identity<br/>personel, role, authorize"]
+  org --> identity
+  analytics --> identity
+  scheduling -. porty .-> integrations["@crux/integrations<br/>porty i atrapy"]
+  platform -. porty .-> integrations
+  web["apps/web<br/>ekrany"] --> scheduling & analytics & org & identity
+  worker["apps/worker"] --> platform & analytics

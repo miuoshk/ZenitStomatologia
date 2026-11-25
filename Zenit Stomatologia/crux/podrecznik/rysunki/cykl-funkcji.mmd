@@ -1,0 +1,11 @@
+flowchart LR
+  A[Ból w gabinecie] --> B[Specyfikacja<br/>docs/specs/ID.md<br/>kryteria Dane/Gdy/Wtedy]
+  B --> C{Pojęcie i tabela<br/>są w 03 i 03a?}
+  C -- nie --> C2[PR do 03/03a<br/>ADR, jeśli zmienia zasadę] --> C
+  C -- tak --> D[Prompt K<br/>z szablonu docs/10]
+  D --> E[Cursor: Plan → Agent<br/>częściami: migracja → domena → use case → ekran]
+  E --> F[Strażnicy<br/>lint, pgTAP, doctor, testy ID/ACn, przegląd adwersarialny]
+  F -- czerwone --> E
+  F -- zielone --> G[Ledger + commit + PR]
+  G --> H[Staging → gabinet 01 → gabinet 02]
+  H --> I[Bramka wydania<br/>mierzona w gabinecie]

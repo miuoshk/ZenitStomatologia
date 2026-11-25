@@ -1,0 +1,45 @@
+{
+  "name": "crux",
+  "private": true,
+  "packageManager": "pnpm@10.23.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "eslint . --max-warnings 0",
+    "lint:deps": "depcruise --config packages/config/dependency-cruiser.cjs apps packages",
+    "test": "vitest run --passWithNoTests",
+    "test:db": "echo \"no db tests yet\" && exit 0",
+    "doctor": "echo skip",
+    "e2e": "pnpm --filter @crux/web e2e",
+    "format": "prettier --write .",
+    "lint:packages": "turbo run lint"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "@types/node": "22.20.7",
+    "@vitest/coverage-v8": "5.1.2",
+    "dependency-cruiser": "18.9.0",
+    "eslint": "10.15.0",
+    "eslint-plugin-boundaries": "7.4.5",
+    "eslint-plugin-import-x": "4.18.1",
+    "playwright": "1.65.1",
+    "prettier": "3.10.1",
+    "tsx": "4.23.15",
+    "turbo": "2.11.13",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.74.0",
+    "vitest": "5.1.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@tailwindcss/oxide",
+      "sharp",
+      "unrs-resolver"
+    ]
+  },
+  "type": "module"
+}

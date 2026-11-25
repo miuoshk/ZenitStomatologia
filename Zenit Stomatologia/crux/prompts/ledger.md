@@ -1,0 +1,41 @@
+# Rejestr promptów (ledger)
+
+Każda zastosowana sesja promptów ma tu wpis. Nowy czat (Claude lub Cursor) czyta 10 ostatnich wpisów przed planem. Format: `docs/10-praca-z-ai.md`, sekcja 7. Najnowsze wpisy na górze.
+
+## Szablon
+
+```
+## RRRR-MM-DD · <ID specyfikacji lub wydanie> · <prompt> · część <n>
+Prompt: prompts/<plik>.md#<P>
+Commit: <hash> · Gałąź: <nazwa>
+Wynik: <CI zielone / co nie przeszło i dlaczego>
+Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
+```
+
+## Wpisy
+
+## 2026-11-25 · K01 · Monorepo i narzędzia · część 1
+Prompt: prompts/F0-fundament.md#K01
+Commit: lokalnie (brak git w crux) · Gałąź: brak
+Wynik: pnpm install / typecheck / lint / test / test:db / doctor / e2e zielone; build @crux/web i @crux/worker OK. Docker: CLI niedostępne w środowisku — Dockerfilei gotowe, `docker build` do potwierdzenia lokalnie.
+Uwagi: TypeScript pinned 6.0.3 (7.x poza peer `typescript-eslint <6.1`); `eslint-plugin-boundaries` 7.x flat config OK (reguła `boundaries/dependencies`); `postcss` tylko transitively z `@tailwindcss/postcss`; pnpm przez corepack (`packageManager: pnpm@10.23.0`).
+
+## 2026-11-13 · pakiet marki 1.2 · zielnik 2.0, teksty, prezentacje · bez promptu
+Prompt: brak (zmiana w dokumentacji i materiałach marki)
+Commit: folder `crux` i `Materialy marki` na dysku wspólnym · Gałąź: brak
+Wynik: zielnik 2.0 (42 tablice SVG z folderu „FINAL FINAL”, warianty svg/svg-48px/mech/krem/zielen, `ZIELNIK.md` z katalogiem zastosowań przyciętym do wyrenderowanych roślin, `przeglad.png`); ryciny podmienione w `Materialy marki/ryciny-kohler/`, `Crux - dla tworcow aplikacji/ryciny/`, `manifest/zrodla/marka/ryciny/` (koka → krasnodrzew), manifeście, podręczniku i planszach zespołu (v17); brandbooki zbudowane na nowo z artboardów kanwy jako 1.1 (`Materialy marki/brandbook/zrodla/`); nazwy wydań 3.0 Dąb, 4.0 Gutaperkowiec, 5.0 Brzoza w `07` i `06`; teksty bez konstrukcji „nie X, tylko Y” w docs, specs, prompts, regułach, podręczniku, manifeście, planszach i materiałach marki; jeden system marki dla Kursu na LDEK i produktów ZENIT LABS (`14` 1.2, brandbook BB03); nowy folder `Materialy marki/prezentacje/` (`PREZENTACJE.md`, `szablon-zenit-prezentacja.pptx` z 17 układami i 14 slajdami, źródła szablonu, 16 slajdów decku w HTML, `prompt-dla-bota.md`); fonty statyczne Hanken Grotesk wygenerowane na nowo z poprawnymi nazwami wewnętrznymi (dotąd trzy pliki nazywały się „Hanken Grotesk Regular”), dodane 500 i 700; stare foldery `brandbook/`, `logo/`, `ryciny-kohler/` i zipy 1.0/1.1 w `_archiwum-marka-v1-2026-11-05/`; `zenit-materialy-1.2.zip`
+Uwagi: listy „Czym Crux nie jest” i etykiety regulacyjne („podgląd, nie do diagnostyki”) zostawione celowo; rośliny kolornika Z1–Z+ poza cyklem wydań; w PowerPoincie pismo z kolumny pt (18 pt tekst, 40 pt tytuł), wymiary 1 px = 0,5 pt; folder źródłowy „FINAL FINAL ryciny-botaniczne-po-audycie” zostaje na dysku do decyzji właściciela
+
+## 2026-11-06 · wydanie 1.0 „Krasnodrzew” · plan, podręcznik, manifest · bez promptu
+Prompt: brak (zmiana w dokumentacji)
+Commit: folder `crux` na dysku wspólnym · Gałąź: brak
+Wynik: ADR-032 (wydania jako jednostka dostarczania, nazwy z zielnika; 1.0 bez danych pacjentów, produkcja 11.12.2026); `07` 2.1 przepisana (wydania, bramka 1.0, tydzień po tygodniu); `prompts/F0-fundament.md` = wydanie 1.0 w 17 krokach K01–K17 (prompty `P01…` → `K01…`, „Krok n/m” → „Część n/m”); moduł wzorcowy to obłożenie godzinowe foteli (F0-010), zlecenia laboratoryjne (F0-001) przeniesione do 1.1 jako F1#K12; nowe specyfikacje F0-010 i F0-011; `03a` 1.1 (sekcje 5.1, 12.1), `03` 2.1 (ChairOccupancy, macierz ról), `11` 1.2 (metryki i pulpity 1.0, filtr `wykonawca`), `00`, `01`, `04` (5a), `06` 2.2, `09`, `10`, `13`, `README`, `AGENTS`, reguły Cursora; nowe foldery `podrecznik/` (PODRECZNIK-CRUX-1.0 md/html/pdf, `build.py`) i `manifest/` (CRUX-MANIFEST-1.0.pdf, plansze, makiety); plansze zespołu v14
+Uwagi: „P1” w rozmowie = wydanie 1.0, w dokumentach = Platforma P1; tor B (opinia prawna, DPIA, DPA) bramkuje 1.1, nie 1.0; pierwsza migracja z `patients` dostaje etykietę `patient-data`; decyzje otwarte w podręczniku, rozdział 9.3; wieczorem ADR-033 (domeny: Crux na `crux.zenitstomatologia.pl`) w `02`, `01` 13, `05`, K17, podręcznik 12.1
+
+## 2026-11-06 · dokumentacja 2.1 · pakiet marki · bez promptu
+Prompt: brak (zmiana w dokumentacji)
+Commit: folder `crux` na dysku wspólnym · Gałąź: brak
+Wynik: `docs/14` dodany (kopia `Materialy marki/GUIDELINE-APLIKACJI.md`), `06` 2.1, `11` 1.1, ADR-031, reguły 30/70, prompty F0-K07/K08/K12 i F3-K03, backlog F0-009, numeracja 01 Nowodworska / 02 Białowieska poprawiona w `README`, `01`, `03`, `03a`, F0-K12, F1-K03, prototypie
+Uwagi: przy K08 skopiować pakiet marki do `packages/ui/brand/`; token `--dane-kulka-pusta` do dodania w `Materialy marki/tokeny/tokens.css` (`06`, sekcja 8)
+
+(pierwszy wpis z kodem powstanie po F0-K01)

@@ -1,0 +1,19 @@
+---
+description: Zasady podstawowe Crux, zawsze aktywne
+alwaysApply: true
+---
+
+# Crux: zasady podstawowe
+
+- System medyczny dla sieci gabinetów zenit.stomatologia. Dane o zdrowiu, dokumentacja przechowywana 20 lat. Wydanie 1.0 „Krasnodrzew” nie zawiera danych pacjentów (ADR-032): do 1.1 nie twórz tabel ani pól o pacjentach.
+- Prompty: `prompts/<faza>.md#K01`… (K = krok planu; prompt ma części = commity). „P1” oznacza wyłącznie Platformę P1 (e-zdrowie); wersje Crux mają numery wydań.
+- Przed zmianą przeczytaj `AGENTS.md` i 10 ostatnich wpisów `prompts/ledger.md`. Przy nowej funkcji przeczytaj specyfikację z `docs/specs/` i zacznij od planu. Pierwszy krok implementacji to `pnpm gen` (szkielet).
+- Nazwy pojęć bierz ze słownika `docs/03-model-domeny.md`. Zakazane synonimy: `visit`, `clinic`, `branch`, `customer`, `client`, `doctor` (jako rola), `bill`, `slot` (jako encja; godzina obłożenia to `chair_occupancy`).
+- Tabele i kolumny bierz z `docs/03a-schemat-bazy.md`. Jeśli czegoś tam nie ma, zatrzymaj się: najpierw zmiana w `03a`.
+- TypeScript strict, bez `any`. Wejście walidowane Zod. Komendy mają `commandId`. Wynik przypadków użycia jako `Result`.
+- Logika biznesowa w `packages/modules/<moduł>/src/domain` i `application`. Komponenty, server actions (≤ 25 linii) i route handlery są cienkie.
+- Pieniądze w groszach (`Money`), czas w UTC (`timestamptz`), prezentacja Europe/Warsaw, czas z `ctx.clock` (nigdy `new Date()` poza `packages/shared/src/time.ts`).
+- Kod po angielsku, teksty interfejsu po polsku w `packages/i18n/pl`.
+- Każde kryterium akceptacji ma test z nazwą `[<ID>/ACn]`. Nie osłabiaj testów, żeby przeszły.
+- Po każdym kroku: `pnpm typecheck && pnpm lint && pnpm test --filter <moduł> && pnpm doctor`. Gdy `doctor` zgłasza błąd, poprawiasz kod; reguła zostaje.
+- Gdy zadanie łamie dokumentację, zatrzymaj się i zapytaj.
