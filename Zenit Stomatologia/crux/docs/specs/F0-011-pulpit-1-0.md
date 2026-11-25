@@ -1,6 +1,6 @@
 # F0-011 · Analityka i pulpity wydania 1.0
 
-Status: gotowa do planu
+Status: w realizacji (K13 zamknięty lokalnie: schemat `analytics`, zasilanie workera, rejestr 7 metryk, drążenie, testy AC1/AC3/AC4/AC5 po stronie danych; pulpity i lista drążenia K14)
 Wydanie: 1.0 „Krasnodrzew”
 Moduły: @crux/analytics, @crux/ui, @crux/platform, apps/worker
 Właściciel: Miłosz

@@ -38,6 +38,10 @@
       {
         "path": "supabase/migrations/0008_identity_resolve_actor.sql",
         "reason": "identity.resolve_actor — bootstrap requireActor (K07)"
+      },
+      {
+        "path": "supabase/migrations/0014_tests_reset_analytics.sql",
+        "reason": "tests.reset_fixtures obejmuje fakty/wymiary analytics (K13)"
       }
     ],
     "db.pgtap-required": [
@@ -130,6 +134,51 @@
         "table": "audit.integrity_checks",
         "path": "supabase/tests/010_platform.sql",
         "reason": "testy zebrane per domena"
+      },
+      {
+        "table": "analytics.dim_date",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
+      },
+      {
+        "table": "analytics.dim_location",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
+      },
+      {
+        "table": "analytics.dim_chair",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
+      },
+      {
+        "table": "analytics.dim_provider",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
+      },
+      {
+        "table": "analytics.dim_category",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
+      },
+      {
+        "table": "analytics.fact_chair_capacity",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
+      },
+      {
+        "table": "analytics.fact_chair_occupancy",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
+      },
+      {
+        "table": "analytics.fact_day_closures",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
+      },
+      {
+        "table": "analytics.refresh_log",
+        "path": "supabase/tests/040_analytics.sql",
+        "reason": "testy analytics zebrane w 040 (K13)"
       }
     ],
     "code.vocabulary": [

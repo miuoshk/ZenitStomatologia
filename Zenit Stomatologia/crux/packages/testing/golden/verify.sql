@@ -1,5 +1,8 @@
 -- K12 · golden/verify.sql — NAIWNE, niezależne od kodu TS obliczenie metryk golden datasetu.
--- Czyta wyłącznie scheduling.* oraz org.* (fakty analytics powstaną w K13).
+-- Czyta wyłącznie scheduling.* oraz org.* — celowo niezależnie od schematu analytics.
+-- Od K13 źródłem prawdy dla pulpitów są fakty `analytics.*` (zasilane przez `refreshAnalytics`),
+-- a `runMetric` jest porównywane z expected.json w packages/modules/analytics (metrics.test.ts).
+-- Ten plik zostaje jako niezależna kontrola: dane operacyjne ↔ expected.json ↔ fakty analytics.
 -- Uruchomienie:  psql "$DATABASE_URL" -X -A -t -f packages/testing/golden/verify.sql
 -- (jako superuser/właściciel — omija RLS; `pnpm --filter @crux/testing verify:golden`
 --  wykonuje to samo zapytanie przez withActor i porównuje z expected.json).

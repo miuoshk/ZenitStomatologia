@@ -51,3 +51,17 @@ export {
   occupancyDayClosures,
   type OccupancySource,
 } from "./scheduling";
+
+export {
+  analyticsSchema,
+  NO_PROVIDER_KEY,
+  dimDate,
+  dimLocation,
+  dimChair,
+  dimProvider,
+  dimCategory,
+  factChairCapacity,
+  factChairOccupancy,
+  factDayClosures,
+  refreshLog,
+} from "./analytics";

@@ -16,7 +16,7 @@ Wersja 1.1 · 6 listopada 2026. Wydanie, w którym specyfikacja trafia do gabine
 | F0-008 | Szyfrowanie aplikacyjne i KMS | shared, platform | `enc:v1`, HMAC, klucze per tenant, rotacja (ADR-025) | szkic |
 | F0-009 | Pakiet marki w repo i model kuleczkowy | ui | `packages/ui/brand/` z `Materialy marki/` (tokeny, fonty, logo, ryciny, geometria), `pnpm brand:sync`, `CruxLogo`, komplet wykresów, `Num`, strażnicy `ui.brand-sync`/`ui.brand-separation` | szkic (realizowana w K08) |
 | F0-010 ✦ | Obłożenie godzinowe foteli (moduł wzorcowy) | scheduling, org, identity, platform, ui | siatka godzin × fotele per gabinet, wpis: wykonawca, kategoria Z, kwota; blokady foteli; zamknięcie dnia; bez danych pacjenta; wzorzec dla wszystkich modułów | gotowa do planu |
-| F0-011 ✦ | Analityka i pulpity wydania 1.0 | analytics, ui, platform | schemat `analytics` (fakty obłożenia i pojemności), zasilanie co 5 min, rejestr metryk, 7 metryk, pulpity sieci/gabinetu/moje, lista drążenia, CSV | gotowa do planu |
+| F0-011 ✦ | Analityka i pulpity wydania 1.0 | analytics, ui, platform | schemat `analytics` (fakty obłożenia i pojemności), zasilanie co 5 min, rejestr metryk, 7 metryk, pulpity sieci/gabinetu/moje, lista drążenia, CSV | w realizacji |
 | F0-012 | Ekrany administracji | org, identity, platform, ui | organizacja (gabinety, fotele, godziny, wyjątki), personel (konta, role, członkostwa, zaproszenia), ustawienia systemu, Integracje (szkielet) | szkic (realizowana w K15) |
 
 ## F1 · Pacjenci i terminarz

@@ -607,7 +607,7 @@ create table analytics.fact_day_closures (tenant_id uuid not null, location_id u
 create table analytics.refresh_log (id uuid primary key, window_from timestamptz not null, window_to timestamptz not null, started_at timestamptz not null, finished_at timestamptz, rows_written int, mode text not null);  -- mode: incremental | full
 ```
 
-Indeksy `(tenant_id, location_id, date_key)` na faktach. RLS `tenant_location`; widoki `v_self_occupancy` (`provider_key = auth.staff_id()`), `v_location_*`, `v_network_*`. Zasilanie: worker `analytics.refresh` co 5 min (gabinet i dzień ze zdarzeń `occupancy.*` oraz ostatnie 48 h) i pełne 02:10 (13 miesięcy); źródło per gabinet wg `scheduling.occupancy_mode`. Metryki 1.0: `11`, sekcja 4.7.
+`fact_chair_occupancy.provider_key` jest `NOT NULL` (wymóg klucza głównego): wpis bez wykonawcy dostaje wartownika `00000000-0000-7000-8000-000000000000`. `source` ma typ `scheduling.occupancy_source`. Indeksy `(tenant_id, location_id, date_key)` na faktach. RLS `tenant_location` + poziom uprawnień `analytics.view_*` (wykonawca widzi tylko własne wiersze obłożenia); widoki `v_self_occupancy` (`provider_key = auth.staff_id()`), `v_location_*`, `v_network_*`. Zasilanie: worker `analytics.refresh` co 5 min (gabinet i dzień ze zdarzeń `occupancy.*` oraz ostatnie 48 h) i pełne 02:10 (13 miesięcy); źródło per gabinet wg `scheduling.occupancy_mode`. Metryki 1.0: `11`, sekcja 4.7.
 
 ### 12.2 Od 2.1 (F3-002)
 

@@ -5,7 +5,7 @@ import { dispatchOutboxBatch } from "../dispatch/outbox";
 import type { Logger } from "../logger";
 import { QUEUES } from "../queues";
 import type { TopicHandlerContext } from "../topics/types";
-import { runAnalyticsRefresh } from "./analytics-refresh";
+import { runAnalyticsRefresh, runAnalyticsRefreshFull } from "./analytics-refresh";
 import { runBackupNightly } from "./backup-nightly";
 import { runIntegrityVerify } from "./integrity-verify";
 import { runRemindersSchedule } from "./reminders-schedule";
@@ -51,21 +51,15 @@ export async function registerJobs(rt: WorkerRuntime): Promise<void> {
       locationId?: string;
       day?: string;
     };
-    if (data.tenantId && data.locationId && data.day) {
-      await runAnalyticsRefresh(db, log, {
-        tenantId: data.tenantId,
-        locationId: data.locationId,
-        day: data.day,
-      });
-    } else {
-      log.info({ queue: QUEUES.analyticsRefresh }, "analytics.refresh cron stub");
-      await db.withWorker("analytics.refresh", async () => Promise.resolve());
-    }
+    await runAnalyticsRefresh(db, log, {
+      ...(data.tenantId ? { tenantId: data.tenantId } : {}),
+      ...(data.locationId ? { locationId: data.locationId } : {}),
+      ...(data.day ? { day: data.day } : {}),
+    });
   });
 
   await boss.work(QUEUES.analyticsRefreshFull, async () => {
-    log.info({ queue: QUEUES.analyticsRefreshFull }, "analytics.refresh full stub");
-    await db.withWorker("analytics.refresh", async () => Promise.resolve());
+    await runAnalyticsRefreshFull(db, log);
   });
 
   await boss.work(QUEUES.backupNightly, async () => {
