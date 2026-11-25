@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K06 · @crux/identity + @crux/org: personel, role, gabinety · część 1
+Prompt: prompts/F0-fundament.md#K06
+Commit: d2a84a6 · Gałąź: main
+Wynik: `@crux/identity` test 2/2; `@crux/org` test 1/1; `pnpm db:test` 46 asercji OK (020_org_identity); typecheck/lint monorepo OK.
+Uwagi: DDL+RLS w `0005_org`/`0006_identity`; seed uprawnień `0007_role_permissions_seed` (zamiast `manual_`). `createTenant` bez RETURNING (RLS SELECT blokuje nowy id). Drizzle baseline stub. Claims z memberships; `authorize()` na role_permissions.
+
 ## 2026-11-25 · K05 · @crux/platform: audyt, outbox, flagi, ustawienia · część 1
 Prompt: prompts/F0-fundament.md#K05
 Commit: 23e0c2a (+ 3eac620 pgTAP) · Gałąź: main
