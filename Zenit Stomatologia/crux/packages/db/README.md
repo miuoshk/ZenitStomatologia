@@ -38,6 +38,7 @@ pnpm db:test       # pgTAP
 2. Funkcje, triggery, `EXCLUDE`, granty — tylko SQL ręczny (nie generuj ich z Drizzle, jeśli brak wsparcia).
 3. **Nie edytuj** już scalonych migracji — dodaj nową.
 4. Po `db:generate` zawsze przeglądaj SQL przed PR.
+5. Tabele `platform.*` / `audit.*`: DDL w **`0004_platform.sql`**. Plik timestamp z Drizzle Kit to baseline (snapshot); nie duplikuj `CREATE TABLE`.
 
 ### EXCLUDE / złożone polityki
 

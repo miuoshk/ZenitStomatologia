@@ -6,6 +6,7 @@ import postgres from "postgres";
 import { actorToClaims, type Actor, type WorkerClaims } from "./actor.js";
 import { DbMappedError } from "./errors.js";
 import { isPrivilegedOperation, PRIVILEGED_OPERATIONS } from "./privileged.js";
+import * as schema from "./schema/index.js";
 
 export type DbRole = "app" | "worker";
 
@@ -15,7 +16,7 @@ export type CreateDbOptions = {
   readonly privilegedOperations?: readonly string[];
 };
 
-type DrizzleDb = ReturnType<typeof drizzle>;
+type DrizzleDb = ReturnType<typeof drizzle<typeof schema>>;
 export type Tx = Parameters<Parameters<DrizzleDb["transaction"]>[0]>[0];
 
 export type CruxDb = {
@@ -34,7 +35,7 @@ export type CruxDb = {
 export function createDb(url: string, options: CreateDbOptions): CruxDb {
   const max = options.role === "app" ? 10 : 5;
   const client = postgres(url, { max, prepare: false });
-  const db = drizzle(client);
+  const db = drizzle(client, { schema });
   const privileged = new Set(options.privilegedOperations ?? PRIVILEGED_OPERATIONS);
 
   async function withActor<T>(actor: Actor, fn: (tx: Tx) => Promise<T>): Promise<T> {

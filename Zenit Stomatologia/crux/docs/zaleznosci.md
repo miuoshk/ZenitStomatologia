@@ -1,6 +1,6 @@
 # Zależności npm
 
-Wersja 1.0 · K04 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
+Wersja 1.0 · K05 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
 
 | Pakiet | Po co | Licencja | Dane pacjentów |
 |---|---|---|---|

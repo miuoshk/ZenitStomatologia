@@ -1,3 +1,7 @@
-# @crux/platform
+# `@crux/platform`
 
-Szkielet modułu (K01). Zakres i zależności: `docs/01-architektura.md`, sekcja 4.
+Mechanizmy przekrojowe: outbox, command_log, feature flags, settings, audyt, log dostępu.
+
+**Zależy od:** `@crux/db`, `@crux/shared`.
+
+**Nie robi:** tożsamości, organizacji, domeny klinicznej — tylko infrastruktura zdarzeń i kontroli.
