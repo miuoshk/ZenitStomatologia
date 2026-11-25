@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import type { ReactNode } from "react";
 
 import "./globals.css";
@@ -16,9 +17,10 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const theme = (await cookies()).get("crux.theme")?.value === "dark" ? "dark" : "light";
   return (
-    <html lang="pl">
+    <html lang="pl" data-theme={theme}>
       <body>{children}</body>
     </html>
   );

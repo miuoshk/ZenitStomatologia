@@ -4,6 +4,7 @@ export default defineConfig({
   test: {
     name: "@crux/org",
     include: ["src/**/*.test.ts"],
+    fileParallelism: false,
     testTimeout: 30_000,
     hookTimeout: 30_000,
   },

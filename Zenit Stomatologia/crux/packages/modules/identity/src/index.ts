@@ -11,6 +11,7 @@ export type {
 export {
   createStaffMember,
   inviteStaffMember,
+  updateStaffMember,
   deactivateStaffMember,
   assignMembership,
   endMembership,

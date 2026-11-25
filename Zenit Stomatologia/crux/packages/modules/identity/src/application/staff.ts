@@ -22,6 +22,7 @@ export async function createStaffMember(
     title?: string;
     npwz?: string;
     phone?: string;
+    colorKey?: string;
   },
 ): Promise<Result<{ id: string }, DomainError>> {
   const authz = await authorize(tx, actor, "staff.manage");
@@ -37,11 +38,45 @@ export async function createStaffMember(
       ...(input.title ? { title: input.title } : {}),
       ...(input.npwz ? { npwz: input.npwz } : {}),
       ...(input.phone ? { phone: input.phone } : {}),
+      ...(input.colorKey ? { colorKey: input.colorKey } : {}),
     })
     .returning({ id: staffMembers.id });
   const id = rows[0]?.id;
   if (!id) return err({ type: "invariant", details: { code: "staff_insert" } });
   return ok({ id });
+}
+
+export async function updateStaffMember(
+  tx: Tx,
+  actor: Actor,
+  staffId: string,
+  patch: {
+    firstName?: string;
+    lastName?: string;
+    title?: string | null;
+    npwz?: string | null;
+    phone?: string | null;
+    colorKey?: string | null;
+  },
+): Promise<Result<{ id: string }, DomainError>> {
+  const authz = await authorize(tx, actor, "staff.manage");
+  if (!authz.ok) return authz;
+
+  await tx
+    .update(staffMembers)
+    .set({
+      ...(patch.firstName !== undefined ? { firstName: patch.firstName } : {}),
+      ...(patch.lastName !== undefined ? { lastName: patch.lastName } : {}),
+      ...(patch.title !== undefined ? { title: patch.title } : {}),
+      ...(patch.npwz !== undefined ? { npwz: patch.npwz } : {}),
+      ...(patch.phone !== undefined ? { phone: patch.phone } : {}),
+      ...(patch.colorKey !== undefined ? { colorKey: patch.colorKey } : {}),
+      updatedAt: sql`now()`,
+      updatedBy: actor.staffId,
+    })
+    .where(and(eq(staffMembers.id, staffId), eq(staffMembers.tenantId, actor.tenantId)));
+
+  return ok({ id: staffId });
 }
 
 export async function inviteStaffMember(

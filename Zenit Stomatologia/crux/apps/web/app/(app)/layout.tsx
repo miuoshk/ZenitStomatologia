@@ -36,6 +36,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
       activeLocationId={actor.activeLocationId}
       staffLabel={actor.role}
       canNetworkView={actor.permissions.includes("network.view")}
+      canManageIntegrations={actor.permissions.includes("integrations.manage")}
       idleLockMs={idleLockMs()}
     >
       {children}

@@ -121,5 +121,16 @@ export function createAuthAdminPort(): AuthAdminPort | null {
       }
       return { authUserId: result.data.user.id };
     },
+    async resetMfa(authUserId) {
+      const listed = await admin.auth.admin.mfa.listFactors({ userId: authUserId });
+      if (listed.error) throw new Error(listed.error.message);
+      let removed = 0;
+      for (const factor of listed.data.factors) {
+        const del = await admin.auth.admin.mfa.deleteFactor({ id: factor.id, userId: authUserId });
+        if (del.error) throw new Error(del.error.message);
+        removed += 1;
+      }
+      return { removed };
+    },
   };
 }

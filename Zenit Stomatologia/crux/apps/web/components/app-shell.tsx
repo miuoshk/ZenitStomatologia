@@ -22,12 +22,14 @@ type Props = {
   activeLocationId: string;
   staffLabel: string;
   canNetworkView: boolean;
+  canManageIntegrations?: boolean;
   idleLockMs: number;
 };
 
-const NAV = [
+const BASE_NAV = [
   { id: "oblozenie", label: "Obłożenie", href: "/oblozenie" },
   { id: "pulpit", label: "Pulpit", href: "/pulpit" },
+  { id: "integracje", label: "Integracje", href: "/integracje" },
   { id: "ustawienia", label: "Ustawienia", href: "/ustawienia" },
 ] as const;
 
@@ -37,8 +39,13 @@ export function AppShell({
   activeLocationId,
   staffLabel,
   canNetworkView,
+  canManageIntegrations = false,
   idleLockMs,
 }: Props) {
+  const NAV = useMemo(
+    () => BASE_NAV.filter((n) => n.id !== "integracje" || canManageIntegrations),
+    [canManageIntegrations],
+  );
   const router = useRouter();
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
@@ -122,7 +129,7 @@ export function AppShell({
       },
     }));
     return [...navCmds, ...locCmds];
-  }, [locations, router]);
+  }, [locations, router, NAV]);
 
   return (
     <>

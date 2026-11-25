@@ -66,7 +66,15 @@ export async function updateLocation(
   tx: Tx,
   actor: Actor,
   locationId: string,
-  patch: { name?: string; phone?: string; email?: string; active?: boolean },
+  patch: {
+    name?: string;
+    phone?: string;
+    email?: string;
+    active?: boolean;
+    address?: Record<string, unknown>;
+    colorKey?: (typeof COLOR_POOL)[number];
+    openedOn?: string | null;
+  },
 ): Promise<Result<{ id: string }, DomainError>> {
   const authz = await authorize(tx, actor, "org.manage");
   if (!authz.ok) return authz;
@@ -78,6 +86,9 @@ export async function updateLocation(
       ...(patch.phone !== undefined ? { phone: patch.phone } : {}),
       ...(patch.email !== undefined ? { email: patch.email } : {}),
       ...(patch.active !== undefined ? { active: patch.active } : {}),
+      ...(patch.address !== undefined ? { address: patch.address } : {}),
+      ...(patch.colorKey !== undefined ? { colorKey: patch.colorKey } : {}),
+      ...(patch.openedOn !== undefined ? { openedOn: patch.openedOn } : {}),
       updatedAt: sql`now()`,
       updatedBy: actor.staffId,
     })
@@ -201,6 +212,123 @@ export async function setOpeningException(
       ...(input.closes ? { closes: input.closes } : {}),
       ...(input.reason ? { reason: input.reason } : {}),
     })
+    .returning({ id: openingExceptions.id });
+  const id = rows[0]?.id;
+  if (!id) return err({ type: "invariant", details: { code: "opening_exception_insert" } });
+  return ok({ id });
+}
+
+/**
+ * Tygodniowy plan godzin: zamyka (validTo) obowiązujące wiersze zmienionych dni i dodaje nowe od `validFrom`.
+ * `hours[weekday]` = null → dzień zamknięty. Niezmienione dni zostają bez ruchu.
+ */
+export async function replaceWeeklyHours(
+  tx: Tx,
+  actor: Actor,
+  input: {
+    locationId: string;
+    validFrom: string;
+    hours: ReadonlyArray<{ weekday: number; opens: string; closes: string } | null>;
+  },
+): Promise<Result<{ changed: number }, DomainError>> {
+  const authz = await authorize(tx, actor, "org.manage");
+  if (!authz.ok) return authz;
+
+  const from = plainDate(input.validFrom);
+  let changed = 0;
+  for (const [index, day] of input.hours.entries()) {
+    const weekday = index + 1;
+    if (day && day.opens >= day.closes) {
+      return err({ type: "validation", details: { field: `hours.${String(weekday)}`, code: "opens_before_closes" } });
+    }
+    const current = await tx
+      .select()
+      .from(openingHours)
+      .where(
+        and(
+          eq(openingHours.tenantId, actor.tenantId),
+          eq(openingHours.locationId, input.locationId),
+          eq(openingHours.weekday, weekday),
+          sql`(${openingHours.validTo} is null or ${openingHours.validTo} >= ${from})`,
+        ),
+      );
+    const same =
+      day !== null &&
+      current.length === 1 &&
+      current[0]?.validTo === null &&
+      current[0].opens.slice(0, 5) === day.opens.slice(0, 5) &&
+      current[0].closes.slice(0, 5) === day.closes.slice(0, 5);
+    if (same || (day === null && current.length === 0)) continue;
+
+    for (const row of current) {
+      await tx
+        .update(openingHours)
+        .set({
+          validTo:
+            row.validFrom < from
+              ? sql`(${from}::date - 1)`
+              : sql`(${openingHours.validFrom} - 1)`,
+        })
+        .where(eq(openingHours.id, row.id));
+    }
+    if (day) {
+      await tx.insert(openingHours).values({
+        tenantId: actor.tenantId,
+        locationId: input.locationId,
+        weekday,
+        opens: day.opens,
+        closes: day.closes,
+        validFrom: from,
+      });
+    }
+    changed += 1;
+  }
+  return ok({ changed });
+}
+
+/** Wyjątek godzin otwarcia dla dnia — upsert po (location, day). */
+export async function upsertOpeningException(
+  tx: Tx,
+  actor: Actor,
+  input: {
+    locationId: string;
+    day: string;
+    closed: boolean;
+    opens?: string;
+    closes?: string;
+    reason?: string;
+  },
+): Promise<Result<{ id: string }, DomainError>> {
+  const authz = await authorize(tx, actor, "org.manage");
+  if (!authz.ok) return authz;
+  if (!input.closed && (!input.opens || !input.closes || input.opens >= input.closes)) {
+    return err({ type: "validation", details: { field: "opens", code: "opens_before_closes" } });
+  }
+  const day = plainDate(input.day);
+  const existing = await tx
+    .select({ id: openingExceptions.id })
+    .from(openingExceptions)
+    .where(
+      and(
+        eq(openingExceptions.tenantId, actor.tenantId),
+        eq(openingExceptions.locationId, input.locationId),
+        eq(openingExceptions.day, day),
+      ),
+    )
+    .limit(1);
+  const values = {
+    closed: input.closed,
+    opens: input.closed ? null : (input.opens ?? null),
+    closes: input.closed ? null : (input.closes ?? null),
+    reason: input.reason ?? null,
+  };
+  if (existing[0]) {
+    await tx.update(openingExceptions).set(values).where(eq(openingExceptions.id, existing[0].id));
+    return ok({ id: existing[0].id });
+  }
+  const rows = await tx
+    .insert(openingExceptions)
+    .values({ tenantId: actor.tenantId, locationId: input.locationId, day, ...values })
     .returning({ id: openingExceptions.id });
   const id = rows[0]?.id;
   if (!id) return err({ type: "invariant", details: { code: "opening_exception_insert" } });

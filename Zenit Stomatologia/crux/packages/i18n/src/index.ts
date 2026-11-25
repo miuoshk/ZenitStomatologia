@@ -14,3 +14,4 @@ export {
   type OccupancyUiCategory,
 } from "./pl/occupancy";
 export { PULPIT_LABELS, SOURCE_LABELS_PL } from "./pl/pulpit";
+export { USTAWIENIA_LABELS, FIELD_CODE_PL } from "./pl/ustawienia";
