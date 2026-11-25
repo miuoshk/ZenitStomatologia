@@ -6,3 +6,96 @@
 [data-theme="dark"] {
   --dane-kulka-pusta: #2a4a3a;
 }
+
+/* Pasek boczny (audyt wizualny 1.0, wzór: panel Kursu na LDEK). Butelka w obu motywach. */
+:root {
+  --nav-bg: #173A2A;
+  --nav-fg: #EFE4C6;
+  --nav-fg-strong: #F7F3E8;
+  --nav-muted: #9DB2A3;
+  --nav-line: rgb(239 228 198 / 0.12);
+  --nav-hover: rgb(239 228 198 / 0.07);
+  --nav-active: #2F5A33;
+  --nav-chip: rgb(239 228 198 / 0.12);
+}
+
+[data-theme="dark"] {
+  --nav-bg: #12301F;
+  --nav-active: #2A5231;
+}
+
+/* Akcja główna i obrys pól (wzór: Kurs na LDEK; ciemny: porost z butelką, WCAG ≥ 4,5:1). */
+:root {
+  --action-bg: #2F5A33;
+  --action-bg-hover: #173A2A;
+  --action-fg: #F7F3E8;
+  --border-strong: #9DB5A4;
+}
+
+[data-theme="dark"] {
+  --action-bg: #AFC2B3;
+  --action-bg-hover: #C9D6CB;
+  --action-fg: #173A2A;
+  --border-strong: #4F7359;
+}
+
+/* Ciemny motyw jak w Kursie na LDEK: „butelka” zamiast prawie czarnej zieleni (audyt wizualny 1.0). */
+[data-theme="dark"] {
+  --surface-app: #173A2A;
+  --surface-card: #204A37;
+  --surface-sunken: #19392A;
+  --text-primary: #EFE4C6;
+  --text-secondary: #D6D9BF;
+  --text-muted: #B3BA97;
+  --border: #456A4D;
+  --grid: #2F5843;
+  --dane-kulka-pusta: #2F5843;
+}
+
+/* Kolornik w ciemnym motywie: te same pasy krawędzi, tła przyciemnione do karty. */
+[data-theme="dark"] {
+  --kolornik-z1: #2A4B37;
+  --kolornik-z2: #3A5236;
+  --kolornik-z3: #4A5634;
+  --kolornik-z4: #585832;
+  --kolornik-z5: #655A30;
+  --kolornik-zplus: #2D5843;
+}
+
+/* Tekst na kolorniku: html[...] przebija :root niezależnie od kolejności. */
+:root {
+  --kolornik-tekst: #173A2A;
+}
+
+html[data-theme="dark"] {
+  --kolornik-tekst: #F7F3E8;
+}
+
+/* Dane na wykresach: akcent, słupek, zakres; w ciemnym motywie skala odwrócona (najwięcej = krem). */
+:root {
+  --dane-akcent: #2F5A33;
+  --dane-slupek: #4A6E52;
+  --dane-zakres: #AFC2B3;
+}
+
+[data-theme="dark"] {
+  --dane-akcent: #D6D9BF;
+  --dane-slupek: #8FA77A;
+  --dane-zakres: #5E7F57;
+  --dane-skala-1: #2F5843;
+  --dane-skala-2: #3F6649;
+  --dane-skala-3: #5E7F57;
+  --dane-skala-4: #768F64;
+  --dane-skala-5: #A2AE84;
+  --dane-skala-6: #C9CCA6;
+  --dane-skala-7: #EFE4C6;
+}
+
+/* Link i akcja jako tekst (≥ 4,5:1 na karcie w obu motywach). */
+:root {
+  --link: #2F5A33;
+}
+
+[data-theme="dark"] {
+  --link: #D6D9BF;
+}

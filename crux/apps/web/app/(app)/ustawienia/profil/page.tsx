@@ -11,7 +11,7 @@ export default async function ProfilPage() {
   const session = await (await createAuthPort()).getSession();
   return (
     <div className="max-w-xl space-y-6">
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">{L.profile.title}</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{L.profile.title}</h1>
       <Card>
         <CardHeader title={L.profile.password} />
         <OwnPasswordForm />
@@ -19,7 +19,7 @@ export default async function ProfilPage() {
       <Card>
         <CardHeader title={L.profile.mfa} />
         <p className="text-sm">{session?.hasTotp ? L.profile.mfaActive : L.profile.mfaInactive}</p>
-        <Link href="/logowanie/mfa" className="mt-2 inline-block text-[var(--zenit-zielen)] underline-offset-2 hover:underline">
+        <Link href="/logowanie/mfa" className="mt-2 inline-block text-[var(--link)] underline-offset-2 hover:underline">
           {L.profile.mfaLink}
         </Link>
       </Card>

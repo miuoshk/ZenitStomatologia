@@ -4,10 +4,85 @@
 @import "@crux/ui/fonts.css";
 @import "@crux/config/tailwind-theme.css";
 
+/* Tailwind v4 skanuje tylko apps/web; komponenty z @crux/ui mają własne klasy (odstępy, siatki,
+   paddingi kart). Bez tego połowa wyglądu komponentów nie trafiała do CSS. */
+@source "../../../packages/ui/src";
+
 html,
 body {
   min-height: 100%;
   background: var(--surface-app);
   color: var(--text-primary);
   font-family: var(--font-sans);
+}
+
+/* ── Ekrany logowania (wzór: kursnaldek.pl) ─────────────────────────────── */
+.auth-bg {
+  background:
+    radial-gradient(1200px 600px at 50% -10%, color-mix(in srgb, var(--zenit-zielen) 55%, transparent), transparent 70%),
+    var(--zenit-butelka);
+  color: var(--zenit-krem);
+  --auth-muted: color-mix(in srgb, var(--zenit-krem) 70%, var(--zenit-butelka));
+}
+.auth-rycina {
+  position: absolute;
+  background: var(--zenit-krem);
+  opacity: 0.07;
+  -webkit-mask: var(--rycina) center / contain no-repeat;
+  mask: var(--rycina) center / contain no-repeat;
+  pointer-events: none;
+}
+.auth-rycina--a { --rycina: url("/brand/ryciny/szalwia.svg"); width: 520px; height: 800px; left: -140px; bottom: -180px; rotate: -12deg; }
+.auth-rycina--b { --rycina: url("/brand/ryciny/mieta.svg"); width: 440px; height: 680px; right: -120px; top: -140px; rotate: 160deg; }
+.auth-card {
+  width: 100%;
+  border-radius: var(--radius-karta);
+  border: 1px solid color-mix(in srgb, var(--zenit-krem) 16%, transparent);
+  background: color-mix(in srgb, var(--zenit-zielen) 38%, var(--zenit-butelka));
+  padding: 40px;
+  color: var(--zenit-krem);
+  box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.5);
+}
+.auth-field {
+  min-height: 48px;
+  border-radius: var(--radius-input);
+  border: 1px solid color-mix(in srgb, var(--zenit-krem) 28%, transparent);
+  background: color-mix(in srgb, var(--zenit-butelka) 70%, black);
+  padding: 0 16px;
+  color: var(--zenit-kosc);
+  font-size: 16px;
+  font-weight: 500;
+  transition: border-color 150ms;
+}
+.auth-field:hover { border-color: color-mix(in srgb, var(--zenit-krem) 50%, transparent); }
+.auth-field:focus-visible { outline: 2px solid var(--zenit-bursztyn); outline-offset: 2px; border-color: transparent; }
+.auth-btn {
+  min-height: 48px;
+  border-radius: var(--radius-pelne);
+  background: var(--zenit-krem);
+  color: var(--zenit-butelka);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0 24px;
+  transition: background-color 150ms, scale 100ms;
+}
+.auth-btn:hover { background: var(--zenit-kosc); }
+.auth-btn:focus-visible { outline: 2px solid var(--zenit-bursztyn); outline-offset: 3px; }
+.auth-btn:disabled { opacity: 0.6; }
+
+/* ── Siatka obłożenia: kolornik Z1–Z+ (tło + pasek 4 px), stany komórek ─── */
+.occ-cell { color: var(--kolornik-tekst); box-shadow: inset 4px 0 0 var(--occ-pasek); background: var(--occ-tlo); }
+.occ-cell:hover { filter: brightness(0.97); }
+.occ-z1 { --occ-tlo: var(--kolornik-z1); --occ-pasek: var(--kolornik-z1-pasek); }
+.occ-z2 { --occ-tlo: var(--kolornik-z2); --occ-pasek: var(--kolornik-z2-pasek); }
+.occ-z3 { --occ-tlo: var(--kolornik-z3); --occ-pasek: var(--kolornik-z3-pasek); }
+.occ-z4 { --occ-tlo: var(--kolornik-z4); --occ-pasek: var(--kolornik-z4-pasek); }
+.occ-z5 { --occ-tlo: var(--kolornik-z5); --occ-pasek: var(--kolornik-z5-pasek); }
+.occ-zplus { --occ-tlo: var(--kolornik-zplus); --occ-pasek: var(--kolornik-zplus-pasek); }
+.occ-empty { background: var(--surface-sunken); }
+.occ-empty:hover { background: color-mix(in srgb, var(--surface-sunken) 70%, var(--border)); }
+.occ-outside { background: transparent; border: 1px dashed var(--border); opacity: 0.7; }
+.occ-block {
+  color: var(--text-secondary);
+  background: repeating-linear-gradient(-45deg, var(--surface-sunken) 0 6px, color-mix(in srgb, var(--border) 60%, transparent) 6px 8px);
 }

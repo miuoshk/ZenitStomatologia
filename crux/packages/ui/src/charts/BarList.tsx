@@ -27,7 +27,7 @@ export function BarList({ items, label, variant = "list", width = 560, asTable =
   const labelW = 200;
   const barMax = width - labelW - 80;
   return (
-    <svg role="img" aria-label={desc} viewBox={`0 0 ${width} ${items.length * rowH}`} width={width} height={items.length * rowH}>
+    <svg role="img" aria-label={desc} className="block h-auto max-w-full" viewBox={`0 0 ${width} ${items.length * rowH}`} width={width} height={items.length * rowH}>
       <title>{desc}</title>
       {items.map((it, i) => {
         const y = i * rowH;
@@ -40,7 +40,7 @@ export function BarList({ items, label, variant = "list", width = 560, asTable =
             <text x={it.swatch ? 22 : 0} y={y + 16} fontSize={13} fontWeight={500} fill="var(--text-primary)" style={{ fontFamily: "var(--font-sans)" }}>
               {it.label}
             </text>
-            <rect x={labelW} y={y + 2} width={w} height={20} rx={4} fill="var(--zenit-las)" />
+            <rect x={labelW} y={y + 2} width={w} height={20} rx={4} fill="var(--dane-slupek)" />
             <text
               x={labelW + w + 8}
               y={y + 16}

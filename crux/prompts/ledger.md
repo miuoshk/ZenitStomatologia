@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-26 · 1.0 · przebudowa wizualna (Claude) · bez promptu
+Prompt: brak (prośba właściciela: wygląd na poziomie kursnaldek.pl)
+Commit: patrz PR `feat/estetyka-1.0` · Gałąź: feat/estetyka-1.0 (na `fix/audyt-1.0`)
+Wynik: typecheck, lint, lint:deps OK; `pnpm test` 174/174; `doctor --strict-db` OK; e2e lokalnie z kontem MFA: AC2, AC4, K15 (hub, organizacja, integracje, motyw) zielone; AC7 i AC9 padają identycznie na `main` (selektor karty i godziny otwarcia w seedzie, poza tym PR).
+Uwagi: główna przyczyna „surowego” wyglądu: Tailwind v4 nie skanował `packages/ui/src` (brak `@source`), więc odstępy, paddingi i siatki komponentów nie trafiały do CSS. Dalej: powłoka jak panel Kursu na LDEK (ikony lucide z `@crux/ui`, sekcje, profil z rolą po polsku, przełącznik gabinetu, pasek z wyszukiwaniem i datą, treść max 1280 px), logowanie na butelce z rycinami jako faktura, przyciski i segmenty jako pigułki, kafle i nagłówki 800, siatka obłożenia z kolornikiem (tło + pasek 4 px, F0-010), ciemny motyw z wartościami Kursu na LDEK (butelka zamiast prawie czarnej zieleni), odwrócona skala danych w ciemnym motywie, wykresy SVG skalują się do szerokości karty, kafle 2/3 kolumny. Nowe tokeny tylko w `tokens.extra.css` (`--nav-*`, `--action-*`, `--border-strong`, `--link`, `--dane-akcent/slupek/zakres`, kolornik ciemny) — do przeniesienia do `Materialy marki/tokeny` przy kolejnym wydaniu pakietu marki. Dług: daty w `input type=date` w formacie przeglądarki, e2e wymagają sekretu TOTP zamiast jednorazowego kodu (kod zużywa się po pierwszym logowaniu).
+
 ## 2026-11-26 · 1.0 · poprawki po audycie (Claude) · bez promptu
 Prompt: brak (audyt adwersarialny wydania 1.0, raport w projekcie Claude: `claude/audyt-crux-1.0.md`)
 Commit: patrz PR `fix/audyt-1.0` · Gałąź: fix/audyt-1.0

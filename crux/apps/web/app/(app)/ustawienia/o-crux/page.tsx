@@ -16,7 +16,7 @@ export default function OCruxPage() {
 
   return (
     <div className="max-w-xl">
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">O Crux</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">O Crux</h1>
       <p className="mt-2 text-[var(--text-secondary)]">
         System wewnętrzny zenit.stomatologia
       </p>

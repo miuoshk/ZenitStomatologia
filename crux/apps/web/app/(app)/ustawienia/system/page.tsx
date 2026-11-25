@@ -46,7 +46,7 @@ export default async function SystemPage() {
 
   return (
     <div className="max-w-4xl space-y-6">
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">{L.system.title}</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{L.system.title}</h1>
 
       <Card>
         <CardHeader title={L.system.flags} />
@@ -120,7 +120,7 @@ export default async function SystemPage() {
         </div>
       </Card>
 
-      <Link href="/ustawienia/o-crux" className="text-[var(--zenit-zielen)] underline-offset-2 hover:underline">
+      <Link href="/ustawienia/o-crux" className="text-[var(--link)] underline-offset-2 hover:underline">
         {L.system.oCrux}
       </Link>
     </div>

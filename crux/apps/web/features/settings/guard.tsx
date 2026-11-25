@@ -11,7 +11,7 @@ export async function actorWith(permission: string): Promise<Actor | null> {
 export function NoAccess() {
   return (
     <div>
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">{L.title}</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{L.title}</h1>
       <p role="alert" className="mt-4 text-[var(--text-secondary)]">
         {L.forbidden}
       </p>

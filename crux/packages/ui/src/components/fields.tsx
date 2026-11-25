@@ -1,5 +1,6 @@
 "use client";
 import { useId, useMemo, useState, type InputHTMLAttributes, type ReactNode, type Ref, type SelectHTMLAttributes } from "react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "../lib/cn";
 import { formatPhonePl, peselValid } from "../lib/format";
 import { focusRing } from "./Button";
@@ -21,7 +22,7 @@ function FieldWrap({ id, label, hint, error, children }: FieldProps & { id: stri
   return (
     <div className="flex flex-col gap-1.5">
       {label ? (
-        <label htmlFor={id} className="text-sm font-semibold text-[var(--text-secondary)]">
+        <label htmlFor={id} className="text-[13px] font-semibold text-[var(--text-secondary)]">
           {label}
         </label>
       ) : null}
@@ -82,11 +83,12 @@ export function Select({ label, hint, error, options, placeholder, className, id
   const fid = id ?? auto;
   return (
     <FieldWrap id={fid} {...({ label, hint, error } as FieldProps)}>
+      <div className="relative">
       <select
         id={fid}
         aria-invalid={error ? true : undefined}
         aria-describedby={describe(fid, { hint, error } as FieldProps)}
-        className={cn(fieldBase, "appearance-none pr-9", className)}
+        className={cn(fieldBase, "cursor-pointer appearance-none pr-10 font-medium", className)}
         {...rest}
       >
         {placeholder ? (
@@ -100,6 +102,12 @@ export function Select({ label, hint, error, options, placeholder, className, id
           </option>
         ))}
       </select>
+      <ChevronDown
+        aria-hidden
+        strokeWidth={2}
+        className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-[var(--text-muted)]"
+      />
+      </div>
     </FieldWrap>
   );
 }

@@ -9,9 +9,9 @@ export function MfaForm({ factorId }: { factorId: string }) {
   const [state, action, pending] = useActionState(verifyTotpAction, initial);
 
   return (
-    <form action={action} className="flex flex-col gap-4">
+    <form action={action} className="flex flex-col gap-5">
       <input type="hidden" name="factorId" value={factorId} />
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-[13px] font-semibold text-[var(--auth-muted)]">
         Kod
         <input
           name="code"
@@ -19,7 +19,7 @@ export function MfaForm({ factorId }: { factorId: string }) {
           autoComplete="one-time-code"
           required
           pattern="[0-9]{6}"
-          className="rounded-[var(--radius-input)] border border-[var(--zenit-mech)] bg-[var(--zenit-zielen)] px-3 py-2 text-[var(--zenit-krem)] tabular-nums"
+          className="auth-field tabular-nums tracking-[0.3em]"
         />
       </label>
       {state.message && (
@@ -30,7 +30,7 @@ export function MfaForm({ factorId }: { factorId: string }) {
       <button
         type="submit"
         disabled={pending || !factorId}
-        className="rounded-[var(--radius-pelne)] bg-[var(--zenit-zielen)] px-4 py-2.5 disabled:opacity-60"
+        className="auth-btn"
       >
         {pending ? "Sprawdzanie…" : "Potwierdź"}
       </button>

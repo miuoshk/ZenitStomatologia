@@ -17,13 +17,13 @@ export default async function UstawieniaPage() {
   const visible = SECTIONS.filter((s) => s.permission === null || actor.permissions.includes(s.permission));
   return (
     <div>
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">{L.title}</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{L.title}</h1>
       <ul className="mt-6 grid gap-4 sm:grid-cols-2">
         {visible.map((s) => (
           <li key={s.href}>
             <Link href={s.href} className="block">
-              <Card className="h-full transition-colors hover:bg-[var(--surface-sunken)]">
-                <p className="font-bold text-[var(--zenit-zielen)]">{s.title}</p>
+              <Card className="h-full transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--surface-sunken)]">
+                <p className="text-[18px] font-extrabold text-[var(--text-primary)]">{s.title}</p>
                 <p className="mt-1 text-sm text-[var(--text-muted)]">{s.hint}</p>
               </Card>
             </Link>

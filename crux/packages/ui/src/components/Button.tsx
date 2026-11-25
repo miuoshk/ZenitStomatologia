@@ -9,7 +9,7 @@ export const focusRing =
 export const buttonVariants = cva(
   [
     "inline-flex items-center justify-center gap-2 font-semibold select-none",
-    "rounded-[var(--radius-input)] transition-colors duration-150",
+    "rounded-[var(--radius-pelne)] transition-colors duration-150 active:scale-[0.98]",
     "disabled:opacity-50 disabled:pointer-events-none",
     "min-h-11 px-5 text-[15px]",
     focusRing,
@@ -18,9 +18,9 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-[var(--zenit-zielen)] text-[var(--zenit-kosc)] hover:bg-[var(--zenit-butelka)]",
+          "bg-[var(--action-bg)] text-[var(--action-fg)] hover:bg-[var(--action-bg-hover)]",
         secondary:
-          "bg-[var(--surface-card)] text-[var(--text-primary)] border border-[var(--border)] hover:bg-[var(--surface-sunken)]",
+          "bg-transparent text-[var(--text-primary)] border border-[var(--border-strong)] hover:bg-[var(--surface-sunken)]",
         ghost: "bg-transparent text-[var(--text-primary)] hover:bg-[var(--surface-sunken)]",
         danger: "bg-[var(--zenit-cegla)] text-[var(--zenit-kosc)] hover:bg-[var(--status-krytyczne)]",
       },

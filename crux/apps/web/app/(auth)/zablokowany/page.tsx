@@ -16,9 +16,9 @@ export default async function ZablokowanyPage() {
   const factorId = (await getTotpFactorId()) ?? "";
 
   return (
-    <div className="w-full max-w-md rounded-[var(--radius-karta)] bg-[var(--zenit-butelka)] p-8 text-[var(--zenit-krem)]">
-      <h1 className="mb-1 text-xl font-medium">Ekran zablokowany</h1>
-      <p className="mb-6 text-sm text-[var(--zenit-patyna)]">
+    <div className="auth-card">
+      <h1 className="mb-2 text-[32px] font-extrabold leading-9 tracking-[-0.02em] text-[var(--zenit-kosc)]">Ekran zablokowany</h1>
+      <p className="mb-8 text-[15px] text-[var(--auth-muted)]">
         Odblokuj hasłem lub kodem MFA — stan aplikacji zostaje.
       </p>
       <UnlockForm factorId={factorId} />

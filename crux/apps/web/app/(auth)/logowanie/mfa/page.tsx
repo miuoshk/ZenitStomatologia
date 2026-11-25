@@ -15,7 +15,7 @@ export default async function MfaPage() {
     const enrolled = await auth.enrollTotp();
     if ("error" in enrolled) {
       return (
-        <div className="rounded-[var(--radius-karta)] bg-[var(--zenit-butelka)] p-8 text-[var(--zenit-krem)]">
+        <div className="auth-card">
           <p>Nie udało się rozpocząć rejestracji MFA.</p>
         </div>
       );
@@ -27,11 +27,11 @@ export default async function MfaPage() {
   }
 
   return (
-    <div className="w-full max-w-md rounded-[var(--radius-karta)] bg-[var(--zenit-butelka)] p-8 text-[var(--zenit-krem)]">
-      <h1 className="mb-1 text-xl font-medium">
+    <div className="auth-card">
+      <h1 className="mb-2 text-[32px] font-extrabold leading-9 tracking-[-0.02em] text-[var(--zenit-kosc)]">
         {qrCode ? "Zarejestruj MFA" : "Kod MFA"}
       </h1>
-      <p className="mb-6 text-sm text-[var(--zenit-patyna)]">
+      <p className="mb-8 text-[15px] text-[var(--auth-muted)]">
         {qrCode
           ? "Zeskanuj kod QR w aplikacji uwierzytelniającej, potem wpisz kod."
           : "Podaj kod z aplikacji uwierzytelniającej."}

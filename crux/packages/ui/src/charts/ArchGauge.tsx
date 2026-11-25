@@ -26,7 +26,7 @@ export function ArchGauge({ value, label, width = 320, asTable = false, ...rest 
   const h = geometry.wysokosc * s;
   const extra = label ? 32 : 0;
   return (
-    <svg role="img" aria-label={desc} viewBox={`0 0 ${s} ${h + extra}`} width={s} height={h + extra} {...rest}>
+    <svg role="img" aria-label={desc} className="block h-auto max-w-full" viewBox={`0 0 ${s} ${h + extra}`} width={s} height={h + extra} {...rest}>
       <title>{desc}</title>
       {geometry.zeby.map((t, i) => (
         <circle
@@ -34,7 +34,7 @@ export function ArchGauge({ value, label, width = 320, asTable = false, ...rest 
           cx={t.cx * s}
           cy={t.cy * s}
           r={t.r * s}
-          fill={i < filled ? "var(--zenit-zielen)" : "var(--dane-kulka-pusta)"}
+          fill={i < filled ? "var(--dane-akcent)" : "var(--dane-kulka-pusta)"}
         />
       ))}
       <text

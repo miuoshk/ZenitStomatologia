@@ -60,7 +60,7 @@ async function loadProviders(ctx: DashboardContext) {
 export function Heading({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
     <header>
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">{title}</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{title}</h1>
       {subtitle ? <p className="mt-1 text-[var(--text-secondary)]">{subtitle}</p> : null}
     </header>
   );
@@ -69,7 +69,7 @@ export function Heading({ title, subtitle }: { title: string; subtitle?: string 
 export function Forbidden() {
   return (
     <div>
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">{L.title}</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{L.title}</h1>
       <p role="alert" className="mt-4 text-[var(--text-secondary)]">
         {L.forbidden}
       </p>
@@ -96,7 +96,7 @@ export async function NetworkOrLocationDashboard({ ctx }: { ctx: DashboardContex
         providers={providers}
         singleLocation={location}
       />
-      <section aria-label="Kafle" className="grid grid-cols-2 gap-4 lg:grid-cols-4 min-[1440px]:grid-cols-6">
+      <section aria-label="Kafle" className="grid grid-cols-2 gap-4 xl:grid-cols-3">
         <Tile ctx={ctx} id="chair_utilization" />
         <Tile ctx={ctx} id="chair_hours_worked" />
         <Tile ctx={ctx} id="revenue_realized" />
@@ -107,7 +107,7 @@ export async function NetworkOrLocationDashboard({ ctx }: { ctx: DashboardContex
       <Cell ctx={ctx} id="przychod" title={L.cards.revenueWeekly}>
         <RevenueWeeklyCard ctx={ctx} />
       </Cell>
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 xl:grid-cols-2">
         <Cell ctx={ctx} id="luki" title={L.cards.gauges}>
           <GaugesCard ctx={ctx} />
         </Cell>
@@ -127,7 +127,7 @@ export async function NetworkOrLocationDashboard({ ctx }: { ctx: DashboardContex
           <QualityCard ctx={ctx} />
         </Cell>
         {location ? (
-          <Cell ctx={ctx} id="wykonawcy" title={L.cards.providers} className="lg:col-span-2">
+          <Cell ctx={ctx} id="wykonawcy" title={L.cards.providers} className="xl:col-span-2">
             <ProvidersCard ctx={ctx} />
           </Cell>
         ) : null}
