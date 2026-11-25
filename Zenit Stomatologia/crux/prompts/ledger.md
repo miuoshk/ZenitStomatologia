@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K15 · ekrany administracji: org, personel, system, integracje · część 1
+Prompt: prompts/F0-fundament.md#K15
+Commit: 301c9b7 · Gałąź: main
+Wynik: web typecheck/lint OK; org 3, identity 3, platform 9 (fileParallelism off); `db:test` 70; `doctor` OK. e2e ustawienia na E2E_*.
+Uwagi: `/ustawienia/{organizacja,personel,system,profil}`, `/integracje`; AuthAdmin invite + reset MFA (SUPABASE_SECRET_KEY); hasło jednorazowe tylko w UI; `0015_outbox_retry`; vitest `fileParallelism: false` w modułach DB. Luki: historia audytu org bez triggerów; force-password e2e niekompletne.
+
 ## 2026-11-25 · K14 · pulpity 1.0 + lista drążenia (F0-011) · część 1–2
 Prompt: prompts/F0-fundament.md#K14
 Commit: 0b4f243 · Gałąź: main
