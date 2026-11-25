@@ -1,6 +1,6 @@
 # Zależności npm
 
-Wersja 1.0 · K01 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
+Wersja 1.0 · K03 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
 
 | Pakiet | Po co | Licencja | Dane pacjentów |
 |---|---|---|---|
@@ -26,6 +26,10 @@ Wersja 1.0 · K01 (25 listopada 2026). Każda bezpośrednia zależność musi tu
 | `dependency-cruiser` | graf zależności modułów | MIT | nie |
 | `tailwindcss` | style (v4) | MIT | nie |
 | `@tailwindcss/postcss` | integracja Tailwind z PostCSS / Next | MIT | nie |
+| `supabase` | CLI lokalne (init/start/test/migrate) | MIT | nie |
+| `zod` | schematy i walidacja wejścia (`Id`, `PlainDate`) | MIT | nie |
+| `uuidv7` | generowanie identyfikatorów UUIDv7 (`newId`) | Apache-2.0 | nie |
+| `date-fns` | formatowanie dat/czasu w `@crux/shared/time` | MIT | nie |
+| `@date-fns/tz` | strefa `Europe/Warsaw`, DST (`TZDate`) | MIT | nie |
 
 Transitive (m.in. `postcss` z `@tailwindcss/postcss`) nie wymagają osobnego wiersza, dopóki nie są zależnością bezpośrednią.
-| `supabase` | CLI lokalne (init/start/test/migrate) | MIT | nie |

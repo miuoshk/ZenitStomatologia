@@ -4,15 +4,31 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./result": "./src/result.ts",
+    "./money": "./src/money.ts",
+    "./id": "./src/id.ts",
+    "./time": "./src/time.ts",
+    "./crypto": "./src/crypto.ts",
+    "./pesel": "./src/pesel.ts",
+    "./errors": "./src/errors.ts",
+    "./pii": "./src/pii.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint . --max-warnings 0",
-    "test": "vitest run --passWithNoTests",
+    "test": "vitest run --coverage",
     "build": "tsc -p tsconfig.build.json"
   },
+  "dependencies": {
+    "@date-fns/tz": "1.5.0",
+    "date-fns": "4.4.0",
+    "uuidv7": "1.2.1",
+    "zod": "4.6.7"
+  },
   "devDependencies": {
+    "@types/node": "22.20.7",
+    "@vitest/coverage-v8": "5.1.2",
     "typescript": "6.0.3",
     "vitest": "5.1.2"
   }
