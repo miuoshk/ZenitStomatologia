@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K08 · @crux/ui: brand, komponenty, wykresy, Storybook · część 1
+Prompt: prompts/F0-fundament.md#K08
+Commit: b22daa4 · Gałąź: main
+Wynik: `storybook build` OK; lint/typecheck/e2e smoke OK.
+Uwagi: `brand:sync` + manifest (149 plików); inwentarz 1.0 + model kuleczkowy; `tokens.extra` (`--dane-kulka-pusta`); web na `@crux/ui` (logowanie: `@crux/ui/crux-logo`); ESLint `ui.no-hex`. `test:visual` / `charts-vs-reference.png` — placeholder do K10/CI.
+
 ## 2026-11-25 · K07 · logowanie, MFA, blokada, powłoka · część 1
 Prompt: prompts/F0-fundament.md#K07
 Commit: a4a91e9 · Gałąź: main
