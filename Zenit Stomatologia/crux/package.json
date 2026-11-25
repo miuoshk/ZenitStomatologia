@@ -1,5 +1,6 @@
 {
   "name": "crux",
+  "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@10.23.0",
   "engines": {
@@ -28,9 +29,15 @@
     "db:generate": "pnpm --filter @crux/db db:generate",
     "db:push:staging": "pnpm --filter @crux/db db:push:staging",
     "seed:demo": "tsx packages/testing/src/seed-demo.ts",
-    "analytics:refresh": "tsx packages/modules/analytics/src/refresh/cli.ts"
+    "analytics:refresh": "tsx packages/modules/analytics/src/refresh/cli.ts",
+    "bootstrap:prod": "tsx tools/bootstrap-prod.ts"
   },
   "devDependencies": {
+    "@crux/db": "workspace:*",
+    "@crux/identity": "workspace:*",
+    "@crux/org": "workspace:*",
+    "@crux/platform": "workspace:*",
+    "@crux/shared": "workspace:*",
     "@opentelemetry/api": "1.10.0",
     "@playwright/test": "1.65.1",
     "@types/node": "22.20.7",

@@ -12,6 +12,10 @@
 | [wdrozenie-produkcyjne.md](wdrozenie-produkcyjne.md) | okno po 20:00, lista kontrolna | Bartek |
 | [supabase-konfiguracja.md](supabase-konfiguracja.md) | lista kontrolna Supabase (staging / produkcja) | Bartek |
 | [zaleznosci-przeglad.md](zaleznosci-przeglad.md) | kwartalny przegląd zależności | Bartek |
+| [bramka-1-0.md](bramka-1-0.md) | bramka operacyjna wydania 1.0 (10 dni roboczych), dziennik | Miłosz |
+| [lista-obecnosci-szkolenie-1-0.md](lista-obecnosci-szkolenie-1-0.md) | lista obecności szkolenia recepcji i kierowników | Miłosz |
 | [sentry-bez-pii.md](sentry-bez-pii.md) | jak sprawdzić, że Sentry/OTel nie dostają danych osobowych | Bartek |
+
+Instrukcje użytkownika: [docs/instrukcje](../instrukcje/README.md).
 
 Obserwowalność (ADR-016): logi pino z allowlistą (`@crux/shared/logger`), Sentry UE bez PII, OpenTelemetry tylko z `OTEL_EXPORTER_OTLP_ENDPOINT`. Konfiguracja przez zmienne środowiskowe — patrz [sentry-bez-pii.md](sentry-bez-pii.md).

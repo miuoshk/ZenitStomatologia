@@ -8,6 +8,21 @@ importers:
 
   .:
     devDependencies:
+      '@crux/db':
+        specifier: workspace:*
+        version: link:packages/db
+      '@crux/identity':
+        specifier: workspace:*
+        version: link:packages/modules/identity
+      '@crux/org':
+        specifier: workspace:*
+        version: link:packages/modules/org
+      '@crux/platform':
+        specifier: workspace:*
+        version: link:packages/modules/platform
+      '@crux/shared':
+        specifier: workspace:*
+        version: link:packages/shared
       '@opentelemetry/api':
         specifier: 1.10.0
         version: 1.10.0

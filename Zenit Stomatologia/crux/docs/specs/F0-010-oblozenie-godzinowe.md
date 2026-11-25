@@ -1,6 +1,6 @@
 # F0-010 · Obłożenie godzinowe foteli (moduł wzorcowy)
 
-Status: w realizacji (K11 zamknięty lokalnie: migracja/RLS/pgTAP, domena, use-case'y, UI `/oblozenie` + `/oblozenie/tydzien`, e2e AC9 na seedzie E2E_*; UI tworzenia blokad czasu i staging → `wdrożona` później)
+Status: w realizacji (K11 zamknięty lokalnie: migracja/RLS/pgTAP, domena, use-case'y, UI `/oblozenie` + `/oblozenie/tydzien`, e2e AC9 na seedzie E2E_*; UI tworzenia blokad czasu i staging → `wdrożona` później) · K17 (2026-11-25): kod kompletny; status „wdrożona” dopiero po bramce operacyjnej 1.0 ([docs/ops/bramka-1-0.md](../ops/bramka-1-0.md))
 Wydanie: 1.0 „Krasnodrzew”
 Moduły: @crux/scheduling, @crux/org, @crux/identity, @crux/platform, @crux/ui
 Właściciel: Miłosz

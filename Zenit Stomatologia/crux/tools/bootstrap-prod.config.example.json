@@ -1,0 +1,64 @@
+{
+  "_uwaga": "PRZYKŁAD z placeholderami. Skopiuj POZA repo i uzupełnij prawdziwe dane z KRS/RPWDL. Nie commituj wypełnionego pliku. Wartości TODO muszą zniknąć.",
+  "tenant": {
+    "name": "Zenit Stomatologia",
+    "legalName": "TODO: pełna nazwa podmiotu leczniczego z KRS",
+    "nip": "TODO-NIP",
+    "regon": "TODO-REGON",
+    "rpwdlBookNumber": "TODO-numer-księgi-rejestrowej",
+    "address": { "street": "TODO", "postalCode": "TODO", "city": "TODO" }
+  },
+  "openingValidFrom": "2026-12-11",
+  "locations": [
+    {
+      "number": "01",
+      "name": "Nowodworska",
+      "colorKey": "01",
+      "resortCode": "TODO-kod-resortowy-01",
+      "openedOn": "2026-12-11",
+      "address": { "street": "TODO: ul. Nowodworska", "postalCode": "TODO", "city": "TODO" },
+      "chairs": 3,
+      "weeklyHours": [
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "14:00" },
+        null
+      ],
+      "occupancyMode": "manual",
+      "chairUtilizationTarget": 75
+    },
+    {
+      "number": "02",
+      "name": "Białowieska",
+      "colorKey": "02",
+      "resortCode": "TODO-kod-resortowy-02",
+      "openedOn": "2026-12-11",
+      "address": { "street": "TODO: ul. Białowieska", "postalCode": "TODO", "city": "TODO" },
+      "chairs": 2,
+      "weeklyHours": [
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "20:00" },
+        { "opens": "08:00", "closes": "14:00" },
+        null
+      ],
+      "occupancyMode": "manual",
+      "chairUtilizationTarget": 65
+    }
+  ],
+  "staff": [
+    { "firstName": "Miłosz", "lastName": "TODO", "email": "TODO.milosz@zenitstomatologia.pl", "role": "network_admin", "locations": [] },
+    { "firstName": "Bartek", "lastName": "TODO", "email": "TODO.bartek@zenitstomatologia.pl", "role": "network_admin", "locations": [] },
+    { "firstName": "TODO", "lastName": "Kierownik01", "email": "TODO.kierownik01@zenitstomatologia.pl", "role": "location_manager", "locations": ["01"] },
+    { "firstName": "TODO", "lastName": "Recepcja01", "email": "TODO.recepcja01@zenitstomatologia.pl", "role": "receptionist", "locations": ["01"] },
+    { "firstName": "TODO", "lastName": "Kierownik02", "email": "TODO.kierownik02@zenitstomatologia.pl", "role": "location_manager", "locations": ["02"] },
+    { "firstName": "TODO", "lastName": "Recepcja02", "email": "TODO.recepcja02@zenitstomatologia.pl", "role": "receptionist", "locations": ["02"] }
+  ],
+  "_staffWykonawcy": "TODO: dentist/hygienist wg grafiku (imię, nazwisko, e-mail imienny, role, locations). Dodaj wpisy do tablicy staff; puste = dodasz w UI.",
+  "featureFlags": ["oblozenie", "pulpit", "ustawienia", "integracje"]
+}

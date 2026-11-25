@@ -1,6 +1,6 @@
 # F0-011 · Analityka i pulpity wydania 1.0
 
-Status: w realizacji (K13 zamknięty lokalnie: schemat `analytics`, zasilanie workera, rejestr 7 metryk, drążenie, testy AC1/AC3/AC4/AC5 po stronie danych; K14 UI gotowe lokalnie, bez zatwierdzenia: pulpity `/pulpit`, `/pulpit/gabinet`, `/pulpit/moje`, lista `/lista/oblozenie` z CSV, e2e `pulpit.spec.ts`; do domknięcia: zrzuty w obu motywach w PR, edycja celów w K15, mediana gabinetu dla lekarza, p95 AC6 na stagingu)
+Status: w realizacji (K13 zamknięty lokalnie: schemat `analytics`, zasilanie workera, rejestr 7 metryk, drążenie, testy AC1/AC3/AC4/AC5 po stronie danych; K14 UI gotowe lokalnie, bez zatwierdzenia: pulpity `/pulpit`, `/pulpit/gabinet`, `/pulpit/moje`, lista `/lista/oblozenie` z CSV, e2e `pulpit.spec.ts`; do domknięcia: zrzuty w obu motywach w PR, edycja celów w K15, mediana gabinetu dla lekarza, p95 AC6 na stagingu) · K17 (2026-11-25): kod kompletny; status „wdrożona” dopiero po bramce operacyjnej 1.0 ([docs/ops/bramka-1-0.md](../ops/bramka-1-0.md))
 Wydanie: 1.0 „Krasnodrzew”
 Moduły: @crux/analytics, @crux/ui, @crux/platform, apps/worker
 Właściciel: Miłosz

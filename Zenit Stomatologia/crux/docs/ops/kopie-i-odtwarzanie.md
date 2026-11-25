@@ -38,4 +38,6 @@
 |---|---|---|---|---|---|
 | _do uzupełnienia przed K17_ | | | | | |
 
+> **Wydanie 1.0:** pierwszy test odtworzenia z kopii **produkcyjnej** musi być wpisany do tabeli powyżej, zanim zamknie się bramka 1.0 ([bramka-1-0.md](bramka-1-0.md), punkt 5).
+
 > Brak testu w ciągu 100 dni = alarm; kopia nieprzetestowana nie jest kopią.

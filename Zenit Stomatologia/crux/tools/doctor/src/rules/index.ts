@@ -21,6 +21,7 @@ import {
 } from "./db";
 import { depsDocumented } from "./deps";
 import { docsRulesChecksum } from "./docs";
+import { releaseNoPatientTables } from "./release";
 import { specTraceability } from "./specs";
 import { uiBrandSeparation, uiBrandSync, uiMetricForm, uiNoHex } from "./ui";
 import type { Rule } from "../types";
@@ -48,4 +49,5 @@ export const rules: readonly Rule[] = [
   depsDocumented,
   specTraceability,
   docsRulesChecksum,
+  releaseNoPatientTables,
 ];
