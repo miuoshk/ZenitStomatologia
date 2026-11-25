@@ -231,6 +231,9 @@ importers:
         specifier: 0.45.4
         version: 0.45.4(pg@8.23.1)(postgres@3.4.7)
     devDependencies:
+      '@crux/testing':
+        specifier: link:../../testing
+        version: link:../../testing
       '@types/node':
         specifier: 22.20.7
         version: 22.20.7
@@ -268,6 +271,9 @@ importers:
         specifier: 0.45.4
         version: 0.45.4(pg@8.23.1)(postgres@3.4.7)
     devDependencies:
+      '@crux/testing':
+        specifier: link:../../testing
+        version: link:../../testing
       '@types/node':
         specifier: 22.20.7
         version: 22.20.7
@@ -293,6 +299,9 @@ importers:
         specifier: 4.6.7
         version: 4.6.7
     devDependencies:
+      '@crux/testing':
+        specifier: link:../../testing
+        version: link:../../testing
       '@types/node':
         specifier: 22.20.7
         version: 22.20.7
@@ -327,6 +336,9 @@ importers:
         specifier: 4.6.7
         version: 4.6.7
     devDependencies:
+      '@crux/testing':
+        specifier: link:../../testing
+        version: link:../../testing
       '@types/node':
         specifier: 22.20.7
         version: 22.20.7
@@ -366,7 +378,44 @@ importers:
         version: 5.1.2(@types/node@22.20.7)(@vitest/coverage-v8@5.1.2)(vite@8.3.8(@types/node@22.20.7)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15))
 
   packages/testing:
+    dependencies:
+      '@crux/db':
+        specifier: workspace:*
+        version: link:../db
+      '@crux/identity':
+        specifier: workspace:*
+        version: link:../modules/identity
+      '@crux/integrations':
+        specifier: workspace:*
+        version: link:../modules/integrations
+      '@crux/org':
+        specifier: workspace:*
+        version: link:../modules/org
+      '@crux/platform':
+        specifier: workspace:*
+        version: link:../modules/platform
+      '@crux/scheduling':
+        specifier: workspace:*
+        version: link:../modules/scheduling
+      '@crux/shared':
+        specifier: workspace:*
+        version: link:../shared
+      drizzle-orm:
+        specifier: 0.45.4
+        version: 0.45.4(pg@8.23.1)(postgres@3.4.7)
+      seedrandom:
+        specifier: 3.0.5
+        version: 3.0.5
     devDependencies:
+      '@types/node':
+        specifier: 22.20.7
+        version: 22.20.7
+      '@types/seedrandom':
+        specifier: 3.0.8
+        version: 3.0.8
+      tsx:
+        specifier: 4.23.15
+        version: 4.23.15
       typescript:
         specifier: 6.0.3
         version: 6.0.3
@@ -2159,6 +2208,9 @@ packages:
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
 
+  '@types/seedrandom@3.0.8':
+    resolution: {integrity: sha512-TY1eezMU2zH2ozQoAFAQFOPpvP15g+ZgSfTZt31AUUH/Rxtnz3H+A/Sv1Snw2/amp//omibc+AEkTaA8KUeOLQ==}
+
   '@types/use-sync-external-store@0.0.6':
     resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
 
@@ -3828,6 +3880,9 @@ packages:
 
   secure-json-parse@2.7.0:
     resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
+
+  seedrandom@3.0.5:
+    resolution: {integrity: sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==}
 
   semver@6.3.2:
     resolution: {integrity: sha512-GYrCADwpu6yV5OAvchkQ27Z5wwMxWAEMg5NNWjyHh/5DboFFqbdbvYNIvZouQpxXyeMPoTOh0vdPYKlf0ZswdQ==}
@@ -5649,6 +5704,8 @@ snapshots:
 
   '@types/resolve@1.20.6': {}
 
+  '@types/seedrandom@3.0.8': {}
+
   '@types/use-sync-external-store@0.0.6': {}
 
   '@typescript-eslint/eslint-plugin@8.74.0(@typescript-eslint/parser@8.74.0(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3))(eslint@10.15.0(jiti@2.7.0))(typescript@6.0.3)':
@@ -7230,6 +7287,8 @@ snapshots:
   scheduler@0.28.0: {}
 
   secure-json-parse@2.7.0: {}
+
+  seedrandom@3.0.5: {}
 
   semver@6.3.2: {}
 

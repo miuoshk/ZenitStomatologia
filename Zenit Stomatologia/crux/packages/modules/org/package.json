@@ -19,6 +19,7 @@
     "drizzle-orm": "0.45.4"
   },
   "devDependencies": {
+    "@crux/testing": "link:../../testing",
     "@types/node": "22.20.7",
     "typescript": "6.0.3",
     "vitest": "5.1.2"

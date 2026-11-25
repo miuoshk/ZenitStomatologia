@@ -52,5 +52,7 @@ Wersja 1.0 · K10 (25 listopada 2026). Każda bezpośrednia zależność musi tu
 | `pg-boss` | kolejki / cron workera (`apps/worker`, schemat `pgboss`) | MIT | tak (metadane jobów w PG) |
 | `pino` | logi JSON workera (bez PII) | MIT | nie |
 | `pino-pretty` | czytelne logi workera w dev | MIT | nie |
+| `seedrandom` | deterministyczny PRNG dla fabryk i golden datasetu (`@crux/testing`, K12) | MIT | nie |
+| `@types/seedrandom` | typy `seedrandom` | MIT | nie |
 
 Transitive (m.in. `postcss` z `@tailwindcss/postcss`) nie wymagają osobnego wiersza, dopóki nie są zależnością bezpośrednią.

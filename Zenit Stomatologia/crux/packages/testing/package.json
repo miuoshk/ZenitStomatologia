@@ -4,15 +4,33 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./golden": "./src/golden/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run --passWithNoTests",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "gen:golden": "tsx src/golden/gen-golden.ts",
+    "verify:golden": "tsx src/golden/verify-golden.ts",
+    "seed:demo": "tsx src/seed-demo.ts"
+  },
+  "dependencies": {
+    "@crux/db": "workspace:*",
+    "@crux/identity": "workspace:*",
+    "@crux/integrations": "workspace:*",
+    "@crux/org": "workspace:*",
+    "@crux/platform": "workspace:*",
+    "@crux/scheduling": "workspace:*",
+    "@crux/shared": "workspace:*",
+    "drizzle-orm": "0.45.4",
+    "seedrandom": "3.0.5"
   },
   "devDependencies": {
+    "@types/node": "22.20.7",
+    "@types/seedrandom": "3.0.8",
+    "tsx": "4.23.15",
     "typescript": "6.0.3",
     "vitest": "5.1.2"
   }

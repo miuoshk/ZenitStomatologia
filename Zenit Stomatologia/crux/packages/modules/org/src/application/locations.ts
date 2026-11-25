@@ -5,7 +5,8 @@ import { plainDate } from "@crux/shared/time";
 import { and, eq, sql } from "drizzle-orm";
 import { authorize } from "@crux/identity";
 
-const COLOR_POOL = ["loc1", "loc2", "loc3", "loc4"] as const;
+/** `01`–`04` wg docs/14 (kolor gabinetu = numer); `loc1`–`loc4` zostają dla zgodności wstecznej. */
+export const COLOR_POOL = ["01", "02", "03", "04", "loc1", "loc2", "loc3", "loc4"] as const;
 const NUMBER_RE = /^\d{2}$/;
 
 export async function createLocation(

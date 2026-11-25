@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "seed": 20261105,
+    "period": {
+      "from": "2025-10-01",
+      "to": "2026-10-31"
+    },
+    "tenant_id": "e73ad5fa-5fc7-5035-86eb-01a1b04172a3",
+    "locations": {
+      "01": "f62b1b4a-f2ce-5201-a62b-782269ed32be",
+      "02": "4c63ebe5-ac7b-561c-8c69-0b0650de7de0"
+    },
+    "provider_keys": [
+      "prov1",
+      "prov2",
+      "prov3",
+      "prov4",
+      "prov5"
+    ]
+  },
+  "chair_utilization": 0.7165738161559888,
+  "chair_hours_worked": 13377,
+  "revenue_realized": 884898200,
+  "revenue_per_chair_hour": 66150.72138745608,
+  "revenue_by_category": {
+    "Z1": 30429300,
+    "Z2": 76243600,
+    "Z3": 165829600,
+    "Z4": 181073500,
+    "Z5": 203413200,
+    "Z+": 227909000
+  },
+  "provider_hours_worked": {
+    "prov1": 2908,
+    "prov2": 2861,
+    "prov3": 2924,
+    "prov4": 2347,
+    "prov5": 2337
+  },
+  "days_closed_rate": 0.9397058823529412,
+  "counts": {
+    "entries": 13377,
+    "time_blocks": 6,
+    "day_closures": 639,
+    "working_location_days": 680,
+    "available_minutes": 1120080,
+    "occupied_minutes": 802620
+  },
+  "by_location": {
+    "01": {
+      "chair_utilization": 0.7756759168376908,
+      "entries": 8693
+    },
+    "02": {
+      "chair_utilization": 0.6277978823214047,
+      "entries": 4684
+    }
+  }
+}

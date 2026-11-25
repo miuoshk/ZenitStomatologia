@@ -1,12 +1,21 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { randomBytes } from "node:crypto";
 import type { Actor, CruxDb } from "@crux/db";
 import { auditEvents, chairOccupancy, outbox } from "@crux/db/schema";
 import { createTestDb, resetBetweenTests } from "@crux/db/testing";
-import { createStaffMember } from "@crux/identity";
-import { createChair, createLocation, createTenant, setOpeningHours } from "@crux/org";
 import { setSetting } from "@crux/platform";
-import { LocalKeyProvider } from "@crux/shared/crypto";
+import {
+  bootstrapTenant,
+  chairFactory,
+  createFakeKeyProvider,
+  createRng,
+  locationFactory,
+  openingHoursFactory,
+  persistChair,
+  persistLocation,
+  persistOpeningHours,
+  persistStaff,
+  staffFactory,
+} from "@crux/testing";
 import { newId } from "@crux/shared/id";
 import type { Result } from "@crux/shared/result";
 import { and, eq, isNull, sql } from "drizzle-orm";
@@ -43,14 +52,6 @@ type Env = {
   provider: Actor;
 };
 
-function keys() {
-  return new LocalKeyProvider({
-    KMS_LOCAL_DEK: randomBytes(32).toString("hex"),
-    KMS_LOCAL_PEPPER: randomBytes(32).toString("hex"),
-    KMS_KEY_ID: "local-v1",
-  });
-}
-
 describe("@crux/scheduling occupancy (integracja)", () => {
   let db: CruxDb;
   let env: Env;
@@ -65,26 +66,7 @@ describe("@crux/scheduling occupancy (integracja)", () => {
 
   beforeEach(async () => {
     await resetBetweenTests(db);
-    const boot: Actor = {
-      staffId: newId(),
-      tenantId: newId(),
-      locationIds: [],
-      activeLocationId: newId(),
-      role: "network_admin",
-      permissions: ["org.manage"],
-    };
-    let tenantId = "";
-    await db.withActor(boot, async (tx) => {
-      const t = await createTenant(tx, { name: "Z", legalName: "Z" }, keys());
-      if (!t.ok) throw new Error("createTenant");
-      tenantId = t.value.id;
-    });
-
-    const admin: Actor = {
-      ...boot,
-      tenantId,
-      permissions: ["network.view", "org.manage", "staff.manage", "settings.manage"],
-    };
+    const { tenantId, admin } = await bootstrapTenant(db, createFakeKeyProvider());
     const must = <T>(r: Result<T, unknown>, what: string): T => {
       if (!r.ok) throw new Error(`${what} ${JSON.stringify(r.error)}`);
       return r.value;
@@ -95,45 +77,23 @@ describe("@crux/scheduling occupancy (integracja)", () => {
     let location01 = "";
     let location02 = "";
     await db.withActor(admin, async (tx) => {
-      location01 = must(
-        await createLocation(tx, admin, { number: "01", name: "Nowodworska", address: {} }),
-        "location",
-      ).id;
-      location02 = must(
-        await createLocation(tx, admin, { number: "02", name: "Białowieska", address: {} }),
-        "location",
-      ).id;
+      location01 = must(await persistLocation(tx, admin, locationFactory("01")), "location").id;
+      location02 = must(await persistLocation(tx, admin, locationFactory("02")), "location").id;
       for (let i = 1; i <= 3; i += 1) {
-        chairs.push(
-          must(
-            await createChair(tx, admin, {
-              locationId: location01,
-              name: `Fotel ${String(i)}`,
-              position: i,
-            }),
-            "chair",
-          ).id,
-        );
+        chairs.push(must(await persistChair(tx, admin, location01, chairFactory(i)), "chair").id);
       }
-      for (let weekday = 1; weekday <= 7; weekday += 1) {
-        must(
-          await setOpeningHours(tx, admin, {
-            locationId: location01,
-            weekday,
-            opens: "08:00",
-            closes: "20:00",
-            validFrom: "2020-01-01",
-          }),
-          "hours",
-        );
-      }
+      // test potrzebuje także niedzieli (domyślna fabryka: niedziela zamknięta)
+      await persistOpeningHours(
+        tx,
+        admin,
+        location01,
+        "2020-01-01",
+        openingHoursFactory({ 6: { weekday: 6, opens: "08:00", closes: "20:00" }, 7: { weekday: 7, opens: "08:00", closes: "20:00" } }),
+      );
+      const rng = createRng(12);
       for (const key of ["reception", "manager", "dentist", "assistant"] as const) {
         ids[key] = must(
-          await createStaffMember(tx, admin, {
-            firstName: key,
-            lastName: "Test",
-            email: `${key}@test.invalid`,
-          }),
+          await persistStaff(tx, admin, staffFactory(rng, key, "assistant")),
           "staff",
         ).id;
       }

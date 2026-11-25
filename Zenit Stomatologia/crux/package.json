@@ -26,7 +26,8 @@
     "db:diff": "pnpm --filter @crux/db db:diff",
     "db:types": "pnpm --filter @crux/db db:types",
     "db:generate": "pnpm --filter @crux/db db:generate",
-    "db:push:staging": "pnpm --filter @crux/db db:push:staging"
+    "db:push:staging": "pnpm --filter @crux/db db:push:staging",
+    "seed:demo": "tsx packages/testing/src/seed-demo.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.65.1",
