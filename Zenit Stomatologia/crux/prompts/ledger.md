@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K14 · pulpity 1.0 + lista drążenia (F0-011) · część 1–2
+Prompt: prompts/F0-fundament.md#K14
+Commit: 0b4f243 · Gałąź: main
+Wynik: web typecheck/lint OK; web test 14/14; analytics 28/28; `doctor` OK. e2e pulpit na E2E_* (skipped bez env).
+Uwagi: `/pulpit`, `/pulpit/gabinet`, `/pulpit/moje`, `/lista/oblozenie` (+ CSV export); FilterBar URL `docs/11` §3; redirecty ról AC3; query helpers tylko z `analytics.*`. Luki: mediana na „moje” (placeholder); audyt eksportu przez outbox nie `audit.events`; linia celu przychodu / pełne porownaj=cel poza utilization; zrzuty PR w obu motywach do doklejenia ręcznie.
+
 ## 2026-11-25 · K13 · @crux/analytics: schemat, refresh, rejestr metryk · część 1–2
 Prompt: prompts/F0-fundament.md#K13
 Commit: cae7b73 · Gałąź: main
