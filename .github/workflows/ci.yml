@@ -1,5 +1,8 @@
 name: ci
 
+# Workflow musi leżeć w katalogu głównym repozytorium — GitHub nie czyta `crux/.github/`.
+# Do audytu 1.0 (2026-11-25) CI nie uruchomiło się ani razu.
+
 on:
   push:
     branches: [main]
@@ -9,16 +12,28 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    working-directory: crux
+
 jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # gitleaks skanuje historię
+
+      - name: gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version-file: crux/.nvmrc
 
       - uses: pnpm/action-setup@v4
         with:
@@ -31,28 +46,31 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('crux/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
       - run: pnpm install --frozen-lockfile
 
-      - name: gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
-
       - name: pnpm audit (high+)
-        run: pnpm audit --audit-level high || true
+        run: pnpm audit --audit-level high
 
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm lint:deps
-      - run: pnpm test
+
+      # pg_dump/pg_restore w wersji serwera (Supabase: PostgreSQL 17) — test kopii nocnej.
+      - name: PostgreSQL 17 client
+        run: |
+          sudo apt-get install -y -q postgresql-common
+          yes | sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+          sudo apt-get install -y -q postgresql-client-17
+          echo "/usr/lib/postgresql/17/bin" >> "$GITHUB_PATH"
 
       - name: Start Supabase (requires-db)
         run: pnpm db:start
+
+      - run: pnpm test
 
       - name: db tests
         run: pnpm test:db
