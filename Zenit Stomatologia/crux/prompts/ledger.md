@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K11 · @crux/scheduling: obłożenie godzinowe (F0-010) · część 1–4
+Prompt: prompts/F0-fundament.md#K11
+Commit: 74cbaf9 · Gałąź: main
+Wynik: `db:test` 53 OK (030 occupancy); `@crux/scheduling` 31/31; `doctor` OK z DATABASE_URL; web/i18n typecheck OK. e2e AC9 na seedzie E2E_* (skipped bez env).
+Uwagi: migracja `0010` + reset `0011`; EXCLUDE gist + RLS write/write_own; domena OccupancyEntry/DayClosure; usecases z `authorizeWrite` wrapper; UI `/oblozenie` + `/oblozenie/tydzien`; `docs/wzorzec-modulu.md`. F0-010 status „w realizacji” (staging → wdrożona). UI createTimeBlock jeszcze nie.
+
 ## 2026-11-25 · K10 · CI, crux-doctor, gen, dependency-cruiser · część 1
 Prompt: prompts/F0-fundament.md#K10
 Commit: 91f5253 · Gałąź: main
