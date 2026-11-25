@@ -1,6 +1,6 @@
 # Zależności npm
 
-Wersja 1.0 · K07 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
+Wersja 1.0 · K08 (25 listopada 2026). Każda bezpośrednia zależność musi tu mieć wiersz. `crux-doctor` porównuje `package.json` z tą tabelą (K10).
 
 | Pakiet | Po co | Licencja | Dane pacjentów |
 |---|---|---|---|
@@ -38,5 +38,14 @@ Wersja 1.0 · K07 (25 listopada 2026). Każda bezpośrednia zależność musi tu
 | `@supabase/ssr` | sesja Auth w cookie (proxy + server) | MIT | nie |
 | `qrcode` | QR do rejestracji TOTP (MFA) | MIT | nie |
 | `drizzle-orm` (w `@crux/web`) | zapytania lokalizacji w layoutcie powłoki | Apache-2.0 | tak (SQL) |
+| `@radix-ui/react-dialog` | Dialog, SidePanel, CommandPalette | MIT | nie |
+| `@tanstack/react-table` | DataTable | MIT | nie |
+| `recharts` | LineChart (motyw marki) | MIT | nie |
+| `class-variance-authority` | warianty Button i pokrewnych | Apache-2.0 | nie |
+| `clsx` / `tailwind-merge` | `cn()` w `@crux/ui` | MIT | nie |
+| `lucide-react` | ikony UI | ISC | nie |
+| `react-hook-form` / `@hookform/resolvers` | formularze (PeselInput itd.) | MIT | nie |
+| `storybook` + `@storybook/react-vite` + `addon-a11y` | historie komponentów | MIT | nie |
+| Hanken Grotesk (SIL OFL) | font lokalny w `packages/ui/brand/fonts` | SIL OFL | nie |
 
 Transitive (m.in. `postcss` z `@tailwindcss/postcss`) nie wymagają osobnego wiersza, dopóki nie są zależnością bezpośrednią.

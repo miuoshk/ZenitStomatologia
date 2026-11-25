@@ -1,0 +1,8 @@
+/* do przeniesienia do Materialy marki/tokeny/tokens.css (docs/06 §8) */
+:root {
+  --dane-kulka-pusta: #dce4dd;
+}
+
+[data-theme="dark"] {
+  --dane-kulka-pusta: #2a4a3a;
+}

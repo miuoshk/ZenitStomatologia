@@ -1,0 +1,8 @@
+/* Hanken Grotesk — pliki w brand/fonts (nie kopiować ponownie) */
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("../brand/fonts/HankenGrotesk-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

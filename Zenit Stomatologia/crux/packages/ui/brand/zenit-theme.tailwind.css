@@ -1,0 +1,30 @@
+/* Tailwind v4: @import "tailwindcss"; @import "./zenit-theme.css"; */
+@theme {
+  --font-sans: "Hanken Grotesk", Arial, sans-serif;
+  --color-butelka: #173A2A;
+  --color-zielen: #2F5A33;
+  --color-krem: #EFE4C6;
+  --color-kosc: #F7F3E8;
+  --color-bursztyn: #E9A53A;
+  --color-cegla: #B8442E;
+  --color-szron: #E4ECE5;
+  --color-mgla: #CFDBD1;
+  --color-porost: #AFC2B3;
+  --color-patyna: #87A08F;
+  --color-mech: #5E7F6A;
+  --color-las: #4A6E52;
+  --color-bez: #EDE6D6;
+  --color-z1: #F6F1E1;
+  --color-z2: #EFE4C6;
+  --color-z3: #E6D6AE;
+  --color-z4: #D9C595;
+  --color-z5: #C9B37F;
+  --color-zplus: #E4ECE5;
+  --color-gabinet-01: #2F7D45;
+  --color-gabinet-02: #3A76AC;
+  --color-gabinet-03: #C98422;
+  --color-gabinet-04: #A3533B;
+  --radius-pole: 8px;
+  --radius-input: 14px;
+  --radius-karta: 22px;
+}

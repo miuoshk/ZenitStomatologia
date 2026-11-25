@@ -1,10 +1,14 @@
-/** TODO(K08): przenieść AppShell / LocationSwitcher do @crux/ui. */
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
-import { CruxLogo } from "@/lib/crux-logo";
+import {
+  AppShell as UiAppShell,
+  CommandPalette,
+  CruxLogo,
+  LocationSwitcher,
+  type Command,
+} from "@crux/ui";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 export type ShellLocation = {
   id: string;
@@ -21,11 +25,11 @@ type Props = {
   idleLockMs: number;
 };
 
-const NAV: { href: string; label: string }[] = [
-  { href: "/oblozenie", label: "Obłożenie" },
-  { href: "/pulpit", label: "Pulpit" },
-  { href: "/ustawienia", label: "Ustawienia" },
-];
+const NAV = [
+  { id: "oblozenie", label: "Obłożenie", href: "/oblozenie" },
+  { id: "pulpit", label: "Pulpit", href: "/pulpit" },
+  { id: "ustawienia", label: "Ustawienia", href: "/ustawienia" },
+] as const;
 
 export function AppShell({
   children,
@@ -36,6 +40,7 @@ export function AppShell({
   idleLockMs,
 }: Props) {
   const router = useRouter();
+  const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
 
@@ -93,158 +98,113 @@ export function AppShell({
     router.refresh();
   }
 
-  const width = collapsed ? 64 : 232;
+  const activeId =
+    NAV.find((n) => pathname === n.href || pathname.startsWith(`${n.href}/`))?.id ?? "oblozenie";
+
+  const locationItems = useMemo(
+    () => locations.map((loc) => ({ id: loc.id, code: loc.number, name: loc.name })),
+    [locations],
+  );
+
+  const commands: Command[] = useMemo(() => {
+    const navCmds: Command[] = NAV.map((n) => ({
+      id: n.id,
+      label: n.label,
+      run: () => {
+        router.push(n.href);
+      },
+    }));
+    const locCmds: Command[] = locations.map((loc) => ({
+      id: `loc-${loc.id}`,
+      label: `Gabinet ${loc.number} ${loc.name}`,
+      run: () => {
+        void switchLocation(loc.id);
+      },
+    }));
+    return [...navCmds, ...locCmds];
+  }, [locations, router]);
 
   return (
-    <div className="flex min-h-dvh bg-[var(--surface-app)] text-[var(--text-primary)]">
-      <aside
-        className="flex shrink-0 flex-col bg-[var(--zenit-butelka)] text-[var(--zenit-krem)]"
-        style={{ width }}
-      >
-        <div className="flex h-14 items-center gap-2 px-3">
-          {collapsed ? (
-            <img src="/brand/logo/crux-znak-krem.svg" alt="Crux" width={28} height={28} />
-          ) : (
-            <img src="/brand/logo/crux-poziomy-krem.svg" alt="Crux" height={28} />
-          )}
-          <button
-            type="button"
-            className="ml-auto rounded-[var(--radius-pole)] px-2 py-1 text-sm hover:bg-white/10"
-            onClick={() => {
-              setCollapsed((c) => !c);
-            }}
-            aria-label={collapsed ? "Rozwiń menu" : "Zwiń menu"}
-          >
-            {collapsed ? "»" : "«"}
-          </button>
-        </div>
-
-        {!collapsed && (
-          <div className="px-3 pb-3">
-            <label className="sr-only" htmlFor="location-switcher">
-              Gabinet
-            </label>
-            <select
-              id="location-switcher"
-              className="w-full rounded-[var(--radius-input)] border-0 bg-[var(--zenit-zielen)] px-3 py-2 text-sm text-[var(--zenit-krem)]"
-              value={activeLocationId}
-              onChange={(e) => {
-                void switchLocation(e.target.value);
-              }}
-            >
-              {locations.map((loc) => (
-                <option key={loc.id} value={loc.id}>
-                  {loc.number} {loc.name}
-                </option>
-              ))}
-              {canNetworkView && (
-                <option value="network" disabled>
-                  cała sieć
-                </option>
-              )}
-            </select>
-          </div>
-        )}
-
-        <nav className="flex flex-1 flex-col gap-1 px-2">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-[var(--radius-pole)] px-3 py-2 text-sm hover:bg-white/10"
-            >
-              {collapsed ? item.label.slice(0, 1) : item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="border-t border-white/10 p-3 text-xs">
-          {!collapsed && <p className="mb-2 truncate opacity-80">{staffLabel}</p>}
-          <div className="flex flex-wrap gap-2">
+    <>
+      <UiAppShell
+        nav={[...NAV]}
+        activeId={activeId}
+        collapsed={collapsed}
+        brand={
+          <div className="flex w-full items-center gap-2">
+            {collapsed ? (
+              <img src="/brand/logo/crux-znak-krem.svg" alt="Crux" width={28} height={28} />
+            ) : (
+              <img src="/brand/logo/crux-poziomy-krem.svg" alt="Crux" height={28} className="h-7" />
+            )}
             <button
               type="button"
-              className="rounded-[var(--radius-pelne)] bg-[var(--zenit-zielen)] px-3 py-1"
-              onClick={lockNow}
-            >
-              Blokada
-            </button>
-            <button
-              type="button"
-              className="rounded-[var(--radius-pelne)] px-3 py-1 hover:bg-white/10"
+              className="ml-auto rounded-[var(--radius-pole)] px-2 py-1 text-sm hover:bg-white/10"
               onClick={() => {
-                void signOut();
+                setCollapsed((c) => !c);
               }}
+              aria-label={collapsed ? "Rozwiń menu" : "Zwiń menu"}
             >
-              Wyloguj
+              {collapsed ? "»" : "«"}
             </button>
           </div>
-        </div>
-      </aside>
-
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center gap-3 border-b border-[var(--border)] bg-[var(--surface-card)] px-4">
-          <button
-            type="button"
-            className="rounded-[var(--radius-input)] border border-[var(--border)] px-3 py-1.5 text-sm"
-            onClick={() => {
-              setPaletteOpen(true);
-            }}
-          >
-            Szukaj… ⌘K
-          </button>
-          <CruxLogo size={20} className="ml-auto text-[var(--zenit-butelka)]" />
-        </header>
-        <main className="flex-1 p-6">{children}</main>
-      </div>
-
-      {paletteOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-start justify-center bg-black/30 pt-[15vh]"
-          role="dialog"
-          aria-label="Paleta poleceń"
-          onClick={() => {
-            setPaletteOpen(false);
-          }}
-        >
-          <div
-            className="w-full max-w-lg rounded-[var(--radius-karta)] bg-[var(--surface-card)] p-4 shadow-lg"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <p className="mb-2 text-sm text-[var(--text-secondary)]">Przejdź do</p>
-            <ul className="space-y-1">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="block rounded-[var(--radius-pole)] px-3 py-2 hover:bg-[var(--surface-sunken)]"
-                    onClick={() => {
-                      setPaletteOpen(false);
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-              {locations.map((loc) => (
-                <li key={loc.id}>
-                  <button
-                    type="button"
-                    className="w-full rounded-[var(--radius-pole)] px-3 py-2 text-left hover:bg-[var(--surface-sunken)]"
-                    onClick={() => {
-                      void switchLocation(loc.id);
-                      setPaletteOpen(false);
-                    }}
-                  >
-                    Gabinet {loc.number} {loc.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
+        }
+        sidebarTop={
+          !collapsed ? (
+            <div className="mb-2 px-1">
+              <LocationSwitcher
+                locations={locationItems}
+                value={activeLocationId}
+                onChange={(id) => {
+                  if (id) void switchLocation(id);
+                }}
+                allLabel={canNetworkView ? "cała sieć" : null}
+                className="flex-col items-stretch"
+              />
+            </div>
+          ) : null
+        }
+        sidebarBottom={
+          <div className="mt-auto border-t border-white/10 p-2 text-xs">
+            {!collapsed && <p className="mb-2 truncate opacity-80">{staffLabel}</p>}
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                className="rounded-[var(--radius-pelne)] bg-[var(--zenit-zielen)] px-3 py-1"
+                onClick={lockNow}
+              >
+                Blokada
+              </button>
+              <button
+                type="button"
+                className="rounded-[var(--radius-pelne)] px-3 py-1 hover:bg-white/10"
+                onClick={() => {
+                  void signOut();
+                }}
+              >
+                Wyloguj
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        }
+        header={
+          <>
+            <button
+              type="button"
+              className="rounded-[var(--radius-input)] border border-[var(--border)] px-3 py-1.5 text-sm"
+              onClick={() => {
+                setPaletteOpen(true);
+              }}
+            >
+              Szukaj… ⌘K
+            </button>
+            <CruxLogo size={20} className="ml-auto text-[var(--zenit-butelka)]" />
+          </>
+        }
+      >
+        {children}
+      </UiAppShell>
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} commands={commands} />
+    </>
   );
 }

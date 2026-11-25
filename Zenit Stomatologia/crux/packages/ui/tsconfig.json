@@ -1,15 +1,11 @@
 {
   "extends": "../config/tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
-    "lib": [
-      "ES2022",
-      "DOM"
-    ],
-    "jsx": "react-jsx"
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", ".storybook/**/*.ts"]
 }

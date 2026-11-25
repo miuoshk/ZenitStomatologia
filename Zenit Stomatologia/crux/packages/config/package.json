@@ -7,6 +7,8 @@
     "./tsconfig.base.json": "./tsconfig.base.json",
     "./eslint.config.base.js": "./eslint.config.base.js",
     "./prettier.config.js": "./prettier.config.js",
-    "./dependency-cruiser.cjs": "./dependency-cruiser.cjs"
+    "./dependency-cruiser.cjs": "./dependency-cruiser.cjs",
+    "./tailwind-preset.ts": "./tailwind-preset.ts",
+    "./tailwind-theme.css": "./tailwind-theme.css"
   }
 }

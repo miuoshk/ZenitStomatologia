@@ -20,6 +20,9 @@ export default tseslint.config(
       "**/podrecznik/**",
       "**/manifest/**",
       "**/design/**",
+      "**/storybook-static/**",
+      "packages/ui/scripts/**",
+      "packages/ui/brand/manifest.json",
     ],
   },
   ...tseslint.configs.strictTypeChecked,
@@ -217,6 +220,42 @@ export default tseslint.config(
     files: ["packages/shared/src/time.ts", "packages/shared/src/time/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-syntax": "off",
+    },
+  },
+  {
+    files: ["apps/web/**/*.{ts,tsx}", "packages/ui/src/**/*.{ts,tsx}"],
+    ignores: ["packages/ui/brand/**", "packages/ui/src/tokens.extra.css"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "NewExpression[callee.name='Date']",
+          message:
+            "Użyj ctx.clock / @crux/shared/time — new Date() zabronione poza packages/shared/src/time.ts (ADR-022).",
+        },
+        {
+          selector: "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+          message: "Bez HEX w UI — użyj tokenów CSS (var(--zenit-*), ui.no-hex).",
+        },
+        {
+          selector: "TemplateElement[value.raw=/#[0-9a-fA-F]{3,8}\\b/]",
+          message: "Bez HEX w UI — użyj tokenów CSS (var(--zenit-*), ui.no-hex).",
+        },
+      ],
+    },
+  },
+  {
+    files: ["packages/ui/src/**/*.{ts,tsx}"],
+    rules: {
+      // Wymiary SVG / layout — String() wszędzie byłby szumem.
+      "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
+    },
+  },
+  {
+    files: ["packages/ui/.storybook/**/*.{ts,tsx}"],
+    rules: {
+      "@typescript-eslint/require-await": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
     },
   },
 );

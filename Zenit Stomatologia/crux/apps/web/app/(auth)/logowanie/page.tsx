@@ -1,4 +1,4 @@
-import { CruxLogo } from "@/lib/crux-logo";
+import { CruxLogo } from "@crux/ui/crux-logo";
 import { LoginForm } from "./login-form";
 
 export default function LogowaniePage() {

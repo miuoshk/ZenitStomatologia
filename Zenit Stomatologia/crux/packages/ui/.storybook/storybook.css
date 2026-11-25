@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "../brand/tokens.css";
+@import "../src/tokens.extra.css";
+@import "../src/fonts.css";
+@import "../../config/tailwind-theme.css";
+
+@source "../src";
+
+body {
+  font-family: var(--font-sans);
+  background: var(--surface-app);
+  color: var(--text-primary);
+}

@@ -19,6 +19,7 @@
     "@crux/identity": "workspace:*",
     "@crux/org": "workspace:*",
     "@crux/shared": "workspace:*",
+    "@crux/ui": "workspace:*",
     "@supabase/ssr": "0.12.7",
     "@supabase/supabase-js": "2.119.2",
     "drizzle-orm": "0.45.4",

@@ -8,6 +8,7 @@ dist
 out
 build
 *.tsbuildinfo
+packages/ui/storybook-static
 
 # env
 .env
@@ -39,3 +40,5 @@ supabase/.temp
 .tools/
 supabase/.temp/
 packages/db/src/generated/
+
+packages/ui/storybook-static/
