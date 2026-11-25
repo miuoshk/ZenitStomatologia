@@ -7,7 +7,7 @@ import { TZ, plainDate, systemClock, type Clock } from "@crux/shared/time";
 import { and, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { OccupancyEntry } from "../domain/chair-occupancy";
-import { assertEditable, atomic, idempotent, parseInput } from "./common";
+import { assertEditable, atomic, canEditAnyEntry, idempotent, parseInput } from "./common";
 
 export const VoidOccupancyInput = z.object({
   commandId: z.uuid(),
@@ -32,6 +32,7 @@ export async function voidOccupancy(
       id: chairOccupancy.id,
       locationId: chairOccupancy.locationId,
       chairId: chairOccupancy.chairId,
+      providerId: chairOccupancy.providerId,
       voidedAt: chairOccupancy.voidedAt,
       day: sql<string>`to_char(lower(${chairOccupancy.period}) at time zone ${TZ}::text, 'YYYY-MM-DD')`,
     })
@@ -43,6 +44,10 @@ export async function voidOccupancy(
 
   const authz = await authorize(tx, actor, "occupancy.void", { locationId: entry.locationId });
   if (!authz.ok) return authz;
+  // Wykonawca unieważnia tylko własne wpisy (docs/03 §8: `occupancy.void` = „własne”).
+  if (!canEditAnyEntry(actor) && entry.providerId !== actor.staffId) {
+    return err({ type: "forbidden", details: { reason: "not_own_entry" } });
+  }
 
   return idempotent(tx, actor, input.commandId, "scheduling.voidOccupancy", async () => {
     const day = plainDate(entry.day);
@@ -53,7 +58,7 @@ export async function voidOccupancy(
     if (!voided.ok) return voided;
 
     return atomic(tx, async (sp) => {
-      await sp
+      const updated = await sp
         .update(chairOccupancy)
         .set({
           voidedAt: voided.value.voidedAt,
@@ -62,7 +67,11 @@ export async function voidOccupancy(
           updatedAt: clock.now(),
           updatedBy: actor.staffId,
         })
-        .where(eq(chairOccupancy.id, entry.id));
+        .where(eq(chairOccupancy.id, entry.id))
+        .returning({ id: chairOccupancy.id });
+      if (updated.length === 0) {
+        return err({ type: "forbidden", details: { reason: "entry_not_editable" } });
+      }
 
       const published = await publishEvent(
         sp,
