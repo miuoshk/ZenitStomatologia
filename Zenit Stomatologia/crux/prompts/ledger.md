@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K12 · @crux/testing: fabryki, golden, seed:demo, atrapy · część 1
+Prompt: prompts/F0-fundament.md#K12
+Commit: b5c113a · Gałąź: main
+Wynik: `@crux/testing` 11/11; `pnpm seed:demo` + `verify:golden` OK (verify.sql = expected.json); scheduling 31, org/identity/platform smoke z fabrykami OK; `db:test` 53; `doctor` OK.
+Uwagi: golden seed=20261105, okres 2025-10-01…2026-10-31, 13377 wpisów; color_key `01`–`04` (+loc*) w migracji `0012`; `CRUX_PRODUCTION_DB_HOSTS` / localhost-only dla seed:demo; NPWZ z prefiksem testowym `99`; `@crux/testing` jako `link:` w modułach (uniknięcie cyklu workspace/turbo).
+
 ## 2026-11-25 · K11 · @crux/scheduling: obłożenie godzinowe (F0-010) · część 1–4
 Prompt: prompts/F0-fundament.md#K11
 Commit: 74cbaf9 · Gałąź: main
