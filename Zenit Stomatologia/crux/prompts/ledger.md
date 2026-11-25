@@ -14,6 +14,18 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · 1.0 · wydanie Krasnodrzew (kod)
+Prompt: prompts/F0-fundament.md#K17
+Commit: 0942269 · Tag: v1.0.0 · Gałąź: main
+Wynik: artefakty wydania w repo; `doctor` OK; `release.no-patient-tables` OK. Bramka operacyjna (`docs/ops/bramka-1-0.md`) **otwarta** — 10 dni wpisów, szkolenie, restore prod, zero dead po go-live (plan 11.12.2026).
+Uwagi: infrastruktura Supabase/Vercel/worker poza repo; `bootstrap:prod` z konfiguracją poza repo; wpis `1.0 · bramka` dopiero po spełnieniu docs/07 §2.
+
+## 2026-11-25 · K17 · wydanie 1.0: bootstrap, instrukcje, changelog, tag · część 1
+Prompt: prompts/F0-fundament.md#K17
+Commit: 0942269 · Gałąź: main
+Wynik: `doctor` OK; `bootstrap:prod --help/--dry-run` OK; version 1.0.0.
+Uwagi: `tools/bootstrap-prod.ts` (blokada non-prod); instrukcje recepcja/zarząd; ops bramka + lista obecności; CHANGELOG 1.0.0; F0-010/011 nadal „w realizacji” do bramki.
+
 ## 2026-11-25 · K16 · obserwowalność bez PII + docs/ops · część 1
 Prompt: prompts/F0-fundament.md#K16
 Commit: c0bd0f4 · Gałąź: main
