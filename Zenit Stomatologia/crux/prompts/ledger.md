@@ -14,9 +14,15 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K02 · Supabase lokalnie i migracja bazowa · część 1
+Prompt: prompts/F0-fundament.md#K02
+Commit: f6619a5 · Gałąź: main
+Wynik: `pnpm db:start` / `db:reset` / `db:test` zielone (27 asercji). `extensions.tenant_id()` bez claims = null; `crux_app` nie może `set role postgres`. CLI 3.4 → `config.jsonc` (nie toml); `api.enabled=false`, MFA TOTP on, jwt 12h, signup off, PG 17, bucket `assets`.
+Uwagi: claims helpers w **`extensions.*`** (migrator `postgres` nie ma CREATE na `auth`; stockowe `auth.role()` zostaje). Decyzja ADR/synonimy w `auth` otwarta — `docs/ops/supabase-konfiguracja.md`. Hosted staging nie pushowany (`db:push:staging` blokuje).
+
 ## 2026-11-25 · K01 · Monorepo i narzędzia · część 1
 Prompt: prompts/F0-fundament.md#K01
-Commit: lokalnie (brak git w crux) · Gałąź: brak
+Commit: 9cf4a95 · Gałąź: main
 Wynik: pnpm install / typecheck / lint / test / test:db / doctor / e2e zielone; build @crux/web i @crux/worker OK. Docker: CLI niedostępne w środowisku — Dockerfilei gotowe, `docker build` do potwierdzenia lokalnie.
 Uwagi: TypeScript pinned 6.0.3 (7.x poza peer `typescript-eslint <6.1`); `eslint-plugin-boundaries` 7.x flat config OK (reguła `boundaries/dependencies`); `postcss` tylko transitively z `@tailwindcss/postcss`; pnpm przez corepack (`packageManager: pnpm@10.23.0`).
 

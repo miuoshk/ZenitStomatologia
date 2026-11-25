@@ -28,3 +28,4 @@ Wersja 1.0 · K01 (25 listopada 2026). Każda bezpośrednia zależność musi tu
 | `@tailwindcss/postcss` | integracja Tailwind z PostCSS / Next | MIT | nie |
 
 Transitive (m.in. `postcss` z `@tailwindcss/postcss`) nie wymagają osobnego wiersza, dopóki nie są zależnością bezpośrednią.
+| `supabase` | CLI lokalne (init/start/test/migrate) | MIT | nie |

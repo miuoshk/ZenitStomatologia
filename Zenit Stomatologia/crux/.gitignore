@@ -35,3 +35,7 @@ supabase/.temp
 
 # docker
 **/.dockerignore
+.tools
+.tools/
+supabase/.temp/
+packages/db/src/generated/

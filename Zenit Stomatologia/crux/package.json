@@ -11,11 +11,17 @@
     "lint": "eslint . --max-warnings 0",
     "lint:deps": "depcruise --config packages/config/dependency-cruiser.cjs apps packages",
     "test": "vitest run --passWithNoTests",
-    "test:db": "echo \"no db tests yet\" && exit 0",
+    "test:db": "pnpm db:test",
     "doctor": "echo skip",
     "e2e": "pnpm --filter @crux/web e2e",
     "format": "prettier --write .",
-    "lint:packages": "turbo run lint"
+    "lint:packages": "turbo run lint",
+    "db:start": "pnpm --filter @crux/db db:start",
+    "db:reset": "pnpm --filter @crux/db db:reset",
+    "db:test": "pnpm --filter @crux/db db:test",
+    "db:diff": "pnpm --filter @crux/db db:diff",
+    "db:types": "pnpm --filter @crux/db db:types",
+    "db:push:staging": "pnpm --filter @crux/db db:push:staging"
   },
   "devDependencies": {
     "@playwright/test": "1.65.1",
@@ -31,7 +37,8 @@
     "turbo": "2.11.13",
     "typescript": "6.0.3",
     "typescript-eslint": "8.74.0",
-    "vitest": "5.1.2"
+    "vitest": "5.1.2",
+    "supabase": "3.4.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
