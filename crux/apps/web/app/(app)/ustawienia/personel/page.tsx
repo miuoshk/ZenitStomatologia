@@ -47,8 +47,8 @@ export default async function PersonelPage({ searchParams }: Props) {
   return (
     <div className="max-w-5xl space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-medium text-[var(--text-primary)]">{L.staff.title}</h1>
-        <Link href="/ustawienia/personel?nowy" className="text-[var(--zenit-zielen)] underline-offset-2 hover:underline">
+        <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{L.staff.title}</h1>
+        <Link href="/ustawienia/personel?nowy" className="inline-flex h-10 items-center rounded-[var(--radius-pelne)] bg-[var(--action-bg)] px-5 text-[15px] font-semibold text-[var(--action-fg)] hover:bg-[var(--action-bg-hover)]">
           + {L.staff.newStaff}
         </Link>
       </div>

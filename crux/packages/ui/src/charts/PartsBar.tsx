@@ -27,7 +27,7 @@ export function PartsBar({ parts, label, width = 560, asTable = false }: PartsBa
   const usable = width - gap * (parts.length - 1);
   let x = 0;
   return (
-    <svg role="img" aria-label={desc} viewBox={`0 0 ${width} 28`} width={width} height={28}>
+    <svg role="img" aria-label={desc} className="block h-auto max-w-full" viewBox={`0 0 ${width} 28`} width={width} height={28}>
       <title>{desc}</title>
       {parts.map((p) => {
         const w = (p.value / total) * usable;

@@ -21,3 +21,4 @@ export * from "./charts/Sparkline";
 export * from "./charts/PartsBar";
 export * from "./charts/LineChart";
 export * from "./charts/BarList";
+export * from "./components/icons";

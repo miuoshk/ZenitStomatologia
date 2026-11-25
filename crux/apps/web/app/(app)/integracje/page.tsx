@@ -58,7 +58,7 @@ export default async function IntegracjePage() {
 
   return (
     <div className="max-w-4xl space-y-6">
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">{I.title}</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{I.title}</h1>
 
       <Card>
         <CardHeader title={I.ports} />

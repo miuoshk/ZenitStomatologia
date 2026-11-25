@@ -45,7 +45,7 @@ export function DotPlot({ rows, min = 0, max = 100, unit = "%", label, width = 6
   const sx = (v: number) => x0 + ((v - min) / (max - min || 1)) * (x1 - x0);
   const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => min + t * (max - min));
   return (
-    <svg role="img" aria-label={desc} viewBox={`0 0 ${width} ${h}`} width={width} height={h}>
+    <svg role="img" aria-label={desc} className="block h-auto max-w-full" viewBox={`0 0 ${width} ${h}`} width={width} height={h}>
       <title>{desc}</title>
       {rows.map((r, i) => {
         const y = 23 + i * rowH;
@@ -58,7 +58,7 @@ export function DotPlot({ rows, min = 0, max = 100, unit = "%", label, width = 6
               {r.label}
             </text>
             <line x1={x0} y1={y} x2={x1} y2={y} stroke="var(--grid)" />
-            <line x1={sx(lo)} y1={y} x2={sx(hi)} y2={y} stroke="var(--zenit-porost)" strokeWidth={3} strokeLinecap="round" />
+            <line x1={sx(lo)} y1={y} x2={sx(hi)} y2={y} stroke="var(--dane-zakres)" strokeWidth={3} strokeLinecap="round" />
             {r.series.map((s) => (
               <g key={s.name}>
                 <circle cx={sx(s.value)} cy={y} r={8} fill="var(--surface-card)" />

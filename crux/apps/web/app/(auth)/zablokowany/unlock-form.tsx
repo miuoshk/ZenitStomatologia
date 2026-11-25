@@ -10,7 +10,7 @@ export function UnlockForm({ factorId }: { factorId: string }) {
   const [state, action, pending] = useActionState(unlockAction, initial);
 
   return (
-    <form action={action} className="flex flex-col gap-4">
+    <form action={action} className="flex flex-col gap-5">
       <input type="hidden" name="mode" value={mode} />
       <input type="hidden" name="factorId" value={factorId} />
       <div className="flex gap-2 text-sm">
@@ -34,25 +34,25 @@ export function UnlockForm({ factorId }: { factorId: string }) {
         </button>
       </div>
       {mode === "password" ? (
-        <label className="flex flex-col gap-1 text-sm">
+        <label className="flex flex-col gap-2 text-[13px] font-semibold text-[var(--auth-muted)]">
           Hasło
           <input
             name="password"
             type="password"
             autoComplete="current-password"
             required
-            className="rounded-[var(--radius-input)] border border-[var(--zenit-mech)] bg-[var(--zenit-zielen)] px-3 py-2 text-[var(--zenit-krem)]"
+            className="auth-field"
           />
         </label>
       ) : (
-        <label className="flex flex-col gap-1 text-sm">
+        <label className="flex flex-col gap-2 text-[13px] font-semibold text-[var(--auth-muted)]">
           Kod MFA
           <input
             name="code"
             inputMode="numeric"
             autoComplete="one-time-code"
             required
-            className="rounded-[var(--radius-input)] border border-[var(--zenit-mech)] bg-[var(--zenit-zielen)] px-3 py-2 text-[var(--zenit-krem)] tabular-nums"
+            className="auth-field tabular-nums tracking-[0.3em]"
           />
         </label>
       )}
@@ -64,7 +64,7 @@ export function UnlockForm({ factorId }: { factorId: string }) {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-[var(--radius-pelne)] bg-[var(--zenit-zielen)] px-4 py-2.5 disabled:opacity-60"
+        className="auth-btn"
       >
         {pending ? "Odblokowywanie…" : "Odblokuj"}
       </button>

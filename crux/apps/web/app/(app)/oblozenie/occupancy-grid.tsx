@@ -1,5 +1,6 @@
 "use client";
 
+import { instantFromIso } from "@crux/shared/time";
 import {
   OCCUPANCY_LABELS as L,
   OCCUPANCY_UI_CATEGORIES,
@@ -60,13 +61,14 @@ type Editor =
   | { kind: "record"; c: number; from: number; to: number }
   | { kind: "void"; c: number; hour: number; entry: GridEntry };
 
+/** Tło kolornika + pasek 4 px w kolorze krawędzi kategorii (F0-010, widok). Klasy w globals.css. */
 const CATEGORY_STYLE: Record<string, string> = {
-  Z1: "bg-[var(--zenit-mech)]/30",
-  Z2: "bg-[var(--zenit-mech)]/50",
-  Z3: "bg-[var(--zenit-szalwia,var(--zenit-mech))]/60",
-  Z4: "bg-[var(--zenit-krasnodrzew,var(--zenit-mech))]/50",
-  Z5: "bg-[var(--zenit-krasnodrzew,var(--zenit-mech))]/70",
-  "Z+": "bg-[var(--zenit-zielen)]",
+  Z1: "occ-cell occ-z1",
+  Z2: "occ-cell occ-z2",
+  Z3: "occ-cell occ-z3",
+  Z4: "occ-cell occ-z4",
+  Z5: "occ-cell occ-z5",
+  "Z+": "occ-cell occ-zplus",
 };
 
 export function OccupancyGrid({ data }: { data: GridData }) {
@@ -205,12 +207,17 @@ export function OccupancyGrid({ data }: { data: GridData }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-medium text-[var(--text-primary)]">{L.title}</h1>
-        <nav aria-label={L.day} className="flex items-center gap-2 text-sm">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+        <div className="mr-auto">
+          <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{L.title}</h1>
+          <p className="mt-1 text-[15px] first-letter:uppercase text-[var(--text-secondary)]">
+            {new Intl.DateTimeFormat("pl-PL", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(instantFromIso(`${data.day}T12:00:00Z`))}
+          </p>
+        </div>
+        <nav aria-label={L.day} className="flex flex-wrap items-center gap-2 text-sm">
           <Link
             href={`/oblozenie?dzien=${data.prevDay}`}
-            className="rounded-[var(--radius-pelne)] border border-[var(--zenit-mech)] px-3 py-1"
+            className={iconBtnCls}
             aria-label={L.prevDay}
           >
             ←
@@ -227,27 +234,27 @@ export function OccupancyGrid({ data }: { data: GridData }) {
               name="dzien"
               defaultValue={data.day}
               aria-label={L.day}
-              className="rounded-[var(--radius-input)] border border-[var(--zenit-mech)] bg-transparent px-2 py-1"
+              className="h-10 rounded-[var(--radius-pelne)] border border-[var(--border-strong)] bg-[var(--surface-card)] px-4 font-semibold tabular-nums"
             />
-            <button type="submit" className="rounded-[var(--radius-pelne)] px-2 py-1 hover:bg-white/10">
+            <button type="submit" className={ghostBtnCls}>
               {L.goToDay}
             </button>
           </form>
           <Link
             href={`/oblozenie?dzien=${data.nextDay}`}
-            className="rounded-[var(--radius-pelne)] border border-[var(--zenit-mech)] px-3 py-1"
+            className={iconBtnCls}
             aria-label={L.nextDay}
           >
             →
           </Link>
           {data.day !== data.today && (
-            <Link href="/oblozenie" className="rounded-[var(--radius-pelne)] px-2 py-1 hover:bg-white/10">
+            <Link href="/oblozenie" className={ghostBtnCls}>
               {L.today}
             </Link>
           )}
           <Link
             href={`/oblozenie/tydzien?tydzien=${data.day}`}
-            className="rounded-[var(--radius-pelne)] px-2 py-1 hover:bg-white/10"
+            className={outlineBtnCls}
           >
             {L.weekView}
           </Link>
@@ -255,8 +262,9 @@ export function OccupancyGrid({ data }: { data: GridData }) {
         {data.dayClosed && (
           <span
             data-testid="day-closed"
-            className="rounded-[var(--radius-pelne)] border border-[var(--zenit-mech)] px-3 py-1 text-sm"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-pelne)] bg-[var(--status-dobrze-tlo)] px-3 py-1.5 text-[13px] font-bold text-[var(--status-dobrze)]"
           >
+            <span aria-hidden className="size-1.5 rounded-full bg-current" />
             {L.dayClosed}
           </span>
         )}
@@ -291,29 +299,32 @@ export function OccupancyGrid({ data }: { data: GridData }) {
       {noChairs ? (
         <p className="text-[var(--text-secondary)]">{L.noChairs}</p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-[var(--radius-karta)] border border-[var(--border)] bg-[var(--surface-card)] p-3">
           <div
             role="grid"
             aria-label={L.gridLabel}
             aria-readonly={!editable}
             tabIndex={-1}
             onKeyDown={onGridKey}
-            className="inline-grid min-w-full gap-px bg-[var(--zenit-mech)]/40"
-            style={{ gridTemplateColumns: `4.5rem repeat(${String(data.chairs.length)}, minmax(8rem, 1fr))` }}
+            className="inline-grid min-w-full gap-1"
+            style={{ gridTemplateColumns: `4rem repeat(${String(data.chairs.length)}, minmax(9rem, 1fr))` }}
           >
             <div role="row" className="contents">
-              <div role="columnheader" className="bg-[var(--surface-base,transparent)] p-2 text-sm text-[var(--text-secondary)]">
+              <div role="columnheader" className="px-2 pb-2 pt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
                 {L.hour}
               </div>
               {data.chairs.map((ch) => (
-                <div key={ch.id} role="columnheader" className="p-2 text-sm font-medium">
+                <div key={ch.id} role="columnheader" className="flex items-center gap-2 px-2 pb-2 pt-1 text-[15px] font-extrabold">
                   {ch.name}
+                  <span className="text-[12px] font-semibold text-[var(--text-muted)] tabular-nums">
+                    {ch.entries.length} h
+                  </span>
                 </div>
               ))}
             </div>
             {hours.map((h) => (
               <div key={h} role="row" className="contents">
-                <div role="rowheader" className="p-2 text-sm tabular-nums text-[var(--text-secondary)]">
+                <div role="rowheader" className="flex h-11 items-center px-2 text-[13px] font-semibold tabular-nums text-[var(--text-muted)]">
                   {hh(h)}
                 </div>
                 {data.chairs.map((ch, c) => {
@@ -352,21 +363,21 @@ export function OccupancyGrid({ data }: { data: GridData }) {
                           setFocus({ c, h });
                           if (editable && !block) setEditor({ kind: "record", c, from: h, to: h + 1 });
                         }}
-                        className={`flex h-10 w-full items-center justify-between gap-2 px-2 text-left text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--zenit-krem)] ${
+                        className={`flex h-11 w-full items-center justify-between gap-2 rounded-[10px] px-3 text-left text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--focus-ring)] ${
                           entry
-                            ? (CATEGORY_STYLE[entry.category] ?? "")
+                            ? (CATEGORY_STYLE[entry.category] ?? "occ-cell")
                             : block
-                              ? "bg-[repeating-linear-gradient(45deg,transparent,transparent_4px,rgba(255,255,255,0.08)_4px,rgba(255,255,255,0.08)_8px)]"
+                              ? "occ-block"
                               : isOutside(h)
-                                ? "opacity-50"
-                                : ""
-                        } ${inSelection(c, h) ? "ring-1 ring-inset ring-[var(--zenit-krem)]" : ""}`}
+                                ? "occ-outside"
+                                : "occ-empty"
+                        } ${inSelection(c, h) ? "ring-2 ring-inset ring-[var(--zenit-bursztyn)]" : ""}`}
                       >
                         {entry ? (
                           <>
-                            <span className="font-medium">{entry.category}</span>
+                            <span className="font-bold">{entry.category}</span>
                             {entry.amountGrosze && (
-                              <span className="tabular-nums">{formatGrosze(entry.amountGrosze)}</span>
+                              <span className="font-semibold tabular-nums">{formatGrosze(entry.amountGrosze)}</span>
                             )}
                           </>
                         ) : block ? (
@@ -434,8 +445,15 @@ export function OccupancyGrid({ data }: { data: GridData }) {
 }
 
 const inputCls =
-  "rounded-[var(--radius-input)] border border-[var(--zenit-mech)] bg-transparent px-3 py-2";
-const btnCls = "rounded-[var(--radius-pelne)] border border-[var(--zenit-mech)] px-4 py-2 text-sm disabled:opacity-60";
+  "min-h-11 rounded-[var(--radius-input)] border border-[var(--border-strong)] bg-[var(--surface-card)] px-3.5 text-[15px]";
+const btnCls =
+  "inline-flex min-h-11 items-center justify-center rounded-[var(--radius-pelne)] bg-[var(--action-bg)] px-5 text-[15px] font-semibold text-[var(--action-fg)] transition-colors hover:bg-[var(--action-bg-hover)] disabled:opacity-60";
+const outlineBtnCls =
+  "inline-flex h-10 items-center rounded-[var(--radius-pelne)] border border-[var(--border-strong)] px-4 font-semibold transition-colors hover:bg-[var(--surface-sunken)]";
+const ghostBtnCls =
+  "inline-flex h-10 items-center rounded-[var(--radius-pelne)] px-3 font-semibold text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-sunken)] hover:text-[var(--text-primary)]";
+const iconBtnCls =
+  "grid size-10 place-items-center rounded-full border border-[var(--border-strong)] bg-[var(--surface-card)] font-semibold transition-colors hover:bg-[var(--surface-sunken)]";
 
 function RecordEditor(props: {
   chair: GridChair;

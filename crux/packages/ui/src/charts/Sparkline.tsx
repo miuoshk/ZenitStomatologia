@@ -6,7 +6,7 @@ export interface SparklineProps {
   color?: string;
 }
 
-export function Sparkline({ values, label, width = 96, height = 40, color = "var(--zenit-zielen)" }: SparklineProps) {
+export function Sparkline({ values, label, width = 96, height = 40, color = "var(--dane-akcent)" }: SparklineProps) {
   const desc = `${label}: od ${values[0] ?? 0} do ${values[values.length - 1] ?? 0}`;
   const pad = 4;
   const lo = Math.min(...values);

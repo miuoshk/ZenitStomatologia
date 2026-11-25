@@ -22,7 +22,7 @@ export function SegmentedControl<T extends string>({ options, value, onChange, c
     <div
       role="radiogroup"
       aria-label={rest["aria-label"]}
-      className={cn("inline-flex rounded-[var(--radius-input)] bg-[var(--surface-sunken)] p-1", className)}
+      className={cn("inline-flex rounded-[var(--radius-pelne)] border border-[var(--border)] bg-[var(--surface-sunken)] p-1", className)}
     >
       {options.map((o, i) => {
         const on = o.value === value;
@@ -43,9 +43,9 @@ export function SegmentedControl<T extends string>({ options, value, onChange, c
               if (n) onChange(n.value);
             }}
             className={cn(
-              "min-h-9 rounded-[var(--radius-pole)] px-4 text-sm font-semibold transition-colors",
+              "min-h-8 rounded-[var(--radius-pelne)] px-4 text-[13px] font-bold transition-colors",
               on
-                ? "bg-[var(--surface-card)] text-[var(--text-primary)] shadow-sm"
+                ? "bg-[var(--surface-card)] text-[var(--text-primary)] shadow-[0_1px_2px_rgb(0_0_0/0.08)] ring-1 ring-[var(--border)]"
                 : "text-[var(--text-muted)] hover:text-[var(--text-primary)]",
               focusRing,
             )}

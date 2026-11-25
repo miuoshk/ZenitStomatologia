@@ -53,7 +53,7 @@ export default async function OblozenieTydzienPage({ searchParams }: Props) {
   if (!result.ok) {
     return (
       <div>
-        <h1 className="text-2xl font-medium text-[var(--text-primary)]">
+        <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">
           {OCCUPANCY_LABELS.weekTitle}
         </h1>
         <p role="alert" className="mt-4 text-[var(--text-secondary)]">
@@ -76,7 +76,7 @@ export default async function OblozenieTydzienPage({ searchParams }: Props) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-medium text-[var(--text-primary)]">
+        <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">
           {OCCUPANCY_LABELS.weekTitle}
         </h1>
         <nav aria-label={OCCUPANCY_LABELS.weekNav} className="flex items-center gap-2 text-sm">

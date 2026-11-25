@@ -10,6 +10,13 @@ export interface NavItem {
   label: string;
   href?: string;
   icon?: ReactNode;
+  /** Nagłówek sekcji nad tą pozycją (np. „Analityka”). */
+  section?: string;
+}
+
+export interface ShellUser {
+  name: string;
+  roleLabel: string;
 }
 
 export interface AppShellProps {
@@ -18,14 +25,34 @@ export interface AppShellProps {
   onNavigate?: (id: string) => void;
   /** Nad nawigacją (przełącznik gabinetu). */
   sidebarTop?: ReactNode;
-  /** Stopka paska (użytkownik, blokada). */
+  /** Stopka paska (blokada, wylogowanie). */
   sidebarBottom?: ReactNode;
   /** Zastępuje domyślny znak + „Crux”. */
   brand?: ReactNode;
+  /** Osoba zalogowana: inicjały, imię i nazwisko, rola po polsku. */
+  user?: ShellUser;
   collapsed?: boolean;
   header?: ReactNode;
   children: ReactNode;
   className?: string;
+}
+
+function initials(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w.charAt(0).toLocaleUpperCase("pl"))
+    .join("");
+}
+
+/** Etykieta sekcji w pasku bocznym (wersaliki, rozstrzelone). */
+export function ShellSectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <p className="px-3 pb-1.5 pt-4 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--nav-muted)]">
+      {children}
+    </p>
+  );
 }
 
 export function AppShell({
@@ -35,71 +62,110 @@ export function AppShell({
   sidebarTop,
   sidebarBottom,
   brand,
+  user,
   collapsed = false,
   header,
   children,
   className,
 }: AppShellProps) {
-  const width = collapsed ? 64 : 232;
+  const width = collapsed ? 76 : 256;
   return (
     <div className={cn("flex min-h-dvh bg-[var(--surface-app)] text-[var(--text-primary)]", className)}>
       <nav
         aria-label="Główna nawigacja"
-        className="flex shrink-0 flex-col gap-1 bg-[var(--zenit-butelka)] p-3 text-[var(--zenit-krem)]"
+        className="sticky top-0 flex h-dvh shrink-0 flex-col bg-[var(--nav-bg)] text-[var(--nav-fg)] transition-[width] duration-200"
         style={{ width }}
       >
-        <div className="mb-4 flex items-center gap-2 px-1 text-[var(--zenit-krem)]">
+        <div className="flex h-16 shrink-0 items-center gap-2 border-b border-[var(--nav-line)] px-4">
           {brand ?? (
             <>
-              <CruxLogo size={28} className="text-[var(--zenit-krem)]" />
+              <CruxLogo size={28} className="text-[var(--nav-fg)]" />
               {!collapsed ? <span className="text-lg font-extrabold tracking-wide">Crux</span> : null}
             </>
           )}
         </div>
-        {sidebarTop}
-        <div className="flex flex-1 flex-col gap-1">
-          {nav.map((n) => {
-            const on = n.id === activeId;
-            const cls = cn(
-              "flex min-h-11 items-center gap-3 rounded-[var(--radius-input)] px-3 text-[15px] font-semibold",
-              on ? "bg-[var(--zenit-zielen)] text-[var(--zenit-kosc)]" : "hover:bg-[var(--zenit-zielen)]/40",
-              focusRing,
-            );
-            const label = collapsed ? n.label.slice(0, 1) : n.label;
-            return n.href ? (
-              <a
-                key={n.id}
-                href={n.href}
-                aria-current={on ? "page" : undefined}
-                aria-label={n.label}
-                className={cls}
-                onClick={() => onNavigate?.(n.id)}
-              >
-                {n.icon}
-                {label}
-              </a>
-            ) : (
-              <button
-                key={n.id}
-                type="button"
-                aria-current={on ? "page" : undefined}
-                aria-label={n.label}
-                className={cn(cls, "text-left")}
-                onClick={() => onNavigate?.(n.id)}
-              >
-                {n.icon}
-                {label}
-              </button>
-            );
-          })}
+        {user && !collapsed ? (
+          <div className="flex items-center gap-3 border-b border-[var(--nav-line)] px-4 py-4">
+            <span
+              aria-hidden
+              className="grid size-10 shrink-0 place-items-center rounded-full bg-[var(--zenit-krem)] text-sm font-extrabold text-[var(--zenit-butelka)]"
+            >
+              {initials(user.name)}
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-[15px] font-semibold leading-tight">{user.name}</p>
+              <p className="mt-1 inline-flex rounded-[var(--radius-pelne)] bg-[var(--nav-chip)] px-2 py-0.5 text-[11px] font-semibold leading-4 text-[var(--nav-fg)]">
+                {user.roleLabel}
+              </p>
+            </div>
+          </div>
+        ) : null}
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pb-3">
+          {sidebarTop}
+          <div className="flex flex-col gap-0.5">
+            {nav.map((n) => {
+              const on = n.id === activeId;
+              const cls = cn(
+                "relative flex min-h-11 items-center gap-3 rounded-[var(--radius-input)] px-3 text-[15px] transition-colors",
+                collapsed && "justify-center px-0",
+                on
+                  ? "bg-[var(--nav-active)] font-semibold text-[var(--nav-fg-strong)]"
+                  : "font-medium text-[var(--nav-fg)] hover:bg-[var(--nav-hover)]",
+                focusRing,
+              );
+              const body = (
+                <>
+                  {on ? (
+                    <span aria-hidden className="absolute inset-y-2.5 left-0 w-[3px] rounded-full bg-[var(--zenit-bursztyn)]" />
+                  ) : null}
+                  {n.icon ? <span className="grid size-5 shrink-0 place-items-center [&>svg]:size-5">{n.icon}</span> : null}
+                  {collapsed ? null : <span className="truncate">{n.label}</span>}
+                </>
+              );
+              return (
+                <div key={n.id}>
+                  {n.section && !collapsed ? <ShellSectionLabel>{n.section}</ShellSectionLabel> : null}
+                  {n.href ? (
+                    <a
+                      href={n.href}
+                      aria-current={on ? "page" : undefined}
+                      aria-label={n.label}
+                      title={collapsed ? n.label : undefined}
+                      className={cls}
+                      onClick={() => onNavigate?.(n.id)}
+                    >
+                      {body}
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      aria-current={on ? "page" : undefined}
+                      aria-label={n.label}
+                      title={collapsed ? n.label : undefined}
+                      className={cn(cls, "w-full text-left")}
+                      onClick={() => onNavigate?.(n.id)}
+                    >
+                      {body}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
-        {sidebarBottom}
+        {sidebarBottom ? (
+          <div className="shrink-0 border-t border-[var(--nav-line)] p-3">{sidebarBottom}</div>
+        ) : null}
       </nav>
       <div className="flex min-w-0 flex-1 flex-col">
         {header ? (
-          <header className="flex items-center gap-4 border-b border-[var(--border)] px-6 py-3">{header}</header>
+          <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-4 border-b border-[var(--border)] bg-[var(--surface-app)]/90 px-8 backdrop-blur">
+            {header}
+          </header>
         ) : null}
-        <main className="flex-1 p-6">{children}</main>
+        <main className="w-full flex-1 px-8 pb-12 pt-8">
+          <div className="mx-auto w-full max-w-[1280px]">{children}</div>
+        </main>
       </div>
     </div>
   );

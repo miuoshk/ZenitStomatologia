@@ -9,8 +9,8 @@ export function PasswordForm() {
   const [state, action, pending] = useActionState(changePasswordAction, initial);
 
   return (
-    <form action={action} className="flex flex-col gap-4">
-      <label className="flex flex-col gap-1 text-sm">
+    <form action={action} className="flex flex-col gap-5">
+      <label className="flex flex-col gap-2 text-[13px] font-semibold text-[var(--auth-muted)]">
         Nowe hasło
         <input
           name="password"
@@ -18,10 +18,10 @@ export function PasswordForm() {
           autoComplete="new-password"
           required
           minLength={12}
-          className="rounded-[var(--radius-input)] border border-[var(--zenit-mech)] bg-[var(--zenit-zielen)] px-3 py-2 text-[var(--zenit-krem)]"
+          className="auth-field"
         />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-2 text-[13px] font-semibold text-[var(--auth-muted)]">
         Powtórz hasło
         <input
           name="confirm"
@@ -29,7 +29,7 @@ export function PasswordForm() {
           autoComplete="new-password"
           required
           minLength={12}
-          className="rounded-[var(--radius-input)] border border-[var(--zenit-mech)] bg-[var(--zenit-zielen)] px-3 py-2 text-[var(--zenit-krem)]"
+          className="auth-field"
         />
       </label>
       {state.message && (
@@ -40,7 +40,7 @@ export function PasswordForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-[var(--radius-pelne)] bg-[var(--zenit-zielen)] px-4 py-2.5 disabled:opacity-60"
+        className="auth-btn"
       >
         {pending ? "Zapisywanie…" : "Zapisz hasło"}
       </button>

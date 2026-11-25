@@ -48,7 +48,7 @@ export function DeltaBadge({ value, higherIsBetter = true, unit, className }: De
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-[var(--radius-pelne)] px-2 py-0.5 text-xs font-bold tabular-nums",
+        "inline-flex w-fit items-center gap-1 rounded-[var(--radius-pelne)] px-2.5 py-1 text-xs font-bold tabular-nums",
         flat
           ? "bg-[var(--surface-sunken)] text-[var(--text-muted)]"
           : good
@@ -87,7 +87,7 @@ export function CardHeader({ title, hint, actions, className }: CardHeaderProps)
   return (
     <div className={cn("mb-4 flex items-start justify-between gap-4", className)}>
       <div className="min-w-0">
-        <h3 className="text-base font-bold leading-tight">{title}</h3>
+        <h3 className="text-[18px] font-extrabold leading-6 tracking-[-0.01em]">{title}</h3>
         {hint ? <p className="mt-1 text-sm text-[var(--text-muted)]">{hint}</p> : null}
       </div>
       {actions ? <div className="flex shrink-0 items-center gap-2">{actions}</div> : null}
@@ -109,9 +109,9 @@ export interface KpiTileProps extends Pick<NumProps, "format" | "unit"> {
 
 export function KpiTile({ label, value, format, unit, delta, deltaHigherIsBetter, status, statusLabel, spark, className }: KpiTileProps) {
   return (
-    <Card className={cn("flex flex-col gap-2 p-5", className)}>
+    <Card className={cn("flex flex-col gap-3 p-5", className)}>
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-semibold text-[var(--text-secondary)]">{label}</span>
+        <span className="text-[13px] font-semibold text-[var(--text-secondary)]">{label}</span>
         {status ? <StatusPill status={status}>{statusLabel ?? status}</StatusPill> : null}
       </div>
       <div className="flex items-end justify-between gap-3">
@@ -119,12 +119,16 @@ export function KpiTile({ label, value, format, unit, delta, deltaHigherIsBetter
           value={value}
           {...(format ? { format } : {})}
           {...(unit ? { unit } : {})}
-          className="text-4xl font-extrabold leading-none tracking-tight"
+          className="text-[34px] font-extrabold leading-none tracking-[-0.02em] tabular-nums"
         />
         {spark ? <div className="h-10 w-24 shrink-0">{spark}</div> : null}
       </div>
       {delta !== undefined ? (
-        <DeltaBadge value={delta} {...(deltaHigherIsBetter !== undefined ? { higherIsBetter: deltaHigherIsBetter } : {})} />
+        <DeltaBadge
+          className="self-start"
+          value={delta}
+          {...(deltaHigherIsBetter !== undefined ? { higherIsBetter: deltaHigherIsBetter } : {})}
+        />
       ) : null}
     </Card>
   );

@@ -28,7 +28,7 @@ export function DotGrid({ value, total = 100, columns = 10, label, dotRadius = 9
           cx={dotRadius + (i % columns) * step}
           cy={dotRadius + Math.floor(i / columns) * step}
           r={dotRadius}
-          fill={i < value ? "var(--zenit-zielen)" : "var(--dane-kulka-pusta)"}
+          fill={i < value ? "var(--dane-akcent)" : "var(--dane-kulka-pusta)"}
         />
       ))}
     </svg>

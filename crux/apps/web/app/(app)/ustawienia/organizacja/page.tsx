@@ -104,7 +104,7 @@ export default async function OrganizacjaPage({ searchParams }: Props) {
 
   return (
     <div className="max-w-4xl space-y-6">
-      <h1 className="text-2xl font-medium text-[var(--text-primary)]">{L.org.title}</h1>
+      <h1 className="text-[28px] font-extrabold leading-8 tracking-[-0.015em] text-[var(--text-primary)]">{L.org.title}</h1>
       <nav className="flex gap-2" aria-label={L.org.title}>
         {tabLink("gabinety", L.org.tabs.locations, tab === "gabinety")}
         {tabLink("historia", L.org.tabs.history, tab === "historia")}
