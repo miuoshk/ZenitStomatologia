@@ -42,3 +42,4 @@ supabase/.temp/
 packages/db/src/generated/
 
 packages/ui/storybook-static/
+.env*

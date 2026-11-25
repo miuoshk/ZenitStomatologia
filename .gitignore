@@ -1,2 +1,11 @@
 .DS_Store
 **/.DS_Store
+# Brand / archives — not for app deploy
+Zenit Stomatologia/Materialy marki/
+Zenit Stomatologia/RYCINKI FINAL/
+Zenit Stomatologia/FINAL FINAL ryciny-botaniczne-po-audycie/
+Zenit Stomatologia/Crux - dla tworcow aplikacji/
+Zenit Stomatologia/_archiwum-*/
+Zenit Stomatologia/zenit-materialy-*.zip
+Zenit Stomatologia/**/.DS_Store
+.DS_Store
