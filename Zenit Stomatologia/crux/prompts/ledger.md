@@ -16,7 +16,7 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## 2026-11-25 · K05 · @crux/platform: audyt, outbox, flagi, ustawienia · część 1
 Prompt: prompts/F0-fundament.md#K05
-Commit: (pending) · Gałąź: main
+Commit: 23e0c2a (+ 3eac620 pgTAP) · Gałąź: main
 Wynik: `pnpm --filter @crux/platform` test 6/6; `pnpm db:test` 38 asercji OK; typecheck/lint monorepo OK.
 Uwagi: DDL+RLS+`audit.track`/`log_access` w `0004_platform.sql`; Drizzle schema + baseline timestamp (bez duplikatu CREATE). `uuid_generate_v7` z `search_path=extensions` pod pusty path trackera. security definer tylko track + log_access (+ set_reason bez definer).
 
