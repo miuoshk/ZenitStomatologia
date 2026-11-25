@@ -13,6 +13,8 @@ export {
   tableComment,
   type TableCommentOpts,
 } from "./schema/index";
+/** Re-export — jedna kopia drizzle-orm (unikaj dual-package w workerze). */
+export { sql } from "drizzle-orm";
 
 import type { Actor } from "./actor";
 import type { CruxDb, Tx } from "./client";

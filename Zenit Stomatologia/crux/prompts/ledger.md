@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-25 · K09 · apps/worker: pg-boss, outbox, harmonogramy, kopie · część 1
+Prompt: prompts/F0-fundament.md#K09
+Commit: (pending) · Gałąź: main
+Wynik: `@crux/worker` test 9/9; typecheck/lint monorepo OK; `db:test` 46 OK; build worker OK.
+Uwagi: allowlista `PRIVILEGED_OPERATIONS` + `0009_worker_rls`; outbox claim `FOR UPDATE SKIP LOCKED` + retry 2^n / dead@8; handlery occupancy→analytics.refresh (stub K13); backup AES-GCM + FileStorage lokalny; `/healthz`; `docker-compose.worker.yml`; `tools/restore-test.sh` dokumentacyjny. pg-boss 10.x: `createQueue` + `schedule` + `singletonKey`.
+
 ## 2026-11-25 · K08 · @crux/ui: brand, komponenty, wykresy, Storybook · część 1
 Prompt: prompts/F0-fundament.md#K08
 Commit: b22daa4 · Gałąź: main

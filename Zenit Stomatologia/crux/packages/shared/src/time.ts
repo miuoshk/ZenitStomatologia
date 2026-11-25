@@ -42,6 +42,11 @@ export function instantFromIso(iso: string): Date {
   return d;
 }
 
+/** Przesunięcie chwili o `ms` (jedyny dozwolony sposób poza `Clock.now()`). */
+export function plusMs(instant: Date, ms: number): Date {
+  return new Date(instant.getTime() + ms);
+}
+
 export const PlainDateSchema = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/)

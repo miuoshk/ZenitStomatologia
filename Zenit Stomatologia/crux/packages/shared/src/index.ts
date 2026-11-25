@@ -32,6 +32,7 @@ export {
   formatTimePl,
   formatPercent,
   instantFromIso,
+  plusMs,
   type Clock,
   type PlainDate,
 } from "./time";

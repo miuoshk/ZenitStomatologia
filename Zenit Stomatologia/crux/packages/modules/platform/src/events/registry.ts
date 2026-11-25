@@ -6,6 +6,12 @@ const IdOnly = z.uuid();
  * Rejestr zdarzeń outboxa — payload wyłącznie identyfikatory (ADR outbox).
  * Zakazane nazwy pól: name, phone, pesel, email, content (test w registry.test).
  */
+const OccupancyDay = z.object({
+  tenantId: IdOnly,
+  locationId: IdOnly,
+  day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+});
+
 export const eventRegistry = {
   "platform.setting_changed.v1": z.object({
     tenantId: IdOnly,
@@ -21,6 +27,15 @@ export const eventRegistry = {
   "platform.test.v1": z.object({
     entityId: IdOnly,
   }),
+  "platform.outbox.dead.v1": z.object({
+    outboxId: IdOnly,
+    topic: z.string().min(1),
+    tenantId: IdOnly,
+  }),
+  "occupancy.entry_recorded.v1": OccupancyDay.extend({ entryId: IdOnly }),
+  "occupancy.entry_voided.v1": OccupancyDay.extend({ entryId: IdOnly }),
+  "occupancy.day_closed.v1": OccupancyDay,
+  "occupancy.day_reopened.v1": OccupancyDay,
 } as const;
 
 export type EventTopic = keyof typeof eventRegistry;

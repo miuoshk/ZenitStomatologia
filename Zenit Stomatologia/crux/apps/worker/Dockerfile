@@ -30,7 +30,14 @@ RUN pnpm --filter @crux/worker build
 FROM node:22-bookworm-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 worker
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends postgresql-client ca-certificates \
+  && rm -rf /var/lib/apt/lists/* \
+  && addgroup --system --gid 1001 nodejs \
+  && adduser --system --uid 1001 worker
 COPY --from=builder /app/apps/worker/dist ./dist
+COPY --from=builder /app/apps/worker/package.json ./package.json
+COPY --from=builder /app/node_modules ./node_modules
 USER worker
+EXPOSE 8081
 CMD ["node", "dist/main.js"]
