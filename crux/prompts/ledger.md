@@ -14,6 +14,12 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## Wpisy
 
+## 2026-11-26 · 1.0 · produkcja po audycie (migracje + raport) · bez promptu
+Prompt: brak (ops: doprowadzenie bazy prod `mtvzljgzhftograrcrrc` do stanu z `main` po audycie 1.0)
+Commit: (ten PR) · Gałąź: chore/produkcja-1.0.1
+Wynik: na produkcji zastosowano trzy migracje audytu; weryfikacje odczytowe i behawioralne (begin/rollback) OK. Hasła `*_local_only` z repo na poolerze NIE działają → rotacji `crux_app`/`crux_worker` nie robiono. `crux_backup` utworzona jako NOLOGIN; LOGIN/hasło i host workera — otwarte.
+Uwagi: (1) Zastosowano `20261126000100_occupancy_rls_hardening`, `20261126000200_drop_test_reset_from_migrations`, `20261126000300_backup_role`. Pominięto no-opy Drizzle `past_bushwacker` / `overrated_mystique` (`SELECT 1`). (2) WITH CHECK `chair_occupancy_update` ma `provider_id = staff_id()`; trigger `chair_occupancy_guard_closed_day` jest; `tests.reset_fixtures()` = NULL; `crux_backup`: bypassrls, nologin, bez INSERT/UPDATE/DELETE na `chair_occupancy`. (3) Test behawioralny na fikcyjnym tenancie `a1000000-…`: lekarz nie zmienia cudzego (0 wierszy) i nie przepisuje własnego (42501); recepcja → `day_closed`; kierownik z `write_closed` zmienia; po rollback zero tenantów `a1000000-…`. (4) Worker / `DATABASE_URL_BACKUP` / test `pg_dump` — nie: brak hostingu workera (ADR-034). (5) Domeny: `zenitstomatologia.pl` i `crux-staging.` wskazują na ten sam projekt Vercel production co Crux — rekomendacja bez przepięć. (6) Na Vercel Production: `SENTRY_ENVIRONMENT=staging`, `KMS_KEY_ID=staging-v1`, `FAKE_INTEGRATIONS=1` (dług ops). Osobnego projektu Supabase staging nie widać w MCP.
+
 ## 2026-11-26 · 1.0 · przebudowa wizualna (Claude) · bez promptu
 Prompt: brak (prośba właściciela: wygląd na poziomie kursnaldek.pl)
 Commit: patrz PR `feat/estetyka-1.0` · Gałąź: feat/estetyka-1.0 (na `fix/audyt-1.0`)
