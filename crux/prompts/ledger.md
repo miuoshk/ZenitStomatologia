@@ -16,7 +16,7 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## 2026-11-26 · 1.0 · produkcja: crux_backup LOGIN + smoke dump · bez promptu
 Prompt: brak (kontynuacja ops po PR #3)
-Commit: (ten PR) · Gałąź: chore/produkcja-1.0.1-backup
+Commit: afef3ee · Gałąź: chore/produkcja-1.0.1-backup · PR #4
 Wynik: `alter role crux_backup login` na prod OK (`rolcanlogin=true`, `bypassrls=true`). Smoke `pg_dump` (klient 18) + `pg_restore --list`: obecne `TABLE DATA` dla `scheduling.chair_occupancy`, `identity.staff_members`, `audit.events`; plik usunięty. Hasło i `DATABASE_URL_BACKUP` tylko lokalnie u operatora (`~/.config/crux/`), **nie** w Vercel web.
 Uwagi: z tej maszyny direct `db.<ref>:5432` (AAAA) bez trasy IPv6 — dump poszedł przez pooler sesyjny `:5432` (smoke). Docelowo worker ma używać połączenia bezpośredniego 5432 (ADR-034). **Brak hostingu workera** → nocna kopia nadal nie cronuje; trzeba VPS/Docker UE + `DATABASE_URL_WORKER` + `DATABASE_URL_BACKUP` + `BACKUP_LOCAL_DIR`/`FileStoragePort`. Pełny `restore-test.sh` / RTO — nie robione (brak zaplanowanej kopii nocnej).
 
