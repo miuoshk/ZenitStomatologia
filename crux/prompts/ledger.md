@@ -16,7 +16,7 @@ Uwagi: <co model chciał zrobić inaczej, co odrzucono, decyzje, dług>
 
 ## 2026-11-26 · 1.0 · domknięcie ops (domeny, env, restore, worker docs) · bez promptu
 Prompt: brak (zgoda właściciela: „zrób wszystko”)
-Commit: (ten PR) · Gałąź: chore/produkcja-1.0.1-domkniecie
+Commit: 2a3f0a8 · Gałąź: chore/produkcja-1.0.1-domkniecie · PR #5
 Wynik: Vercel Production `SENTRY_ENVIRONMENT=production`, `FAKE_INTEGRATIONS=0` (preview/dev osobno); `crux-staging.` → 307 na `crux.`; apex `zenitstomatologia.pl` → `/dla-pacjentow` (marka zenit, bez Crux); restore Docker = liczności prod; CSP prod bez localhost. Worker: procedura w `docs/ops/worker-hosting.md` — **VPS UE nadal wymagany** (brak konta/CLI cloud w tym środowisku).
 Uwagi: `KMS_KEY_ID` zostawione (`staging-v1`) żeby nie złamać odszyfrowania istniejących wartości. Osobnego projektu Supabase/Vercel staging nie tworzono (koszt/konta).
 
