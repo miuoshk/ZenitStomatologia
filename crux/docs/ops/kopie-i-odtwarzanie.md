@@ -47,8 +47,9 @@ Do 2026-11-25 kopia nocna nie działała: `crux_worker` nie mógł czytać całe
 
 | Data | Kopia | Wykonał | Czas odtworzenia | Wynik | Uwagi |
 |---|---|---|---|---|---|
-| 2026-11-26 | smoke `pg_dump` jako `crux_backup` (prod `mtvzljgzhftograrcrrc`), nie kopia nocna workera | agent (Cursor) | n/d (tylko `--list`) | OK lista: `TABLE DATA` `scheduling.chair_occupancy`, `identity.staff_members`, `audit.events` | Plik usunięty. Direct `:5432` z tej sieci bez IPv6 → dump przez pooler sesyjny. Pełne `restore-test.sh` / RTO **nie** — brak hostingu workera i nocnego joba. |
-| _pełne odtworzenie przed zamknięciem bramki 1.0_ | | | | | |
+| 2026-11-26 | smoke `pg_dump` jako `crux_backup` (prod `mtvzljgzhftograrcrrc`) | agent (Cursor) | n/d (`--list`) | OK | Lista: `TABLE DATA` occupancy / staff / audit.events. Plik usunięty. |
+| 2026-11-26 | `pg_dump` → `pg_restore` na pusty `postgres:17` (Docker lokalnie) | agent (Cursor) | ~10 s | OK liczności = prod | Po stubach ról/`extensions.*`: `org.tenants=1`, `identity.staff_members=1`, `scheduling.chair_occupancy=0`, `audit.events=0` (zgodne z prod). Ostrzeżenia RLS/policy bez pełnego foundation — akceptowalne dla smoke 1.0. Kontener usunięty. Pełny RTO na VPS workera — po hostingowi ([worker-hosting.md](worker-hosting.md)). |
+| _RTO na serwerze workera przed zamknięciem bramki 1.0_ | | | | | |
 
 > **Wydanie 1.0:** pierwszy test odtworzenia z kopii **produkcyjnej** musi być wpisany do tabeli powyżej, zanim zamknie się bramka 1.0 ([bramka-1-0.md](bramka-1-0.md), punkt 5).
 

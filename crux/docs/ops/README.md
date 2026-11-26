@@ -7,6 +7,7 @@
 | [incydent-bezpieczenstwa.md](incydent-bezpieczenstwa.md) | naruszenie ochrony danych: 72 h, role, szablon zgłoszenia do UODO | Miłosz |
 | [korekta-wpisu.md](korekta-wpisu.md) | udokumentowana procedura korekty (§ 1 ust. 6 pkt 1 rozporządzenia) | Miłosz |
 | [kopie-i-odtwarzanie.md](kopie-i-odtwarzanie.md) | PITR, `pg_dump`, kwartalny test odtworzenia, RPO/RTO | Bartek |
+| [worker-hosting.md](worker-hosting.md) | VPS UE, Docker Compose workera, `DATABASE_URL_BACKUP` | Bartek |
 | [nowy-pracownik.md](nowy-pracownik.md) | konto, MFA, członkostwa | Miłosz |
 | [odejscie-pracownika.md](odejscie-pracownika.md) | dezaktywacja, zakończenie członkostw, MFA, tokeny | Miłosz |
 | [wdrozenie-produkcyjne.md](wdrozenie-produkcyjne.md) | okno po 20:00, lista kontrolna | Bartek |

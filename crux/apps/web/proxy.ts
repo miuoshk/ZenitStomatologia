@@ -1,8 +1,9 @@
 import { REQUEST_ID_HEADER, resolveRequestId } from "@crux/shared/request-id";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { CRUX_HOST, isPatientHost } from "./lib/host";
 
-const PUBLIC_PREFIXES = ["/logowanie", "/zablokowany"];
+const PUBLIC_PREFIXES = ["/logowanie", "/zablokowany", "/dla-pacjentow"];
 
 function isPublic(pathname: string): boolean {
   return PUBLIC_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
@@ -17,13 +18,17 @@ function securityHeaders(
     process.env["NODE_ENV"] === "production"
       ? `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`
       : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval'`;
+  const connectSrc =
+    process.env["NODE_ENV"] === "production"
+      ? "connect-src 'self' https://*.supabase.co"
+      : "connect-src 'self' http://127.0.0.1:54321 http://localhost:54321 https://*.supabase.co";
   const csp = [
     "default-src 'self'",
     scriptSrc,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob:",
     "font-src 'self'",
-    "connect-src 'self' http://127.0.0.1:54321 http://localhost:54321 https://*.supabase.co",
+    connectSrc,
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -50,6 +55,34 @@ export async function proxy(request: NextRequest) {
   forwarded.set(REQUEST_ID_HEADER, requestId);
   let response = NextResponse.next({ request: { headers: forwarded } });
   response = securityHeaders(response, nonce, requestId);
+
+  const host = request.headers.get("host");
+  // ADR-033: domena główna = strona dla pacjentów, nie Crux.
+  if (isPatientHost(host)) {
+    const pathname = request.nextUrl.pathname;
+    if (pathname === "/" || pathname === "") {
+      const dest = request.nextUrl.clone();
+      dest.pathname = "/dla-pacjentow";
+      return securityHeaders(NextResponse.rewrite(dest), nonce, requestId);
+    }
+    if (!pathname.startsWith("/dla-pacjentow") && !pathname.startsWith("/brand/")) {
+      return securityHeaders(
+        NextResponse.redirect(new URL("/dla-pacjentow", request.url)),
+        nonce,
+        requestId,
+      );
+    }
+    return response;
+  }
+
+  // Fałszywy staging historycznie wskazywał na produkcję — 307 na kanoniczny host Crux.
+  const bareHost = host?.split(":")[0]?.toLowerCase() ?? "";
+  if (bareHost === "crux-staging.zenitstomatologia.pl") {
+    const dest = new URL(request.url);
+    dest.host = CRUX_HOST;
+    dest.protocol = "https:";
+    return securityHeaders(NextResponse.redirect(dest, 307), nonce, requestId);
+  }
 
   const url = process.env["SUPABASE_URL"];
   const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
