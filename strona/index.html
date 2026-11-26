@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>zenit.stomatologia · gabinety stomatologiczne we Wrocławiu</title>
+<meta name="description" content="Dwa gabinety stomatologiczne we Wrocławiu: 01 Nowodworska i 02 Białowieska. Na pierwszej wizycie dostajesz plan leczenia z ceną każdej pozycji i liczbą wizyt.">
+<link rel="canonical" href="https://zenitstomatologia.pl/">
+<meta name="theme-color" content="#173A2A">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:url" content="https://zenitstomatologia.pl/">
+<meta property="og:title" content="zenit.stomatologia · gabinety stomatologiczne we Wrocławiu">
+<meta property="og:description" content="Dwa gabinety we Wrocławiu. Plan leczenia, cena i termin, zanim zaczniemy leczenie.">
+<meta property="og:image" content="https://zenitstomatologia.pl/zenit-ikona-512.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preload" href="assets/fonts/hanken-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+@font-face{font-family:"Hanken Grotesk";src:url("assets/fonts/hanken-grotesk-var.woff2") format("woff2");font-weight:400 800;font-display:swap}
+
+/* Stałe układu z STRONY-WWW.md; kolory wyłącznie z tokens.css */
+:root{--wrap:1240px;--ease:cubic-bezier(.22,.61,.36,1);--sec-y:clamp(96px,12vw,168px);--nav-h:72px}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:var(--nav-h)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--zenit-butelka);color:var(--text-primary);font-family:var(--font-sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;font-synthesis:none}
+main{background:var(--surface-app)}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+p{margin:0}
+h1,h2,h3{margin:0}
+button{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums lining-nums}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--space-32)}
+@media (max-width:600px){.wrap{padding:0 20px}}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px;border-radius:var(--radius-pole)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--zenit-kosc);color:var(--zenit-butelka);padding:12px 16px;border-radius:var(--radius-pelne);z-index:100;font-weight:700}
+.skip:focus{left:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Typografia */
+.label{margin:0 0 14px;font-size:12px;line-height:1.4;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+.label .n{color:var(--text-primary);margin-right:10px}
+.h-display{font-size:clamp(44px,6.4vw,88px);line-height:.98;font-weight:800;letter-spacing:-.05em;text-wrap:balance}
+.h-sec{font-size:clamp(34px,4.4vw,56px);line-height:1.02;font-weight:800;letter-spacing:-.045em;text-wrap:balance}
+.h-3{font-size:22px;line-height:1.2;font-weight:800;letter-spacing:-.02em}
+.lead{font-size:clamp(18px,1.6vw,20px);line-height:1.5;color:var(--text-secondary);max-width:38em;text-wrap:pretty}
+.caption{font-size:13px;line-height:1.45;color:var(--text-muted)}
+.caption b{color:var(--text-primary);font-weight:700}
+
+/* Przyciski */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 var(--space-24);border-radius:var(--radius-pelne);border:1px solid transparent;font:700 16px/1 var(--font-sans);text-decoration:none;cursor:pointer;transition:background-color .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease)}
+.btn svg{width:18px;height:18px;flex:none;transition:translate .18s var(--ease)}
+.btn:hover svg{translate:3px 0}
+.btn-primary{background:var(--zenit-zielen);color:var(--zenit-krem)}
+.btn-primary:hover{background:var(--zenit-butelka)}
+.btn-krem{background:var(--zenit-krem);color:var(--zenit-butelka)}
+.btn-krem:hover{background:var(--zenit-kosc)}
+.btn-line{border-color:currentColor;background:transparent}
+.btn-line:hover{background:var(--zenit-szron)}
+.btn-link{min-height:44px;padding:0 4px;font-weight:700;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px;display:inline-flex;align-items:center}
+
+/* Pole do uzupełnienia przed publikacją */
+.todo{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border:1px dashed var(--zenit-patyna);border-radius:var(--radius-pole);font-size:13px;font-weight:600;color:var(--text-muted);white-space:nowrap}
+
+/* ---------- Nawigacja ---------- */
+.nav{position:fixed;inset:0 0 auto;z-index:50;height:var(--nav-h);display:flex;align-items:center;color:var(--zenit-krem);transition:background-color .2s var(--ease),color .2s var(--ease),box-shadow .2s var(--ease)}
+.nav .wrap{display:flex;align-items:center;gap:var(--space-24);width:100%;max-width:1400px}
+.nav-logo{display:block;position:relative;height:36px;width:110px}
+.nav-logo img{position:absolute;inset:0;height:36px;width:auto;transition:opacity .2s var(--ease)}
+.nav-logo .on-light{opacity:0}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0 auto 0 var(--space-24);padding:0}
+.nav ul a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:var(--radius-pelne);text-decoration:none;font-weight:600;font-size:15px;opacity:.82;transition:opacity .18s var(--ease),background-color .18s var(--ease)}
+.nav ul a:hover{opacity:1}
+.nav ul a[aria-current="true"]{opacity:1}
+.nav-right{display:flex;align-items:center;gap:var(--space-8);margin-left:auto}
+.nav .tel{font-size:15px;font-weight:600;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;padding:0 12px;opacity:.82}
+.nav .btn{min-height:44px;padding:0 20px;font-size:15px}
+.nav .btn-nav{background:var(--zenit-krem);color:var(--zenit-butelka)}
+.nav.light{background:color-mix(in srgb,var(--zenit-kosc) 96%,transparent);color:var(--zenit-butelka);box-shadow:inset 0 -1px 0 var(--zenit-mgla)}
+.nav.light .on-dark{opacity:0}.nav.light .on-light{opacity:1}
+.nav.light .btn-nav{background:var(--zenit-zielen);color:var(--zenit-krem)}
+.nav.night{background:color-mix(in srgb,var(--zenit-butelka) 96%,transparent);box-shadow:inset 0 -1px 0 color-mix(in srgb,var(--zenit-krem) 12%,transparent)}
+@supports (backdrop-filter:blur(1px)){.nav.light,.nav.night{backdrop-filter:saturate(1.2) blur(10px)}}
+@media (max-width:960px){.nav ul,.nav .tel{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;background:var(--zenit-butelka);color:var(--zenit-krem);min-height:100svh;display:flex;align-items:center;padding:calc(var(--nav-h) + 48px) 0 88px}
+.hero .wrap{position:relative;z-index:1;width:100%}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:var(--space-64);align-items:center}
+.hero .label{color:var(--zenit-porost)}
+.hero .lead{color:var(--zenit-porost);margin-top:var(--space-24)}
+.hero-cta{display:flex;gap:var(--space-16);align-items:center;flex-wrap:wrap;margin-top:var(--space-32)}
+.hero-places{display:flex;gap:var(--space-32);margin-top:var(--space-64);padding-top:var(--space-24);border-top:1px solid color-mix(in srgb,var(--zenit-krem) 14%,transparent);flex-wrap:wrap}
+.place{display:flex;align-items:center;gap:var(--space-12);text-decoration:none}
+.place img{height:44px;width:auto}
+.place span{font-size:15px;font-weight:600;line-height:1.3}
+.place small{display:block;font-size:13px;font-weight:400;color:var(--zenit-porost)}
+.hero-mark{justify-self:end;width:min(380px,100%);color:var(--zenit-krem)}
+.hero-mark svg{width:100%;height:auto;overflow:visible}
+.polluk{position:absolute;pointer-events:none}
+.hero .polluk{right:-4vw;bottom:-46vh;height:110vh;width:auto;opacity:.5}
+@media (max-width:900px){
+  .hero{min-height:auto;padding-top:calc(var(--nav-h) + 40px)}
+  .hero-grid{grid-template-columns:1fr;gap:var(--space-48)}
+  .hero-mark{order:-1;justify-self:start;width:132px}
+  .hero .polluk{height:70vh;bottom:-30vh;right:-30vw}
+}
+/* Wejście znaku: od ósemek do jedynek, słońce na końcu, łącznie 600 ms */
+@media (prefers-reduced-motion:no-preference){
+  .js .hero-mark circle{opacity:0;transform:translateY(4px);transform-box:fill-box;transform-origin:center;transition:opacity .2s var(--ease),transform .2s var(--ease)}
+  .js .hero-mark .word{opacity:0;transition:opacity .3s var(--ease) .3s}
+  .js .hero.in .hero-mark circle,.js .hero.in .hero-mark .word{opacity:1;transform:none}
+  .js .hero .rise{opacity:0;translate:0 14px;transition:opacity .5s var(--ease),translate .5s var(--ease)}
+  .js .hero.in .rise{opacity:1;translate:0 0}
+  .js .hero.in .rise:nth-child(2){transition-delay:.06s}.js .hero.in .rise:nth-child(3){transition-delay:.12s}.js .hero.in .rise:nth-child(4){transition-delay:.18s}.js .hero.in .rise:nth-child(5){transition-delay:.24s}
+}
+
+/* ---------- Sekcje ---------- */
+.sec{position:relative;padding:var(--sec-y) 0;background:var(--surface-app)}
+.sec-alt{background:var(--surface-sunken)}
+.sec-white{background:var(--surface-card)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--space-48);align-items:end;margin-bottom:var(--space-64)}
+@media (max-width:860px){.sec-head{grid-template-columns:1fr;gap:20px;margin-bottom:var(--space-48)}}
+.reveal{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .js .reveal{opacity:0;translate:0 12px;transition:opacity .5s var(--ease),translate .5s var(--ease)}
+  .js .reveal.in{opacity:1;translate:0 0}
+}
+@media (prefers-reduced-motion:reduce){.js .reveal{opacity:1}}
+
+/* ---------- I. Scena łuku: plan leczenia ---------- */
+.plan{position:relative;background:var(--surface-app)}
+.plan-intro{padding:var(--sec-y) 0 0}
+.plan-track{position:relative;height:520vh}
+.plan-pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;padding-top:var(--nav-h)}
+.plan-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--space-64);align-items:center;width:100%}
+.arch-wrap{position:relative;max-width:480px;width:100%;justify-self:center}
+.arch{width:100%;height:auto;overflow:visible}
+.arch circle{transition:fill .25s var(--ease),transform .25s var(--ease);transform-box:fill-box;transform-origin:center}
+.arch .t{fill:var(--zenit-mgla)}
+.arch .t.on{fill:var(--zenit-zielen)}
+.arch .t.now{transform:scale(1.12)}
+.arch .sun{fill:var(--zenit-bursztyn);opacity:0;transform:translateY(10px) scale(.6);transition:opacity .35s var(--ease),transform .5s var(--ease)}
+.arch .sun.on{opacity:1;transform:none}
+.arch-read{position:absolute;left:0;right:0;top:46%;text-align:center}
+.arch-read .val{color:var(--text-primary);font-size:clamp(56px,7vw,96px);line-height:1;font-weight:800;letter-spacing:-.05em}
+.arch-read .val small{font-size:.42em;letter-spacing:-.02em;margin-left:2px}
+.arch-read p{font-size:15px;color:var(--text-muted);margin-top:8px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.step{position:relative;padding:12px 0 12px 28px;border-top:1px solid var(--border);transition:opacity .25s var(--ease)}
+.step:last-child{border-bottom:1px solid var(--border)}
+.step::before{content:"";position:absolute;left:0;top:19px;width:12px;height:12px;border-radius:50%;background:var(--zenit-mgla);transition:background-color .25s var(--ease)}
+.step.done::before{background:var(--zenit-zielen)}
+.step.now::after{content:"";position:absolute;left:-16px;top:12px;bottom:12px;width:2px;background:var(--zenit-bursztyn);border-radius:2px}
+.step h3{font-size:20px;line-height:1.25;font-weight:800;letter-spacing:-.015em;display:flex;gap:12px;align-items:baseline}
+.step h3 .k{font-size:13px;font-weight:700;color:var(--text-muted);letter-spacing:.04em}
+.step p{font-size:15px;color:var(--text-secondary);max-width:44ch;display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s var(--ease),opacity .3s var(--ease),margin .3s var(--ease);opacity:0;margin-top:0}
+.step p span{overflow:hidden}
+.step.now p{grid-template-rows:1fr;opacity:1;margin-top:8px}
+.step:not(.now):not(.done){opacity:.55}
+/* karta planu */
+.card{background:var(--surface-card);border:1px solid var(--border);border-radius:var(--radius-karta)}
+.plan-card{margin-top:var(--space-24);padding:16px var(--space-24)}
+.pc-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.pc-head b{font-size:15px}
+.chip{display:inline-flex;align-items:center;min-height:24px;padding:0 10px;border-radius:var(--radius-pelne);background:var(--zenit-szron);font-size:12px;font-weight:700;color:var(--zenit-las)}
+.pc-row{display:grid;grid-template-columns:6px 1fr auto auto;gap:12px;align-items:center;padding:7px 0;border-top:1px solid var(--grid);font-size:14px;transition:opacity .25s var(--ease)}
+.pc-row .sw{height:20px;border-radius:3px}
+.pc-row .what b{font-weight:700;color:var(--text-primary);margin-right:8px}
+.pc-row .what span{color:var(--text-muted);font-size:13px}
+.pc-row .vis{color:var(--text-muted);font-size:13px;white-space:nowrap}
+.pc-row .amt{font-weight:700;min-width:80px;text-align:right}
+.pc-row .ok{display:inline-block;width:16px;height:16px;margin-left:6px;vertical-align:-3px;border-radius:50%;background:var(--zenit-zielen);opacity:0;transform:scale(.4);transition:opacity .2s var(--ease),transform .25s var(--ease)}
+.pc-row.done .ok{opacity:1;transform:none}
+.pc-row.done .what b{color:var(--zenit-las)}
+.pc-sum{display:flex;justify-content:space-between;padding-top:12px;margin-top:4px;border-top:1px solid var(--border);font-weight:800}
+.pc-note{margin-top:10px}
+@media (max-width:900px){
+  .plan-track{height:auto}
+  .plan-pin{position:relative;height:auto;padding:var(--space-48) 0 var(--sec-y)}
+  .plan-grid{grid-template-columns:1fr;gap:var(--space-32)}
+  .arch-wrap{max-width:none;justify-self:stretch;position:sticky;top:var(--nav-h);z-index:2;background:var(--surface-app);padding:12px 0 8px;margin:0 -24px;width:auto;border-bottom:1px solid var(--border)}
+  .arch{display:block;width:min(260px,70vw);margin:0 auto}
+  .arch-read{top:42%}
+  .arch-read .val{color:var(--text-primary);font-size:48px}
+  .arch-read p{font-size:13px;margin-top:4px}
+  .step{padding-top:20px;padding-bottom:20px}
+  .step p{grid-template-rows:1fr;opacity:1;margin-top:8px}
+  .step:not(.now):not(.done){opacity:1}
+  .pc-row{grid-template-columns:6px 1fr auto}.pc-row .vis{display:none}
+}
+
+/* ---------- II. Kolornik ---------- */
+.kol-bar{display:grid;grid-template-columns:repeat(5,1fr) .9fr;gap:0;border-radius:var(--radius-karta);overflow:hidden;border:1px solid var(--border)}
+.kol-btn{position:relative;appearance:none;border:0;margin:0;padding:16px 16px 18px;min-height:120px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:12px;background:var(--c);color:var(--zenit-butelka);transition:filter .18s var(--ease)}
+.kol-btn+.kol-btn{box-shadow:inset 1px 0 0 color-mix(in srgb,var(--zenit-butelka) 8%,transparent)}
+.kol-btn:hover{filter:brightness(.97)}
+.kol-btn .code{font-size:13px;font-weight:800;letter-spacing:.06em}
+.kol-btn .nm{font-size:15px;font-weight:700;line-height:1.25}
+.kol-btn[aria-selected="true"]::after{content:"";position:absolute;left:16px;right:16px;bottom:8px;height:2px;border-radius:2px;background:var(--zenit-bursztyn)}
+.kol-btn[aria-selected="true"] .nm{font-weight:800}
+.kol-btn:focus-visible{outline-offset:-4px}
+.kol-scale{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:13px;color:var(--text-muted)}
+.kol-panel{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:var(--space-48);margin-top:var(--space-32);padding:clamp(24px,4vw,48px);align-items:center;min-height:440px}
+.kol-panel .code{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase}
+.kol-panel .code i{width:28px;height:16px;border-radius:4px;background:var(--c);border:1px solid var(--border)}
+.kol-panel h3{font-size:clamp(28px,3vw,40px);line-height:1.05;font-weight:800;letter-spacing:-.035em;margin:14px 0 16px}
+.kol-panel .desc{color:var(--text-secondary);font-size:17px;max-width:46ch}
+.kol-list{list-style:none;padding:0;margin:var(--space-24) 0 0;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px}
+.kol-list li{position:relative;padding-left:20px;font-size:15px}
+.kol-list li::before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--zenit-zielen)}
+.kol-meta{display:flex;gap:var(--space-32);margin-top:var(--space-32);padding-top:var(--space-16);border-top:1px solid var(--border);flex-wrap:wrap;align-items:center}
+.kol-meta div{display:grid;gap:4px}
+.kol-meta .k{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.kol-fig{margin:0;display:grid;justify-items:center;gap:14px}
+.ryc{background:var(--zenit-mech);-webkit-mask:var(--src) center/contain no-repeat;mask:var(--src) center/contain no-repeat}
+.kol-fig .ryc{width:100%;max-width:260px;aspect-ratio:926/1414}
+.kol-fig figcaption{text-align:center;max-width:30ch}
+.kol-anim{animation:none}
+@media (prefers-reduced-motion:no-preference){.kol-anim{animation:kolIn .35s var(--ease)}}
+@keyframes kolIn{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
+@media (max-width:900px){
+  .kol-bar{grid-template-columns:repeat(3,1fr)}
+  .kol-btn{min-height:88px}
+  .kol-btn:nth-child(4){box-shadow:none}
+  .kol-panel{grid-template-columns:1fr;gap:var(--space-32)}
+  .kol-fig{order:-1}.kol-fig .ryc{max-width:150px}
+  .kol-list{grid-template-columns:1fr}
+}
+
+/* ---------- III. Noc: myśl marki ---------- */
+.night{position:relative;overflow:hidden;background:var(--zenit-butelka);color:var(--zenit-krem);padding:var(--sec-y) 0}
+.night .label{color:var(--zenit-porost)}
+.night .label .n{color:var(--zenit-krem)}
+.night .polluk{display:block;right:-3vw;top:-8%;height:96%;width:auto}
+.night .manifest,.night .label{position:relative}
+.night .wrap{position:relative;z-index:1}
+.manifest{font-size:clamp(32px,4.6vw,64px);line-height:1.08;font-weight:800;letter-spacing:-.04em;max-width:22ch;text-wrap:balance}
+.manifest .w{color:var(--zenit-krem);transition:color .3s var(--ease)}
+.js .manifest .w{color:color-mix(in srgb,var(--zenit-krem) 26%,var(--zenit-butelka))}
+.js .manifest .w.lit{color:var(--zenit-krem)}
+@media (prefers-reduced-motion:reduce){.js .manifest .w{color:var(--zenit-krem)}}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-16);margin-top:clamp(64px,8vw,112px)}
+.pillar{padding:var(--space-24);border-radius:var(--radius-karta);background:color-mix(in srgb,var(--zenit-krem) 6%,transparent);border:1px solid color-mix(in srgb,var(--zenit-krem) 12%,transparent)}
+.pillar .k{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--zenit-porost)}
+.pillar h3{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:12px 0 10px}
+.pillar p{color:var(--zenit-porost);font-size:16px}
+@media (max-width:860px){.pillars{grid-template-columns:1fr}.night .polluk{display:none}}
+
+/* ---------- IV. Gabinety ---------- */
+.gab-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-16)}
+.gab{padding:clamp(24px,3vw,36px);display:grid;gap:var(--space-24);position:relative;overflow:hidden}
+.gab-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.gab-top img{height:96px;width:auto}
+.gab h3{font-size:clamp(28px,3vw,36px);font-weight:800;letter-spacing:-.035em;line-height:1.05}
+.gab .addr{color:var(--text-secondary);margin-top:6px}
+.gab dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:12px 24px;padding-top:var(--space-16);border-top:1px solid var(--border);font-size:15px;align-items:center}
+.gab dt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.gab dd{margin:0}
+.gab-cta{display:flex;gap:var(--space-12);flex-wrap:wrap}
+.gab .tag{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--zenit-las)}
+.gab-note{margin-top:var(--space-24);display:flex;gap:var(--space-16);align-items:center;color:var(--text-secondary);font-size:15px}
+.gab-note .dots{display:flex;gap:6px}
+.gab-note .dots i{width:10px;height:10px;border-radius:50%;background:var(--zenit-zielen)}
+.gab-note .dots i.e{background:var(--zenit-mgla)}
+@media (max-width:860px){.gab-grid{grid-template-columns:1fr}.gab-top img{height:72px}}
+
+/* ---------- V. FAQ ---------- */
+.faq-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:var(--space-64)}
+.faq details{border-top:1px solid var(--border)}
+.faq details:last-child{border-bottom:1px solid var(--border)}
+.faq summary{cursor:pointer;font-size:19px;font-weight:700;list-style:none;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 0}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";flex:none;width:12px;height:12px;border-right:2px solid var(--zenit-las);border-bottom:2px solid var(--zenit-las);rotate:45deg;translate:0 -3px;transition:rotate .18s var(--ease),translate .18s var(--ease)}
+.faq details[open] summary::after{rotate:-135deg;translate:0 3px}
+.faq details p{padding:0 0 var(--space-24);color:var(--text-secondary);max-width:62ch}
+.faq-side .ryc{width:200px;aspect-ratio:926/1414;margin-top:var(--space-48);opacity:.9}
+@media (max-width:860px){.faq-grid{grid-template-columns:1fr;gap:var(--space-32)}.faq-side .ryc{display:none}}
+
+/* ---------- Koniec i stopka ---------- */
+.end{position:relative;overflow:hidden;background:var(--zenit-butelka);color:var(--zenit-krem);padding:clamp(110px,14vw,180px) 0 48px}
+.end .wrap{position:relative;z-index:1}
+.end .polluk{right:-3vw;top:-30%;height:150%;width:auto;opacity:.4}
+.end .lead{color:var(--zenit-porost);margin-top:var(--space-24)}
+.end-places{display:grid;grid-template-columns:repeat(2,minmax(0,360px));gap:var(--space-16);margin-top:var(--space-48)}
+.end-place{display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:var(--radius-karta);border:1px solid color-mix(in srgb,var(--zenit-krem) 16%,transparent);text-decoration:none;transition:background-color .18s var(--ease)}
+.end-place:hover{background:color-mix(in srgb,var(--zenit-krem) 6%,transparent)}
+.end-place img{height:48px;width:auto}
+.end-place b{display:block;font-size:17px}
+.end-place span{font-size:14px;color:var(--zenit-porost)}
+.foot{margin-top:clamp(96px,12vw,140px);padding-top:28px;border-top:1px solid color-mix(in srgb,var(--zenit-krem) 16%,transparent);display:grid;grid-template-columns:auto 1fr auto;gap:var(--space-32);align-items:center;font-size:14px;color:var(--zenit-porost)}
+.foot img{height:30px;width:auto}
+.foot nav{display:flex;gap:var(--space-24);justify-content:flex-end;flex-wrap:wrap}
+.foot a{color:var(--zenit-krem);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.foot a:hover{text-decoration:underline;text-underline-offset:4px}
+.foot .todo{color:var(--zenit-porost);border-color:var(--zenit-mech)}
+@media (max-width:760px){.end-places{grid-template-columns:1fr}.foot{grid-template-columns:1fr;gap:var(--space-16)}.foot nav{justify-content:flex-start}.end .polluk{display:none}}
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" aria-label="zenit.stomatologia, strona główna">
+      <span class="nav-logo"><img class="on-dark" src="assets/logo/zenit-poziomy-krem.svg" alt="zenit.stomatologia" width="110" height="36"><img class="on-light" src="assets/logo/zenit-poziomy-zielen.svg" alt="" width="110" height="36"></span>
+    </a>
+    <nav aria-label="Główna">
+      <ul>
+        <li><a href="#leczenie">Leczenie</a></li>
+        <li><a href="#uslugi">Usługi</a></li>
+        <li><a href="#gabinety">Gabinety</a></li>
+        <li><a href="#pytania">Pytania</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <a class="btn btn-nav" href="#wizyta">Umów wizytę</a>
+    </div>
+  </div>
+</header>
+
+<main id="tresc">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" aria-labelledby="h1">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="label rise">Wrocław · dwa gabinety</p>
+      <h1 class="h-display rise" id="h1">Plan, cena i&nbsp;termin, zanim zaczniemy leczenie</h1>
+      <p class="lead rise">Na pierwszej wizycie lekarz dentysta rozpisuje Ci leczenie: co trzeba zrobić, w&nbsp;jakiej kolejności, ile to kosztuje i&nbsp;ile wizyt zajmie. Decyzję podejmujesz w&nbsp;domu, ze spokojem.</p>
+      <div class="hero-cta rise">
+        <a class="btn btn-krem" href="#wizyta">Umów pierwszą wizytę <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn-link" href="#leczenie">Jak wygląda leczenie</a>
+      </div>
+      <div class="hero-places rise">
+        <a class="place" href="#gab-01"><img src="assets/logo/gabinet-01-nowodworska-tlo-ciemne.svg" alt="" width="55" height="44"><span>Nowodworska<small>Wrocław</small></span></a>
+        <a class="place" href="#gab-02"><img src="assets/logo/gabinet-02-bialowieska-tlo-ciemne.svg" alt="" width="55" height="44"><span>Białowieska<small>Wrocław</small></span></a>
+      </div>
+    </div>
+    <div class="hero-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0.000 0.000 104.049 117.401" focusable="false" aria-label="zenit.stomatologia, lukowy"><circle cx="58.615" cy="25.183" r="5.343" fill="#EFE4C6"/><circle cx="45.434" cy="25.183" r="5.343" fill="#EFE4C6"/><circle cx="69.839" cy="29.209" r="4.086" fill="#EFE4C6"/><circle cx="34.210" cy="29.209" r="4.086" fill="#EFE4C6"/><circle cx="78.827" cy="36.051" r="4.715" fill="#EFE4C6"/><circle cx="25.223" cy="36.051" r="4.715" fill="#EFE4C6"/><circle cx="86.096" cy="45.103" r="4.400" fill="#EFE4C6"/><circle cx="17.953" cy="45.103" r="4.400" fill="#EFE4C6"/><circle cx="91.247" cy="54.801" r="4.086" fill="#EFE4C6"/><circle cx="12.802" cy="54.801" r="4.086" fill="#EFE4C6"/><circle cx="95.412" cy="66.975" r="6.286" fill="#EFE4C6"/><circle cx="8.637" cy="66.975" r="6.286" fill="#EFE4C6"/><circle cx="98.002" cy="81.180" r="5.658" fill="#EFE4C6"/><circle cx="6.047" cy="81.180" r="5.658" fill="#EFE4C6"/><circle cx="98.706" cy="94.657" r="5.343" fill="#EFE4C6"/><circle cx="5.343" cy="94.657" r="5.343" fill="#EFE4C6"/><circle cx="52.025" cy="7.543" r="7.543" fill="#E9A53A"/><path d="M17.417845852783934 100.0V96.78574751411901L26.7391780618388 85.14301073192787L27.167745059956268 86.46442564279006H17.77498501788182V82.39303916067414H31.667698540189654V85.85728906212364L22.48922199717394 97.53573976082457L22.060654999056474 95.8928996013743H31.667698540189654V100.0ZM41.20331424830326 100.35713916509789Q38.846195758657196 100.35713916509789 37.14978472444223 99.60714691839232Q35.45337369022727 98.85715467168676 34.3998131531885 97.57145367733436Q33.34625261614973 96.28575268298196 32.86411474326758 94.66076948178659Q32.38197687038543 93.0357862805912 32.38197687038543 91.28580437161153Q32.38197687038543 89.60725029565147 32.86411474326758 87.9644101362012Q33.34625261614973 86.32156997675091 34.346242278423816 84.98229810763382Q35.3462319406979 83.64302623851674 36.98907210014818 82.83946311704649Q38.631912259598465 82.03589999557624 40.91760291622494 82.03589999557624Q42.95329615728291 82.03589999557624 44.506851525458714 82.73232136751713Q46.06040689363453 83.42874273945802 47.0961104724184 84.66087285904572Q48.13181405120228 85.89300297863343 48.64966584059421 87.57155705459351Q49.16751762998615 89.25011113055358 49.16751762998615 91.17866262208217Q49.16751762998615 91.50008787067027 49.149660671731255 91.92865486878773Q49.13180371347636 92.3572218669052 49.06037588045679 92.89293061455203H37.27478343222649Q37.48906693128522 94.53577077400232 38.66762617610825 95.33933389547256Q39.84618542093128 96.14289701694281 41.489025580381565 96.14289701694281Q42.81044049124375 96.14289701694281 44.131855402105934 95.67861610231556Q45.453270312968115 95.2143351876883 46.453259975242204 94.35720119145337L48.7032367153589 97.7857371763931Q47.38182180449671 98.7142990056476 46.25683343443836 99.28572166980422Q45.131845064380016 99.85714433396085 43.93542886130209 100.10714174952938Q42.73901265822417 100.35713916509789 41.20331424830326 100.35713916509789ZM44.346138901164665 90.42867037537661Q44.41756673418425 90.1429590432983 44.47113760894893 89.85724771122Q44.52470848371361 89.57153637914168 44.52470848371361 89.32153896357316Q44.52470848371361 88.60726063337738 44.2568541098902 88.01798101096585Q43.98899973606678 87.42870138855434 43.52471882143952 87.00013439043688Q43.06043790681227 86.57156739231942 42.41758740963607 86.3394269350058Q41.77473691245987 86.10728647769217 40.98903074924452 86.10728647769217Q39.739043671401916 86.10728647769217 38.93548054993167 86.58942435057432Q38.13191742846142 87.07156222345647 37.72120738859885 87.78584055365224Q37.31049734873628 88.50011888384802 37.203355599206915 89.25011113055358H45.98897906061495ZM50.774643872926646 100.0V82.39303916067414H55.66745043476771V86.46442564279006L54.953172104571934 86.50013955929984Q55.417453019199186 84.82158548333977 56.328157890198796 83.83945277932058Q57.23886276119841 82.85732007530139 58.41742200602144 82.44661003543882Q59.595981250844474 82.03589999557624 60.7745404956675 82.03589999557624Q63.81022339899955 82.03589999557624 65.50663443321451 83.73231102979122Q67.20304546742949 85.42872206400618 67.20304546742949 88.39297713431864V100.0H62.27452498907863V90.21438687631787Q62.27452498907863 88.17869363525992 61.542389700627965 87.23227484775052Q60.810254412177294 86.28585606024112 59.23884208574658 86.28585606024112Q58.060282840923556 86.28585606024112 57.25671971945331 86.85727872439773Q56.45315659798306 87.42870138855434 56.060303516375384 88.60726063337738Q55.66745043476771 89.78581987820041 55.66745043476771 91.67865745321922V100.0ZM69.31016654150702 100.0V82.39303916067414H74.20297310334809V100.0ZM69.23873870848745 79.82163717196934V75.10740019267723H74.34582876938724V79.82163717196934ZM83.52430531240296 100.35713916509789Q82.06003473550162 100.35713916509789 80.77433374114922 99.80357345919617Q79.48863274679682 99.25000775329444 78.70292658358147 98.00002067545182Q77.91722042036612 96.75003359760922 77.91722042036612 94.6071986070219V78.50022226110715L82.88145481522676 75.85739243938279V93.21435586314013Q82.88145481522676 94.78576818957085 83.29216485508933 95.5714743527862Q83.70287489495189 96.35718051600155 84.88143413977492 96.35718051600155Q85.23857330487282 96.35718051600155 85.68499726124517 96.28575268298198Q86.13142121761753 96.2143248499624 86.63141604875457 96.07146918392324V99.82143041745105Q85.88142380204901 100.10714174952936 85.11357459708856 100.23214045731362Q84.34572539212809 100.35713916509789 83.52430531240296 100.35713916509789ZM74.84582360052428 86.21442822722153V82.39303916067414H86.63141604875457V86.21442822722153Z" fill="#EFE4C6"/><path d="M2.5721132839466145 117.39121383728202Q1.5044436189121706 117.39121383728202 0.8298705123676813 116.8379668290369Q0.15529740582319185 116.28471982079179 0.0 115.3626414737166L1.0967879286262923 115.090871013526Q1.2035548951297366 115.73147281254667 1.6063575414836404 116.06147979992096Q2.0091601878375442 116.39148678729524 2.6012315475384633 116.39148678729524Q2.9312385349127457 116.39148678729524 3.193302907239382 116.27016068899587Q3.455367279566018 116.1488345906965 3.605811641457235 115.92559456982565Q3.756256003348452 115.70235454895482 3.756256003348452 115.42087800090029Q3.756256003348452 115.11998927711785 3.591252509661311 114.92101447590689Q3.4262490159741694 114.72203967469592 3.115654204327786 114.56188922494076Q2.8050593926814025 114.40173877518559 2.358579350939726 114.2270291936345Q1.747095815510908 113.99408308489971 1.3200279494971305 113.72231262470913Q0.892960083483353 113.45054216451854 0.6697200626125147 113.07685778175647Q0.44648004174167644 112.70317339899442 0.44648004174167644 112.1887507422051Q0.44648004174167644 111.65491590968789 0.7085444140683127 111.24240717547002Q0.970608786394949 110.82989844125217 1.446207091728474 110.59695233251739Q1.9218053970619988 110.3640062237826 2.542995020354766 110.3640062237826Q3.212715082967281 110.3640062237826 3.7271377397566035 110.66489494756503Q4.2415603965459265 110.96578367134747 4.55215520819231 111.57726720677628L3.6591951247089574 112.12080812715746Q3.455367279566018 111.75197678832738 3.164184643647533 111.55300198711642Q2.8730020077290486 111.35402718590545 2.504170668898968 111.35402718590545Q2.242106296572332 111.35402718590545 2.028572363565443 111.45594110847692Q1.8150384305585545 111.55785503104839 1.6937123322591858 111.74227070046342Q1.5723862339598171 111.92668636987847 1.5723862339598171 112.16933856647721Q1.5723862339598171 112.4216968509399 1.7179775519190597 112.61096556428691Q1.8635688698783022 112.80023427763392 2.169310637592711 112.95553168345711Q2.4750524053071197 113.1108290892803 2.9506507106406445 113.29524475869535Q3.5621342460694625 113.52819086743014 3.98920211208324 113.79996132762072Q4.416269978097017 114.0717317878113 4.64436304289983 114.44541617057337Q4.872456107702643 114.81910055333542 4.872456107702643 115.35293538585263Q4.872456107702643 115.94500674555356 4.581273471784158 116.40119287515918Q4.290090835865674 116.85737900476481 3.7708151351443764 117.12429642102342Q3.251539434423079 117.39121383728202 2.5721132839466145 117.39121383728202ZM10.394337730665907 117.26503469505069V111.4996185038647H8.23958622486912V110.4998914538779H13.674995428680834V111.4996185038647H11.529950010747998V117.26503469505069ZM20.03160060794375 117.40091992514598Q19.0804039972767 117.40091992514598 18.362153495344437 116.96414597126825Q17.643902993412176 116.52737201739052 17.24110034705827 115.73147281254666Q16.83829770070437 114.9355736077028 16.83829770070437 113.88731611839627Q16.83829770070437 112.82935254122577 17.24110034705827 112.03345333638191Q17.643902993412176 111.23755413153805 18.362153495344437 110.80078017766033Q19.0804039972767 110.3640062237826 20.03160060794375 110.3640062237826Q21.0022093943387 110.3640062237826 21.725312940202937 110.80078017766033Q22.448416486067174 111.23755413153805 22.85121913242108 112.02860029244994Q23.25402177877498 112.81964645336183 23.25402177877498 113.88731611839627Q23.25402177877498 114.94527969556675 22.846366088489102 115.73632585647863Q22.438710398203224 116.52737201739052 21.715606852338986 116.96414597126825Q20.992503306474752 117.40091992514598 20.03160060794375 117.40091992514598ZM20.03160060794375 116.33325026011154Q20.681908494828367 116.33325026011154 21.147800712297943 116.0323615363291Q21.613692929767517 115.73147281254667 21.870904258162177 115.18307884823352Q22.12811558655684 114.63468488392037 22.12811558655684 113.88731611839627Q22.12811558655684 113.13024126500821 21.870904258162177 112.58184730069506Q21.613692929767517 112.03345333638191 21.147800712297943 111.73256461259948Q20.681908494828367 111.43167588881704 20.03160060794375 111.43167588881704Q19.400704896787033 111.43167588881704 18.93481267931746 111.7277115686675Q18.468920461847883 112.02374724851796 18.211709133453223 112.57214121283111Q17.954497805058562 113.12053517714426 17.954497805058562 113.88731611839627Q17.954497805058562 114.64439097178433 18.206856089521246 115.19278493609747Q18.459214373983933 115.74117890041062 18.929959635385483 116.03721458026108Q19.400704896787033 116.33325026011154 20.03160060794375 116.33325026011154ZM27.281165870690018 117.26503469505069V110.4998914538779H28.93120080756143L30.823887941031582 115.55676323099557H30.620060095888643L32.52245331722274 110.4998914538779H34.16278216623021V117.26503469505069H33.03687597401206V111.81021331551108L33.13393685265156 111.82962549123897L31.27036798277326 116.67296333534976H30.173580054146967L28.300305096404713 111.82962549123897L28.40707206290816 111.81021331551108V117.26503469505069ZM37.86962535863491 117.26503469505069 40.54850560908497 110.4998914538779H41.40264134111253L44.07181550369864 117.26503469505069H42.848848432841L40.97557347509875 112.14022030288535L39.1022985173565 117.26503469505069ZM39.53907247123423 115.84794586691406 39.88849163433641 114.84821881692727H42.052949227997146L42.42178056682722 115.84794586691406ZM48.44837875871586 117.26503469505069V111.4996185038647H46.29362725291908V110.4998914538779H51.72903645673079V111.4996185038647H49.583991038797954V117.26503469505069ZM58.08564163599371 117.40091992514598Q57.13444502532666 117.40091992514598 56.416194523394395 116.96414597126825Q55.697944021462135 116.52737201739052 55.29514137510823 115.73147281254666Q54.892338728754325 114.9355736077028 54.892338728754325 113.88731611839627Q54.892338728754325 112.82935254122577 55.29514137510823 112.03345333638191Q55.697944021462135 111.23755413153805 56.416194523394395 110.80078017766033Q57.13444502532666 110.3640062237826 58.08564163599371 110.3640062237826Q59.05625042238866 110.3640062237826 59.77935396825289 110.80078017766033Q60.50245751411713 111.23755413153805 60.90526016047104 112.02860029244994Q61.30806280682494 112.81964645336183 61.30806280682494 113.88731611839627Q61.30806280682494 114.94527969556675 60.900407116539064 115.73632585647863Q60.492751426253186 116.52737201739052 59.769647880388945 116.96414597126825Q59.04654433452471 117.40091992514598 58.08564163599371 117.40091992514598ZM58.08564163599371 116.33325026011154Q58.73594952287833 116.33325026011154 59.2018417403479 116.0323615363291Q59.667733957817475 115.73147281254667 59.924945286212136 115.18307884823352Q60.1821566146068 114.63468488392037 60.1821566146068 113.88731611839627Q60.1821566146068 113.13024126500821 59.924945286212136 112.58184730069506Q59.667733957817475 112.03345333638191 59.2018417403479 111.73256461259948Q58.73594952287833 111.43167588881704 58.08564163599371 111.43167588881704Q57.45474592483699 111.43167588881704 56.98885370736741 111.7277115686675Q56.52296148989784 112.02374724851796 56.26575016150318 112.57214121283111Q56.00853883310852 113.12053517714426 56.00853883310852 113.88731611839627Q56.00853883310852 114.64439097178433 56.260897117571204 115.19278493609747Q56.51325540203389 115.74117890041062 56.98400066343544 116.03721458026108Q57.45474592483699 116.33325026011154 58.08564163599371 116.33325026011154ZM65.33520689874 117.26503469505069V110.4998914538779H66.46111309095814V116.26530764506388H69.38264553800693V117.26503469505069ZM75.7295446294059 117.40091992514598Q74.77834801873884 117.40091992514598 74.06009751680658 116.96414597126825Q73.34184701487432 116.52737201739052 72.93904436852041 115.73147281254666Q72.53624172216651 114.9355736077028 72.53624172216651 113.88731611839627Q72.53624172216651 112.82935254122577 72.93904436852041 112.03345333638191Q73.34184701487432 111.23755413153805 74.06009751680658 110.80078017766033Q74.77834801873884 110.3640062237826 75.7295446294059 110.3640062237826Q76.70015341580084 110.3640062237826 77.42325696166509 110.80078017766033Q78.14636050752932 111.23755413153805 78.54916315388323 112.02860029244994Q78.95196580023712 112.81964645336183 78.95196580023712 113.88731611839627Q78.95196580023712 114.94527969556675 78.54431010995124 115.73632585647863Q78.13665441966536 116.52737201739052 77.41355087380113 116.96414597126825Q76.6904473279369 117.40091992514598 75.7295446294059 117.40091992514598ZM75.7295446294059 116.33325026011154Q76.37985251629051 116.33325026011154 76.84574473376009 116.0323615363291Q77.31163695122966 115.73147281254667 77.56884827962432 115.18307884823352Q77.82605960801898 114.63468488392037 77.82605960801898 113.88731611839627Q77.82605960801898 113.13024126500821 77.56884827962432 112.58184730069506Q77.31163695122966 112.03345333638191 76.84574473376009 111.73256461259948Q76.37985251629051 111.43167588881704 75.7295446294059 111.43167588881704Q75.09864891824918 111.43167588881704 74.6327567007796 111.7277115686675Q74.16686448331002 112.02374724851796 73.90965315491536 112.57214121283111Q73.6524418265207 113.12053517714426 73.6524418265207 113.88731611839627Q73.6524418265207 114.64439097178433 73.90480011098339 115.19278493609747Q74.15715839544607 115.74117890041062 74.62790365684762 116.03721458026108Q75.09864891824918 116.33325026011154 75.7295446294059 116.33325026011154ZM85.83269972415331 117.40091992514598Q84.92032746494206 117.40091992514598 84.21178305087375 116.96414597126825Q83.50323863680543 116.52737201739052 83.1052890343835 115.73147281254666Q82.70733943196157 114.9355736077028 82.70733943196157 113.87761003053231Q82.70733943196157 112.81964645336183 83.11014207831548 112.02860029244994Q83.51294472466938 111.23755413153805 84.23119522660164 110.80078017766033Q84.9494457285339 110.3640062237826 85.90064233920096 110.3640062237826Q86.95860591637145 110.3640062237826 87.73023990155544 110.88813496843588Q88.50187388673942 111.41226371308915 88.84158696197765 112.34404814802829L87.7933294726711 112.72258557472233Q87.56038336393632 112.11110203929351 87.07507897073884 111.77138896405528Q86.58977457754136 111.43167588881704 85.90064233920096 111.43167588881704Q85.26974662804425 111.43167588881704 84.80385441057467 111.73256461259948Q84.33796219310508 112.03345333638191 84.08075086471042 112.57699425676309Q83.82353953631576 113.12053517714426 83.82353953631576 113.87761003053231Q83.82353953631576 114.63468488392037 84.08075086471042 115.18307884823352Q84.33796219310508 115.73147281254667 84.80385441057467 116.0323615363291Q85.26974662804425 116.33325026011154 85.90064233920096 116.33325026011154Q86.23064932657523 116.33325026011154 86.57036240181347 116.24104242540402Q86.9100754770517 116.1488345906965 87.20125811297018 115.92559456982565Q87.49244074888867 115.70235454895482 87.67200337437174 115.29955190260091Q87.8515659998548 114.896749256247 87.8515659998548 114.28526572081819V113.85819785480442L88.10392428431749 114.63468488392037H86.17241279939154V113.63495783393358H88.84158696197765V117.26503469505069H87.8515659998548L87.69626859403161 116.0905980635128L87.8903903513106 116.24589546933599Q87.70597468189555 116.63413898389398 87.40023291418115 116.89135031228864Q87.09449114646674 117.1485616406833 86.69168850011283 117.27474078291465Q86.28888585375894 117.40091992514598 85.83269972415331 117.40091992514598ZM93.01432237185195 117.26503469505069V110.4998914538779H94.14022856407009V117.26503469505069ZM97.84707175647478 117.26503469505069 100.52595200692484 110.4998914538779H101.3800877389524L104.0492619015385 117.26503469505069H102.82629483068087L100.95301987293861 112.14022030288535L99.07974491519636 117.26503469505069ZM99.51651886907409 115.84794586691406 99.86593803217627 114.84821881692727H102.030395625837L102.3992269646671 115.84794586691406Z" fill="#AFC2B3"/></svg></div>
+  </div>
+</section>
+
+<!-- ============ I. LECZENIE: ŁUK ============ -->
+<section class="plan" id="leczenie" aria-labelledby="h-plan">
+  <div class="plan-intro">
+    <div class="wrap sec-head reveal" style="margin-bottom:0">
+      <div><p class="label"><span class="n">I</span>Leczenie</p><h2 class="h-sec" id="h-plan">Leczenie ma początek, plan i&nbsp;koniec</h2></div>
+      <p class="lead">Szesnaście kuleczek łuku to szesnaście zębów szczęki z&nbsp;naszego znaku. Przewijaj, a&nbsp;łuk wypełni się tak, jak wypełnia się plan leczenia. Słońce wschodzi, kiedy plan jest wykonany.</p>
+    </div>
+  </div>
+  <div class="plan-track" id="planTrack">
+    <div class="plan-pin">
+      <div class="wrap plan-grid">
+        <div class="arch-wrap">
+          <svg class="arch" id="arch" viewBox="-2 -4 108.05 106" role="img" aria-labelledby="archT"><title id="archT">Łuk planu leczenia: 16 zębów, słońce przy wykonanym planie</title></svg>
+          <div class="arch-read" aria-live="polite"><p class="val num" id="archVal">0<small>%</small></p><p id="archTxt">planu wykonane</p></div>
+        </div>
+        <div>
+          <ol class="steps" id="steps">
+            <li class="step" data-at="1"><h3><span class="k num">01</span>Przegląd</h3><p><span>Lekarz dentysta ogląda wszystkie zęby, dziąsła i&nbsp;zgryz. Zdjęcie RTG robimy wtedy, gdy jest potrzebne do decyzji, i&nbsp;mówimy po co.</span></p></li>
+            <li class="step" data-at="4"><h3><span class="k num">02</span>Plan leczenia na piśmie</h3><p><span>Każda pozycja ma numer zęba, cenę i&nbsp;liczbę wizyt. Plan zabierasz do domu i&nbsp;przemyślisz go bez presji terminu.</span></p></li>
+            <li class="step" data-at="7"><h3><span class="k num">03</span>Terminy od razu</h3><p><span>Po akceptacji planu ustalamy wszystkie wizyty. Od pierwszego dnia wiesz, kiedy skończysz.</span></p></li>
+            <li class="step" data-at="9"><h3><span class="k num">04</span>Leczenie, pozycja po pozycji</h3><p><span>Każda wizyta zamyka jedną pozycję planu. Gdy w&nbsp;trakcie coś się zmienia, najpierw rozmawiamy, dopiero potem zmienia się plan i&nbsp;cena.</span></p></li>
+            <li class="step" data-at="16"><h3><span class="k num">05</span>Kontrola</h3><p><span>Plan wykonany. Na wizycie kontrolnej sprawdzamy efekt i&nbsp;ustalamy termin kolejnego przeglądu.</span></p></li>
+          </ol>
+          <div class="card plan-card" aria-label="Przykładowy plan leczenia">
+            <div class="pc-head"><b>Plan leczenia</b><span class="chip">Przykład · kwoty ilustracyjne</span></div>
+            <div class="pc-row" data-at="3"><i class="sw" style="background:var(--kolornik-z1);box-shadow:inset 0 0 0 1px var(--zenit-mgla)"></i><span class="what"><b>Przegląd i&nbsp;plan leczenia</b><span>Z1</span></span><span class="vis">wizyta 1</span><span class="amt num">200 zł<i class="ok"></i></span></div>
+            <div class="pc-row" data-at="9"><i class="sw" style="background:var(--kolornik-z2)"></i><span class="what"><b>Higienizacja</b><span>Z2</span></span><span class="vis">wizyta 2</span><span class="amt num">350 zł<i class="ok"></i></span></div>
+            <div class="pc-row" data-at="11"><i class="sw" style="background:var(--kolornik-z3)"></i><span class="what"><b>Wypełnienia 16, 26</b><span>Z3</span></span><span class="vis">wizyta 3</span><span class="amt num">800 zł<i class="ok"></i></span></div>
+            <div class="pc-row" data-at="13"><i class="sw" style="background:var(--kolornik-z4)"></i><span class="what"><b>Leczenie kanałowe 36</b><span>Z4</span></span><span class="vis">wizyty 4–5</span><span class="amt num">1&nbsp;400 zł<i class="ok"></i></span></div>
+            <div class="pc-row" data-at="15"><i class="sw" style="background:var(--kolornik-z5)"></i><span class="what"><b>Korona 36</b><span>Z5</span></span><span class="vis">wizyty 6–7</span><span class="amt num">2&nbsp;200 zł<i class="ok"></i></span></div>
+            <div class="pc-sum num"><span>Razem, 7 wizyt</span><span>4&nbsp;950 zł</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ II. USŁUGI: KOLORNIK ============ -->
+<section class="sec sec-alt" id="uslugi" aria-labelledby="h-kol">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><p class="label"><span class="n">II</span>Usługi</p><h2 class="h-sec" id="h-kol">Im jaśniej, tym mniej ingerencji w&nbsp;ząb</h2></div>
+      <p class="lead">Każda usługa ma swój kolor z&nbsp;kolornika, od najjaśniejszego przeglądu po najciemniejszą koronę. Ten sam kolor zobaczysz w&nbsp;planie leczenia i&nbsp;na karcie zaleceń po wizycie.</p>
+    </div>
+    <div class="reveal">
+      <div class="kol-bar" role="tablist" aria-label="Kolornik usług" id="kolBar"></div>
+      <div class="kol-scale" aria-hidden="true"><span>mniejsza ingerencja</span><span>większa ingerencja</span></div>
+      <div class="card kol-panel" id="kolPanel" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ III. MYŚL MARKI ============ -->
+<section class="night" id="zasady" aria-labelledby="h-night">
+  <img class="polluk" src="assets/logo/polluk-prawy-las.svg" alt="" aria-hidden="true">
+  <div class="wrap">
+    <p class="label"><span class="n">III</span>Dlaczego zenit</p>
+    <h2 class="manifest" id="h-night">Zenit to najwyższy punkt, w&nbsp;którym staje słońce. Do takiego punktu dochodzimy w&nbsp;każdym leczeniu, bez pośpiechu i&nbsp;bez niespodzianek.</h2>
+    <div class="pillars">
+      <article class="pillar reveal"><p class="k">Spokój</p><h3>Najpierw plan</h3><p>Plan, cenę i&nbsp;termin znasz przed leczeniem. Bez promocji na fotelu i&nbsp;bez dopisków na końcu.</p></article>
+      <article class="pillar reveal"><p class="k">Precyzja</p><h3>Najpierw mierzymy</h3><p>Diagnozę opieramy na badaniu i&nbsp;zdjęciach. Decyzję o&nbsp;leczeniu podejmujesz, wiedząc, co widzi lekarz.</p></article>
+      <article class="pillar reveal"><p class="k">Ciągłość</p><h3>Ten sam standard</h3><p>Jedna marka i&nbsp;kolejne gabinety. Na Nowodworskiej i&nbsp;na Białowieskiej pracujemy według tych samych zasad.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IV. GABINETY ============ -->
+<section class="sec" id="gabinety" aria-labelledby="h-gab">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><p class="label"><span class="n">IV</span>Gabinety</p><h2 class="h-sec" id="h-gab">Dwa gabinety we Wrocławiu</h2></div>
+      <p class="lead">Każdy gabinet ma swój numer, jak na szyldzie. Numer zostaje z&nbsp;gabinetem na zawsze, więc 01 to zawsze Nowodworska.</p>
+    </div>
+    <div class="gab-grid">
+      <article class="card gab reveal" id="gab-01" aria-labelledby="g1">
+        <div class="gab-top">
+          <div><p class="tag">Baza sieci</p><h3 id="g1" style="margin-top:8px">Nowodworska</h3><p class="addr">ul. Nowodworska <span class="todo">nr</span>, Wrocław</p></div>
+          <img src="assets/logo/gabinet-01-nowodworska-tlo-ciemne.svg" alt="Gabinet 01" width="119" height="96">
+        </div>
+        <dl>
+          <dt>Godziny</dt><dd><span class="todo">do uzupełnienia</span></dd>
+          <dt>Telefon</dt><dd><span class="todo">do uzupełnienia</span></dd>
+        </dl>
+        <div class="gab-cta">
+          <a class="btn btn-line" href="#wizyta">Umów na Nowodworskiej</a>
+          <a class="btn-link" href="https://www.google.com/maps/search/?api=1&amp;query=ul.+Nowodworska+Wroc%C5%82aw" rel="noopener" target="_blank">Mapa</a>
+        </div>
+      </article>
+      <article class="card gab reveal" id="gab-02" aria-labelledby="g2">
+        <div class="gab-top">
+          <div><p class="tag">Gabinet</p><h3 id="g2" style="margin-top:8px">Białowieska</h3><p class="addr">ul. Białowieska <span class="todo">nr</span>, Wrocław</p></div>
+          <img src="assets/logo/gabinet-02-bialowieska-tlo-ciemne.svg" alt="Gabinet 02" width="119" height="96">
+        </div>
+        <dl>
+          <dt>Godziny</dt><dd><span class="todo">do uzupełnienia</span></dd>
+          <dt>Telefon</dt><dd><span class="todo">do uzupełnienia</span></dd>
+        </dl>
+        <div class="gab-cta">
+          <a class="btn btn-line" href="#wizyta">Umów na Białowieskiej</a>
+          <a class="btn-link" href="https://www.google.com/maps/search/?api=1&amp;query=ul.+Bia%C5%82owieska+Wroc%C5%82aw" rel="noopener" target="_blank">Mapa</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ V. PYTANIA ============ -->
+<section class="sec sec-white" id="pytania" aria-labelledby="h-faq">
+  <div class="wrap faq-grid">
+    <div class="faq-side reveal">
+      <p class="label"><span class="n">V</span>Pytania</p>
+      <h2 class="h-sec" id="h-faq">Najczęstsze pytania</h2>
+      <div class="ryc" style="--src:url(assets/ryciny/szalwia.svg)" role="img" aria-label="Szałwia lekarska, rycina"></div>
+      <p class="caption" style="margin-top:12px"><b>Szałwia lekarska</b> · Köhler’s Medizinal-Pflanzen</p>
+    </div>
+    <div class="faq reveal">
+      <details><summary>Ile kosztuje pierwsza wizyta?</summary><p>Pierwsza wizyta to przegląd i&nbsp;plan leczenia. Jej cenę podajemy przy zapisie, zanim przyjdziesz. <span class="todo">kwota</span></p></details>
+      <details><summary>Czy plan leczenia jest wiążący?</summary><p>Plan jest Twój, ale nic Cię nie zobowiązuje. Możesz go zabrać do domu, przemyśleć, zapytać o&nbsp;inną kolejność albo zacząć od jednej pozycji.</p></details>
+      <details><summary>Co, jeśli w trakcie leczenia okaże się, że trzeba zrobić więcej?</summary><p>Lekarz przerywa, pokazuje, co zobaczył, i&nbsp;mówi, ile kosztuje zmiana. Plan i&nbsp;cena zmieniają się dopiero po Twojej zgodzie.</p></details>
+      <details><summary>Boję się dentysty. Jak to u&nbsp;was wygląda?</summary><p>Powiedz o&nbsp;tym przy zapisie albo na początku wizyty. Przed każdym etapem lekarz mówi, co zrobi i&nbsp;ile to potrwa. Znieczulenie miejscowe dostajesz zawsze, gdy zabieg tego wymaga.</p></details>
+      <details><summary>Czy mogę zacząć w&nbsp;jednym gabinecie, a&nbsp;dokończyć w&nbsp;drugim?</summary><p>Tak. Oba gabinety prowadzą leczenie według tych samych zasad, a&nbsp;plan leczenia jest jeden.</p></details>
+      <details><summary>Jak odwołać albo przesunąć wizytę?</summary><p>Zadzwoń do gabinetu, w&nbsp;którym masz wizytę. Im wcześniej dasz znać, tym szybciej zwolniony termin dostanie ktoś inny.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ UMÓW WIZYTĘ + STOPKA ============ -->
+<section class="end" id="wizyta" aria-labelledby="h-end">
+  <div class="wrap">
+    <p class="label" style="color:var(--zenit-porost)">Pierwsza wizyta</p>
+    <h2 class="h-display" id="h-end" style="font-size:clamp(42px,5.6vw,80px);max-width:14ch">Zacznij od przeglądu i&nbsp;planu leczenia</h2>
+    <p class="lead">Wybierz gabinet, który masz bliżej. Termin ustalisz przez telefon, a&nbsp;na pierwszej wizycie dostaniesz plan leczenia na piśmie.</p>
+    <div class="end-places">
+      <a class="end-place" href="#gab-01"><img src="assets/logo/gabinet-01-nowodworska-tlo-ciemne.svg" alt="" width="60" height="48"><span><b>Nowodworska</b><span>Zadzwoń <span class="todo" style="color:var(--zenit-porost);border-color:var(--zenit-mech)">telefon</span></span></span></a>
+      <a class="end-place" href="#gab-02"><img src="assets/logo/gabinet-02-bialowieska-tlo-ciemne.svg" alt="" width="60" height="48"><span><b>Białowieska</b><span>Zadzwoń <span class="todo" style="color:var(--zenit-porost);border-color:var(--zenit-mech)">telefon</span></span></span></a>
+    </div>
+    <footer class="foot">
+      <img src="assets/logo/zenit-poziomy-krem.svg" alt="zenit.stomatologia" width="92" height="30">
+      <span>© 2026 · <span class="todo">nazwa podmiotu leczniczego, NIP</span></span>
+      <nav aria-label="Dokumenty"><a href="/regulamin">Regulamin</a><a href="/polityka-prywatnosci">Polityka prywatności</a></nav>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS='http://www.w3.org/2000/svg';
+
+/* ---------- Hero: wejście znaku od ósemek do jedynek, słońce na końcu (≤ 600 ms) ---------- */
+const hero=$('.hero'), mark=$('.hero-mark svg');
+if(mark){
+  const cs=[...mark.querySelectorAll('circle')];
+  const sun=cs.find(c=>/E9A53A/i.test(c.getAttribute('fill')));
+  const teeth=cs.filter(c=>c!==sun).sort((a,b)=>b.getAttribute('cy')-a.getAttribute('cy'));
+  teeth.forEach((c,i)=>c.style.transitionDelay=(Math.floor(i/2)*45)+'ms');
+  if(sun) sun.style.transitionDelay='400ms';
+  mark.querySelectorAll('path').forEach(p=>p.classList.add('word'));
+}
+requestAnimationFrame(()=>requestAnimationFrame(()=>hero.classList.add('in')));
+
+/* ---------- Nawigacja: kolor według sekcji pod spodem ---------- */
+const nav=$('#nav'); const darks=$$('.hero,.night,.end');
+const links=$$('.nav ul a'); const secs=links.map(a=>$(a.getAttribute('href')));
+function navTone(){
+  const y=36; let tone='light';
+  for(const d of darks){const r=d.getBoundingClientRect(); if(r.top<=y&&r.bottom>y){tone=d.classList.contains('hero')?'top':'night';break;}}
+  nav.classList.toggle('light',tone==='light'); nav.classList.toggle('night',tone==='night');
+  let cur=-1; secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<innerHeight*.4)cur=i;});
+  links.forEach((a,i)=>i===cur?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current'));
+}
+
+/* ---------- Wejścia przy przewijaniu ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{rootMargin:'0px 0px -10% 0px'});
+$$('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- I. Łuk planu: geometria kuleczek ze znaku zenit-lukowy (D3) ---------- */
+const TEETH=[[5.343,94.657,5.343],[98.706,94.657,5.343],[6.047,81.180,5.658],[98.002,81.180,5.658],[8.637,66.975,6.286],[95.412,66.975,6.286],[12.802,54.801,4.086],[91.247,54.801,4.086],[17.953,45.103,4.400],[86.096,45.103,4.400],[25.223,36.051,4.715],[78.827,36.051,4.715],[34.210,29.209,4.086],[69.839,29.209,4.086],[45.434,25.183,5.343],[58.615,25.183,5.343]];
+const SUN=[52.025,7.543,7.543];
+const arch=$('#arch'); const dots=TEETH.map(([cx,cy,r])=>{const c=document.createElementNS(NS,'circle');c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r);c.setAttribute('class','t');arch.appendChild(c);return c;});
+const sun=document.createElementNS(NS,'circle');sun.setAttribute('cx',SUN[0]);sun.setAttribute('cy',SUN[1]);sun.setAttribute('r',SUN[2]);sun.setAttribute('class','sun');arch.appendChild(sun);
+const steps=$$('#steps .step'), rows=$$('.pc-row'), val=$('#archVal'), txt=$('#archTxt'), track=$('#planTrack');
+let shown=-1;
+function setPlan(n){
+  if(n===shown) return; shown=n;
+  dots.forEach((d,i)=>{d.classList.toggle('on',i<n);d.classList.toggle('now',i===n-1&&n<16);});
+  sun.classList.toggle('on',n>=16);
+  val.innerHTML=Math.round(n/16*100)+'<small>%</small>';
+  txt.textContent=n>=16?'plan wykonany':'planu wykonane';
+  let cur=0; steps.forEach((s,i)=>{if(n>=+s.dataset.at||(i===0))cur=i;});
+  if(n===0)cur=0;
+  steps.forEach((s,i)=>{s.classList.toggle('now',i===cur);s.classList.toggle('done',i<cur||(n>=16&&i===cur));});
+  rows.forEach(r=>r.classList.toggle('done',n>=+r.dataset.at));
+}
+const mobile=()=>innerWidth<=900;
+let target=0, cur=0, raf=0;
+function planTarget(){
+  if(mobile()){ // telefon i iPad pionowo: łuk przyklejony, kroki przewijają się pod nim
+    const mid=innerHeight*.62; let n=0;
+    steps.forEach(s=>{const r=s.getBoundingClientRect(); if(r.top<mid) n=+s.dataset.at;});
+    const last=steps[steps.length-1].getBoundingClientRect(); if(last.top<mid) n=16;
+    return n;
+  }
+  const r=track.getBoundingClientRect(); const p=Math.min(1,Math.max(0,(-r.top)/(r.height-innerHeight)));
+  return Math.min(16,Math.floor(p*17.2));
+}
+function loop(){
+  target=planTarget();
+  cur+= (target-cur)*.18; if(Math.abs(target-cur)<.02) cur=target;
+  setPlan(Math.round(cur));
+  navTone(); words();
+  raf=requestAnimationFrame(loop);
+}
+
+/* ---------- III. Myśl marki: słowa zapalają się przy przewijaniu ---------- */
+const man=$('.manifest');
+(function split(el){
+  const nodes=[...el.childNodes]; el.textContent='';
+  nodes.forEach(n=>{ (n.textContent).split(/(\s+)/).forEach(t=>{ if(!t)return; if(/^\s+$/.test(t)){el.append(t);return;} const s=document.createElement('span');s.className='w';s.textContent=t;el.append(s);});});
+})(man);
+const ws=$$('.manifest .w');
+function words(){
+  const r=man.getBoundingClientRect(); const p=Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(innerHeight*.55)));
+  const k=Math.round(p*ws.length); ws.forEach((w,i)=>w.classList.toggle('lit',i<k));
+}
+
+/* ---------- II. Kolornik ---------- */
+const KOL=[
+ {k:'Z1',c:'--kolornik-z1',n:'Przegląd i plan leczenia',d:'Pierwsza wizyta w Zenicie. Lekarz dentysta sprawdza zęby, dziąsła i zgryz, a potem rozpisuje leczenie na pozycje z ceną i liczbą wizyt.',l:['badanie zębów, dziąseł i zgryzu','zdjęcie RTG, gdy jest potrzebne','plan leczenia na piśmie','termin kolejnej wizyty'],p:'szalwia',pn:'Szałwia lekarska',pw:'płukanki przy zapaleniu dziąseł'},
+ {k:'Z2',c:'--kolornik-z2',n:'Higienizacja',d:'Usuwamy kamień i osad, piaskujemy i polerujemy zęby. Robimy ją przed wypełnieniami, bo na czystych zębach widać więcej.',l:['usunięcie kamienia ultradźwiękami','piaskowanie i polerowanie','fluoryzacja','instruktaż szczotkowania'],p:'mieta',pn:'Mięta pieprzowa',pw:'smak i świeżość past i płynów'},
+ {k:'Z3',c:'--kolornik-z3',n:'Wypełnienia',d:'Leczymy próchnicę materiałem kompozytowym w kolorze zęba. Kolor dobieramy na początku wizyty, zanim ząb przeschnie i zmieni odcień.',l:['znieczulenie miejscowe','usunięcie próchnicy','odbudowa warstwami','kontrola zgryzu'],p:'gozdzikowiec',pn:'Goździkowiec korzenny',pw:'eugenol w cementach i opatrunkach'},
+ {k:'Z4',c:'--kolornik-z4',n:'Leczenie kanałowe',d:'Gdy miazga zęba jest w stanie zapalnym albo obumarła, oczyszczamy i szczelnie wypełniamy kanały. Ząb zostaje w łuku.',l:['znieczulenie miejscowe','pomiar długości kanałów','opracowanie i wypełnienie','zdjęcie kontrolne'],p:'eukaliptus',pn:'Eukaliptus gałkowy',pw:'eukaliptol przy powtórnym leczeniu'},
+ {k:'Z5',c:'--kolornik-z5',n:'Korony i licówki',d:'Odbudowa zęba po leczeniu kanałowym albo zmiana kształtu i koloru zębów przednich. Pracę wykonuje laboratorium protetyczne według skanu lub wycisku.',l:['projekt i dobór koloru','przygotowanie zęba','uzupełnienie tymczasowe','osadzenie i kontrola'],p:'mirra',pn:'Balsamowiec mirra',pw:'zabezpieczenie dziąseł po szlifowaniu'},
+ {k:'Z+',c:'--kolornik-zplus',n:'Ortodoncja nakładkowa',d:'Przezroczyste nakładki stopniowo przesuwają zęby. Zanim zaczniesz, zobaczysz symulację leczenia i liczbę nakładek.',l:['skan zębów','symulacja leczenia','kolejne nakładki co 1–2 tygodnie','wizyty kontrolne'],p:'rumianek',pn:'Rumianek pospolity',pw:'łagodzi podrażnienia błony śluzowej'}
+];
+const nbsp=s=>s.replace(/(^|\s)([aiouwzAIOUWZ])\s/g,'$1$2 ');
+const bar=$('#kolBar'), panel=$('#kolPanel');
+KOL.forEach((s,i)=>{
+  const b=document.createElement('button');b.className='kol-btn';b.type='button';b.setAttribute('role','tab');b.id='kol-'+i;b.setAttribute('aria-controls','kolPanel');
+  b.style.setProperty('--c',`var(${s.c})`);
+  b.innerHTML=`<span class="code">${s.k}</span><span class="nm">${nbsp(s.n)}</span>`;
+  b.addEventListener('click',()=>pick(i,true));
+  b.addEventListener('keydown',e=>{const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0; if(d){e.preventDefault();pick((i+d+KOL.length)%KOL.length,true);bar.children[(i+d+KOL.length)%KOL.length].focus();}});
+  bar.appendChild(b);
+});
+function pick(i,user){
+  const s=KOL[i];
+  [...bar.children].forEach((b,j)=>{b.setAttribute('aria-selected',j===i);b.tabIndex=j===i?0:-1;});
+  panel.setAttribute('aria-labelledby','kol-'+i);
+  panel.style.setProperty('--c',`var(${s.c})`);
+  panel.innerHTML=`<div class="kol-anim"><p class="code"><i></i>${s.k} · kolornik</p><h3>${nbsp(s.n)}</h3><p class="desc">${nbsp(s.d)}</p>
+   <ul class="kol-list">${s.l.map(x=>`<li>${nbsp(x)}</li>`).join('')}</ul>
+   <div class="kol-meta"><div><span class="k">Cena</span><span class="todo">z cennika</span></div><div><span class="k">Czas wizyty</span><span class="todo">z cennika</span></div><a class="btn-link" href="#wizyta">Umów wizytę</a></div></div>
+   <figure class="kol-fig kol-anim"><div class="ryc" style="--src:url(assets/ryciny/${s.p}.svg)" role="img" aria-label="${s.pn}, rycina"></div><figcaption class="caption"><b>${s.pn}</b> · ${s.pw}. Köhler’s Medizinal-Pflanzen</figcaption></figure>`;
+}
+pick(0,false);
+
+/* ---------- Start ---------- */
+if(reduce){ setPlan(16); ws.forEach(w=>w.classList.add('lit')); addEventListener('scroll',navTone,{passive:true}); navTone(); }
+else loop();
+})();
+</script>
+</body>
+</html>
